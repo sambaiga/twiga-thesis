@@ -14,32 +14,32 @@ below for the full write-up behind each):
 # qvn_spline/qvn_umnn -- the only two conditions across all 19 axes that have
 # never run at all (item 4). Reruns the other five qvn_type conditions too,
 # redundant but harmless, for one clean seven-condition comparison:
-uv run python chapters/ch5_fpqr/fpqr_experiment.py --group qvn_type --dataset all --skip-hpo
+uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group qvn_type --dataset all --skip-hpo
 
 # benchmark -- corrects the pre-2026-09-17 nrmse scale_method bug (item 1) and
 # produces predictions.parquet, which benchmark_nhits already has but this
 # group's original 2026-09-13 run predates the feature (item 10):
-uv run python chapters/ch5_fpqr/fpqr_experiment.py --group benchmark --dataset all --skip-hpo
+uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group benchmark --dataset all --skip-hpo
 ```
 
 **Item 11** (a native-`twiga` rerun of the \ac{MLPQF} vs. FPQR-MLP comparison,
 replacing the legacy `PhD-Thesis-Anthony` codebase Figures 5.11/5.12 currently
 depend on) has **no runnable command yet** -- it needs a new FPQR-MLP-style
-condition added to `fpqr_experiment.py` first (`benchmark`'s current
+condition added to `shared/fpqr_experiment.py` first (`benchmark`'s current
 conditions are `mlpqf`/`qr`/`bnn`/`laplace` only, no `FPSe2Q`-\ac{MLP}
 predecessor). See item 11 below before starting this one.
 
 ## Use the twiga ExperimentEngine, not hand-rolled loops
 
-`fpqr_experiment.py` defines these experiments as an `ExperimentSpec` over
+`shared/fpqr_experiment.py` defines these experiments as an `ExperimentSpec` over
 `Condition` objects and runs them through `twiga.experiment.ExperimentEngine`,
 the same machinery as `chapters/ch6_conformal/crc_experiment.py`. That buys four things the
 hand-rolled scripts in this folder do not have:
 
 * **Ten-fold expanding-window backtesting.** The engine defaults are
   `cv_train_size=12`, `cv_test_size=4`, `cv_val_size=2`, `cv_folds=10`, which is
-  exactly the protocol Chapter 3 specifies. `learned_tau.py` and
-  `tau_matrix.py` use a single train/test split, so their numbers carry no
+  exactly the protocol Chapter 3 specifies. `exploratory/learned_tau.py` and
+  `exploratory/tau_matrix.py` use a single train/test split, so their numbers carry no
   fold-level variability. Chapter 3's own argument is that single splits
   mislead, and the plan records a case where a single-split ablation failed to
   reproduce on a ten-fold rerun. Treat their output as a diagnostic, not as a
@@ -57,7 +57,7 @@ different config class from `mlpffpqr`.
 **What the engine does not do** is capture intermediate tensors. The learned
 grid is read with a forward hook on the proposal network, so the tau
 diagnostics need a small `ExperimentEngine` subclass overriding `_run_condition`
-to attach that hook after each fold's fit. Until that exists, `learned_tau.py`
+to attach that hook after each fold's fit. Until that exists, `exploratory/learned_tau.py`
 remains the source for the tau figures, with the single-split caveat stated.
 
 ## Why re-run rather than re-score
@@ -127,7 +127,7 @@ NRMSE/CWE-only report.
 fixed-grid QR, parametric Laplace, and BNN on proper scores (CRPS, Winkler
 score), not only on NRMSE/CWE.
 
-Implemented as the `benchmark` group in `fpqr_experiment.py`
+Implemented as the `benchmark` group in `shared/fpqr_experiment.py`
 (`--group benchmark`): MLPQF (`mlpffpqr`) against QR, parametric Laplace, and
 BNN, all on the MLPF backbone, full metric surface (point + interval +
 quantile/parametric, not only NRMSE and CWE as the chapter originally reports,
@@ -148,7 +148,7 @@ supporting check, the same way `grid`/`proposal` are. Together `benchmark` and
 `benchmark_nhits` are also what Chapter 5's `tab:backbone-generality`
 (Experiment 4, backbone generality) reports.
 
-**Plotting the `benchmark`/`benchmark_nhits` results.** `plot_backbone_generality.py`
+**Plotting the `benchmark`/`benchmark_nhits` results.** `experiment_4_backbone_generality/plot_backbone_generality.py`
 reads `results/ch5_fpqr_full.csv`, aggregates to one row per fold (the same
 fold-then-mean convention `design_ablation_significance.py` uses), and writes
 one bar chart per metric (NRMSE, CRPS, Winkler score, CWE stratified) to
@@ -156,7 +156,7 @@ one bar chart per metric (NRMSE, CRPS, Winkler score, CWE stratified) to
 bar per head (MLPQF/QR/BNN/Laplace):
 
 ```bash
-uv run python chapters/ch5_fpqr/plot_backbone_generality.py
+uv run python chapters/ch5_fpqr/experiment_4_backbone_generality/plot_backbone_generality.py
 ```
 
 Requires `arviz<1.0` and `seaborn` (both added as `dev` dependencies; newer
@@ -311,7 +311,7 @@ four fields now declared and forwarded) and
 completed run's rows for them reflect the bug, not the design choice.
 
 **`best_config` was never actually assembled.** Its `Condition` definition in
-`fpqr_experiment.py` was a byte-for-byte copy of `default_config`'s, with a
+`shared/fpqr_experiment.py` was a byte-for-byte copy of `default_config`'s, with a
 description literally reading "update once the ablation completes", never
 done. Updated to the settings confirmed on both datasets: `n_quantiles=23`
 (prop_nq: +17.5% MLVS-PT / +6.5% MLVS-UK vs. the reference's 9), `crossing_penalty=100`
@@ -373,7 +373,7 @@ all four conditions together, not just the missing one, the other three
 N-HiTS rows shifted slightly from the numbers the table above was originally
 built on; `tab:backbone-generality` and its discussion in `Chapter-5.tex`
 have been rewritten from this run and the table above (**Findings**) reads
-from the current `ch5_fpqr_full.csv`. `analyse_results.py` picks up this
+from the current `ch5_fpqr_full.csv`. `shared/analyse_results.py` picks up this
 run automatically (latest by timestamp per group).
 `tau_embed_type="TimeEmb"` (the reference) beats `LinearEmb`/`ConvEmb` by 9 to
 74%. The full objective (pinball + entropy + crossing terms) beats every
@@ -460,7 +460,7 @@ chapter's central claim requires, and it is one configuration.
 ### Prerequisites
 
 - Run from the repository root with `uv run`, or from inside `experiment/` with
-  the virtual environment active. `fpqr_experiment.py` inserts `experiment/`
+  the virtual environment active. `shared/fpqr_experiment.py` inserts `experiment/`
   onto `sys.path` itself, so no package installation is required.
 - Datasets: `MLVS-PT` and `MLVS-UK`, both expected at `examples/data/*.parquet`.
   These are the same files Chapter 7 uses; see
@@ -469,7 +469,7 @@ chapter's central claim requires, and it is one configuration.
 
 ### Bootstrap: seed the backbone HPO cache first
 
-`fpqr_experiment.py` runs on `twiga.experiment.engine.ExperimentEngine`, the
+`shared/fpqr_experiment.py` runs on `twiga.experiment.engine.ExperimentEngine`, the
 same shared engine Chapter 7's scripts use. Its Phase 1 tunes the backbone
 (`MLPFConfig`, `SPEC.backbone_cls`) once per dataset via Optuna and caches the
 result under the engine's own `backbone_hpo/<dataset>/` directory; Phase 2
@@ -489,7 +489,7 @@ Run once per dataset, **without** `--skip-hpo`, before any other group.
 over `dataset_keys` and caches Phase 1 HPO separately for each:
 
 ```bash
-uv run python chapters/ch5_fpqr/fpqr_experiment.py --group grid --dataset all
+uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group grid --dataset all
 ```
 
 `grid` is used here only because it is the smallest group (one condition);
@@ -498,9 +498,9 @@ runs the group's own conditions, and only needs to happen once per dataset.
 Every subsequent group/condition on the same dataset can then safely add
 `--skip-hpo` to reuse the cached backbone rather than re-tuning it.
 
-### `fpqr_experiment.py`: every experiment except `s563`
+### `shared/fpqr_experiment.py`: every experiment except `s563`
 
-`fpqr_experiment.py` implements the `grid`, `n_quantiles`, `loss_terms`,
+`shared/fpqr_experiment.py` implements the `grid`, `n_quantiles`, `loss_terms`,
 `proposal`, `tau_embed`, `num_cosines`, `rope_type`, `crossing`, `sort_output`,
 `qvn_type`, `loss_fn`, `lambda_cal`, `prop_nq`, `stop_gradient`, `prop_loss`,
 `horizon_sharing`, `best_config`, `benchmark`, and `benchmark_nhits` groups
@@ -510,25 +510,25 @@ mapping).
 
 ```bash
 # List every group and flag:
-uv run python chapters/ch5_fpqr/fpqr_experiment.py --help
+uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --help
 
 # Everything, both datasets:
-uv run python chapters/ch5_fpqr/fpqr_experiment.py
+uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py
 
 # One group only, for example the fixed-grid control (s562):
-uv run python chapters/ch5_fpqr/fpqr_experiment.py --group grid
+uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group grid
 
 # The benchmark replication (s561), one dataset:
-uv run python chapters/ch5_fpqr/fpqr_experiment.py --group benchmark --dataset MLVS-PT
+uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group benchmark --dataset MLVS-PT
 
 # Several groups at once, e.g. both benchmark variants:
-uv run python chapters/ch5_fpqr/fpqr_experiment.py --group benchmark benchmark_nhits
+uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group benchmark benchmark_nhits
 
 # Reuse cached backbone HPO parameters instead of re-searching:
-uv run python chapters/ch5_fpqr/fpqr_experiment.py --group grid --skip-hpo
+uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group grid --skip-hpo
 
 # Quick smoke-test with fewer epochs and folds:
-uv run python chapters/ch5_fpqr/fpqr_experiment.py --group grid --epochs 2 --folds 2
+uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group grid --epochs 2 --folds 2
 ```
 
 `--group`/`--dataset` both accept `all` (the default) or a space-separated
@@ -538,20 +538,20 @@ tracked tree since these runs regenerate large per-fold CSVs and checkpoints),
 one CSV per
 group per dataset, following the `s5<section><n>_*.csv` naming convention.
 
-### `learned_tau.py` and `tau_matrix.py`: `s563`, single-split diagnostics
+### `exploratory/learned_tau.py` and `exploratory/tau_matrix.py`: `s563`, single-split diagnostics
 
 These are not on the `ExperimentEngine` (see **What the engine does not do**
 above) and run as plain scripts:
 
 ```bash
-uv run python chapters/ch5_fpqr/learned_tau.py
-uv run python chapters/ch5_fpqr/tau_matrix.py
+uv run python chapters/ch5_fpqr/exploratory/learned_tau.py
+uv run python chapters/ch5_fpqr/exploratory/tau_matrix.py
 ```
 
 Both need `s561`'s checkpoints already trained, since they read a fitted
 MLPQF model rather than retraining one.
 
-### `worked_example.py`: pipeline-figure intermediates, already run
+### `exploratory/worked_example.py`: pipeline-figure intermediates, already run
 
 Also not on the `ExperimentEngine`. Captures every intermediate signal of
 one MLPQF forecast (input window, GHI, learned quantile fractions and
@@ -560,11 +560,11 @@ median-CRPS day among the most variable third by within-day irradiance --
 representative rather than flattering.
 
 ```bash
-uv run python chapters/ch5_fpqr/worked_example.py
+uv run python chapters/ch5_fpqr/exploratory/worked_example.py
 ```
 
-Needs `s561`'s checkpoints, same as `learned_tau.py`/`tau_matrix.py` above.
-Already run: writes `s563_worked_example.npz`, present in this directory.
+Needs `s561`'s checkpoints, same as `exploratory/learned_tau.py`/`exploratory/tau_matrix.py` above.
+Already run: writes `s563_worked_example.npz`, present in `exploratory/`.
 
 ## Next steps
 
@@ -607,7 +607,7 @@ still genuinely missing (item 2 below) — everything else, including the
    the raw target scale, and no significance conclusion in this chapter is
    decided on NRMSE. Pending, to correct every table consistently:
    ```bash
-   uv run python chapters/ch5_fpqr/fpqr_experiment.py --group benchmark benchmark_nhits grid --dataset all --skip-hpo
+   uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group benchmark benchmark_nhits grid --dataset all --skip-hpo
    ```
 2. **A real bug in the shared `pairwise_dm_table`'s `significant` column was found and
    fixed 2026-09-17, and every group's significance table below has
@@ -635,7 +635,7 @@ still genuinely missing (item 2 below) — everything else, including the
    eight conditions, not seven (`qvn_attention` added since this item was
    last written). The latest run (`runs/20260918_002159_e7736d`) covers
    five of them on both datasets (`qvn_relu`, `qvn_softplus`,
-   `qvn_monotone`, `qvn_monotone_cal`, `qvn_lattice`) — `analyse_results.py`
+   `qvn_monotone`, `qvn_monotone_cal`, `qvn_lattice`) — `shared/analyse_results.py`
    output for these five is complete
    (`results/analysis/{MLVS-PT,MLVS-UK}_qvn_type_{metrics,significance,kupiec}.csv`).
    **`qvn_attention`/`qvn_spline`/`qvn_umnn` trained (TensorBoard logs exist
@@ -650,14 +650,14 @@ still genuinely missing (item 2 below) — everything else, including the
    pairs" -> mixed scalar/array crash the fix addresses; a rerun after it
    should resolve them without further changes. Pending:
    ```bash
-   uv run python chapters/ch5_fpqr/fpqr_experiment.py --group qvn_type --dataset all --skip-hpo
+   uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group qvn_type --dataset all --skip-hpo
    ```
    Re-running the five already-complete conditions alongside the three
    missing ones is redundant but harmless, and keeps all eight from one run
    for a clean comparison.
 
    **Significance on the five complete conditions (DM, BH-corrected, per
-   `analyse_results.py`)**: on both datasets, `qvn_relu`/`qvn_softplus`
+   `shared/analyse_results.py`)**: on both datasets, `qvn_relu`/`qvn_softplus`
    (unconstrained, crossing-penalty QVN) each significantly beat all three
    monotonicity-constrained variants (`qvn_monotone`, `qvn_monotone_cal`,
    `qvn_lattice`) on Winkler score; `qvn_relu` vs. `qvn_softplus` itself is
@@ -682,7 +682,7 @@ still genuinely missing (item 2 below) — everything else, including the
    to flag as `n/a`. `benchmark` itself is unchanged from the original
    2026-09-13 run — no gap there, nothing pending.
 8. **Read the per-epoch TensorBoard scalars, not just the text log, if any
-   condition's sample plot looks off.** `fpqr_experiment.py`'s own run log has
+   condition's sample plot looks off.** `shared/fpqr_experiment.py`'s own run log has
    no per-epoch loss; `logs/<condition>/.../lightning_logs/backtesting_fold_*/
    events.out.tfevents.*` does. This is what distinguished a real training
    collapse from a y-axis-compression artefact during the equivalent Chapter 7
@@ -706,7 +706,7 @@ still genuinely missing (item 2 below) — everything else, including the
    the current codebase, same invocation as every other group here:
 
    ```bash
-   uv run python chapters/ch5_fpqr/fpqr_experiment.py --group benchmark --dataset all --skip-hpo
+   uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group benchmark --dataset all --skip-hpo
    ```
 
    This one command (plus `benchmark_nhits`'s file, already on disk) covers
@@ -729,17 +729,17 @@ still genuinely missing (item 2 below) — everything else, including the
    at the nominal PI), not the full learned quantile array
    (`quantile_hats`/`tau_hats`) a PIT value needs. Getting that means
    bypassing the standard reduced-prediction path the engine returns from
-   `forecaster.backtesting`/`_run_folds`, the way `worked_example.py`
+   `forecaster.backtesting`/`_run_folds`, the way `exploratory/worked_example.py`
    already does for its one representative day -- extended to every test
    timestamp, for `benchmark`/`benchmark_nhits`. **Not started for
    `benchmark`/`benchmark_nhits`**, but **done for the `qvn_type` group**
-   specifically (2026-09-18, `qvn_pit.py`, below) -- the same
+   specifically (2026-09-18, `exploratory/qvn_pit.py`, below) -- the same
    forward-hook capture, generalised across all eight `qvn_type`
    mechanisms rather than one condition on one day, since
    `FPQRDistribution.quantile_proposal`/`.quantile_output` (confirmed
    directly against `twiga/distributions/nn/fpqr/distribution.py`) are set
    under every `qvn_type` branch, not just the default one
-   `worked_example.py` targets.
+   `exploratory/worked_example.py` targets.
 
    **Real bug found and fixed while building this**:
    `twiga.core.plot.plot_pit_histogram` silently rendered zero bars (no
@@ -757,29 +757,29 @@ still genuinely missing (item 2 below) — everything else, including the
 
    ```bash
    # All eight qvn_type conditions, MLVS-PT (default):
-   uv run python chapters/ch5_fpqr/qvn_pit.py
+   uv run python chapters/ch5_fpqr/exploratory/qvn_pit.py
 
    # One dataset, a subset of conditions:
-   uv run python chapters/ch5_fpqr/qvn_pit.py --dataset MLVS-UK --conditions qvn_relu qvn_softplus
+   uv run python chapters/ch5_fpqr/exploratory/qvn_pit.py --dataset MLVS-UK --conditions qvn_relu qvn_softplus
    ```
 
    Illustrative, not a faithful reproduction of the formal backtest: one
-   freshly-trained model per condition on `learned_tau.py`'s own `SPLITS`
+   freshly-trained model per condition on `exploratory/learned_tau.py`'s own `SPLITS`
    (a single train/test window), not the 10-fold rolling-origin protocol
-   `fpqr_experiment.py`'s `qvn_type` group actually ran under -- read the
+   `shared/fpqr_experiment.py`'s `qvn_type` group actually ran under -- read the
    PIT/reliability shapes as diagnostic of each mechanism's calibration
-   behaviour, not as a substitute for `analyse_results.py`'s per-fold
+   behaviour, not as a substitute for `shared/analyse_results.py`'s per-fold
    Winkler-score comparison. Output (`.npy` PIT arrays, `.npz` forecast
    captures for reuse, PIT histogram + reliability diagram PNGs,
    `pit_summary.csv`) lands under `chapters/ch5_fpqr/qvn_pit/<dataset>/`.
 
-   **`qvn_forecast_examples.py` (2026-09-18)** is the companion good/bad-day
+   **`exploratory/qvn_forecast_examples.py` (2026-09-18)** is the companion good/bad-day
    view: what a forecast from each `qvn_type` mechanism actually looks like,
-   not just whether it is calibrated on average. Unlike `qvn_pit.py`, this
+   not just whether it is calibrated on average. Unlike `exploratory/qvn_pit.py`, this
    one needs no retraining and no new metric computation -- `predictions.parquet`
    already carries exactly `forecast`/`lower`/`upper`/`Actual`, and
    `metrics.parquet` already has per-day NRMSE/CRPS/Winkler, both written by
-   `fpqr_experiment.py`'s own formal 10-fold backtest, so this script only
+   `shared/fpqr_experiment.py`'s own formal 10-fold backtest, so this script only
    reads them. One day is picked once, pooled over every condition with a
    completed backtest (mean per-day NRMSE), so every panel shows the same
    day and the comparison is fair -- the same principle
@@ -800,8 +800,8 @@ still genuinely missing (item 2 below) — everything else, including the
    follow-up, not done here.
 
    ```bash
-   uv run python chapters/ch5_fpqr/qvn_forecast_examples.py
-   uv run python chapters/ch5_fpqr/qvn_forecast_examples.py --dataset MLVS-UK
+   uv run python chapters/ch5_fpqr/exploratory/qvn_forecast_examples.py
+   uv run python chapters/ch5_fpqr/exploratory/qvn_forecast_examples.py --dataset MLVS-UK
    ```
 
    Only 5 of the 8 conditions have a completed formal backtest on MLVS-PT
@@ -821,7 +821,7 @@ still genuinely missing (item 2 below) — everything else, including the
    confirmed directly, no such file exists under any run directory for that
    group -- and the script reports all three missing and exits rather than
    drawing an empty panel. Getting panels for `proposal` needs a rerun:
-   `uv run python chapters/ch5_fpqr/fpqr_experiment.py --group proposal --dataset all --skip-hpo`.
+   `uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group proposal --dataset all --skip-hpo`.
 
    **Finding**: on MLVS-PT, `qvn_lattice` predicts an almost perfectly flat
    line on *both* the picked good day and the picked bad day -- visibly
@@ -833,24 +833,24 @@ still genuinely missing (item 2 below) — everything else, including the
    because the other conditions' more responsive forecasts happened to
    misjudge that particular day's direction more.
 
-   **`qvn_type_comparison.py` (2026-09-18)** joins `analyse_results.py`'s
+   **`shared/qvn_type_comparison.py` (2026-09-18)** joins `shared/analyse_results.py`'s
    three separate `qvn_type` CSVs per dataset (`_metrics`, `_significance`,
    `_kupiec`) into one table -- NRMSE/CRPS/Winkler/CWE-stratified/PICP/NMPI/
    calibration-error, the Borda-count ranking, a DM significant win/loss
    count per condition, and the Kupiec calibration flag, for both datasets
-   side by side, plus four quantile-specific metrics `analyse_results.py`'s
+   side by side, plus four quantile-specific metrics `shared/analyse_results.py`'s
    own `METRIC_COLS` does not carry (pinball loss, weighted quantile loss,
    sharpness, tail pinball loss), read from each condition's own
    `metrics.parquet` (`metric_type == "quantile"` rows) rather than
-   `analyse_results.py`'s `load_csv` -- that path reads only the single
+   `shared/analyse_results.py`'s `load_csv` -- that path reads only the single
    most-recently-timestamped run covering the whole group, which silently
    drops `qvn_monotone` on MLVS-PT (it only completed in an older run than
    the one currently latest). Otherwise recomputes nothing; only reads and
    joins.
 
    ```bash
-   uv run python chapters/ch5_fpqr/qvn_type_comparison.py
-   uv run python chapters/ch5_fpqr/qvn_type_comparison.py --group proposal
+   uv run python chapters/ch5_fpqr/shared/qvn_type_comparison.py
+   uv run python chapters/ch5_fpqr/shared/qvn_type_comparison.py --group proposal
    ```
 
    Output: `results/analysis/{group}_comparison_both_datasets.csv`.
@@ -902,7 +902,7 @@ still genuinely missing (item 2 below) — everything else, including the
     `tab:backbone-generality`, closing that caveat and dropping the
     legacy-codebase dependency (and its pandas-1.5.3-pickle/`ppscore` shim)
     entirely. Not started; needs a new condition definition in
-    `fpqr_experiment.py` for the FPQR-MLP predecessor architecture, since the
+    `shared/fpqr_experiment.py` for the FPQR-MLP predecessor architecture, since the
     current `benchmark` group only has `mlpqf`/`qr`/`bnn`/`laplace`, not the
     `FPSe2Q`-\ac{MLP} predecessor itself.
 
@@ -910,7 +910,7 @@ still genuinely missing (item 2 below) — everything else, including the
 under `results/chapter_5_fpqr/runs/*/results/ch5_fpqr_full.csv` (one
 directory per run, picked by timestamp), not the single flat
 `results/ch5_fpqr_full.csv` file earlier revisions of this README pointed
-to. `analyse_results.py` (below) reads the latest run that covers each
+to. `shared/analyse_results.py` (below) reads the latest run that covers each
 group automatically; do not read `ch5_fpqr_summary.csv` from any individual
 run directly, since it pools `MLVS-PT`/`MLVS-UK` into one number per
 condition rather than reporting the two datasets separately.
@@ -918,10 +918,10 @@ condition rather than reporting the two datasets separately.
 ```bash
 # The one remaining ExperimentEngine gap (qvn_spline/qvn_umnn never run --
 # Chapter 6 scope, not Chapter 5; benchmark_nhits is closed as of 2026-09-16):
-uv run python chapters/ch5_fpqr/fpqr_experiment.py --group qvn_type --dataset all --skip-hpo
+uv run python chapters/ch5_fpqr/shared/fpqr_experiment.py --group qvn_type --dataset all --skip-hpo
 ```
 
-### `analyse_results.py`: metrics, significance, and figures across every completed group
+### `shared/analyse_results.py`: metrics, significance, and figures across every completed group
 
 Consolidates every run under `results/chapter_5_fpqr/runs/` (picking the
 latest run that covers each requested group, so `best_config`/`grid` come
@@ -938,10 +938,10 @@ and a best-vs-worst-day comparison from `ch5_fpqr_representative.csv`.
 ```bash
 # Everything that has complete data (skips qvn_umnn/qvn_spline
 # automatically -- see the coverage table it prints first):
-uv run python chapters/ch5_fpqr/analyse_results.py --group all
+uv run python chapters/ch5_fpqr/shared/analyse_results.py --group all
 
 # One group:
-uv run python chapters/ch5_fpqr/analyse_results.py --group benchmark benchmark_nhits
+uv run python chapters/ch5_fpqr/shared/analyse_results.py --group benchmark benchmark_nhits
 ```
 
 Output under `chapters/ch5_fpqr/results/analysis/`.

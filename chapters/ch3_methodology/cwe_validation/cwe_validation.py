@@ -123,6 +123,13 @@ def stratified_cwe(
     ``R`` is computed once over the whole sample and shared, so widths remain
     comparable across strata; recomputing it per stratum rescales NMPI differently
     in each bin and makes them incommensurable.
+
+    Deliberately not ``twiga.core.metrics.interval.conditional_cwe``: that function
+    references the per-stratum width to the raw target ``y``, while this one
+    references it to the residual ``y - mu``. Residual-referencing is exactly the
+    design choice this experiment is validating (see this chapter's "Validation
+    Using Net-Load Data" subsection), so calling the shipped, raw-target-referenced
+    function here would validate a different hypothesis than the one claimed.
     """
     scale = float(y.max() - y.min())
     out = []

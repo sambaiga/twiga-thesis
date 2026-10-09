@@ -62,7 +62,7 @@ OUT_DIR = script_dir / "results" / "analysis"
 FIG_DIR = OUT_DIR / "figures"
 
 sys.path.insert(0, str(script_dir))
-from chapters.ch5_fpqr.fpqr_experiment import SPEC  # noqa: E402
+from chapters.ch5_fpqr.shared.fpqr_experiment import SPEC  # noqa: E402
 
 sys.path.insert(0, str(script_dir.parent))
 from twiga_thesis.plotting import (

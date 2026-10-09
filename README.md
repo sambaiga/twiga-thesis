@@ -68,20 +68,6 @@ uv run ty check twiga_thesis chapters
 uv run pytest
 ```
 
-<details>
-<summary>Notes from the initial reorganization</summary>
-
-- All `chapters/` internal imports were converted from `sys.path.insert`-style and bare
-  sibling-module imports to absolute package imports (`uv run ty check twiga_thesis chapters` is
-  fully clean). This also caught a real bug: two output-artifact directories had been given
-  `__init__.py` files, shadowing the real same-named `.py` modules.
-- SPS-UK's raw-to-parquet pipeline (`twiga_thesis.datasets`) is verified end-to-end against the
-  real Zenodo files. One assumption, averaging six weather stations into single Ghi/Temperature
-  columns, isn't specified in the thesis text and couldn't be checked against the original
-  parquet; see `data/README.md`.
-
-</details>
-
 ---
 
 <div align="center">

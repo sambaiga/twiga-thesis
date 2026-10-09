@@ -56,7 +56,7 @@ from twiga.utils.run_forecast import (  # noqa: E402
     split_data,
 )
 
-from chapters.ch5_fpqr.learned_tau import SPLITS, find_head  # noqa: E402
+from chapters.ch5_fpqr.exploratory.learned_tau import SPLITS, find_head  # noqa: E402
 
 script_dir = Path(__file__).resolve().parent
 OUT = script_dir / "qvn_pit"
