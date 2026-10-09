@@ -21,13 +21,13 @@ Per-chapter reproducibility code for the thesis. Depends on
 
 | # | Chapter | RQ | |
 |---|---|---|---|
-| 1 | [Introduction](chapters/ch1_introduction/) | Setting the stage | <img src="assets/roadmap.png" width="200"> |
-| 2 | [Background](chapters/ch2_background/) | Setting the stage | <img src="assets/ch2.png" width="200"> |
-| 3 | [Methodology](chapters/ch3_methodology/) | RQ1 | <img src="assets/ch3.png" width="200"> |
+| 1 | [Introduction](chapters/ch1_introduction/) | Setting the stage | <img src="assets/roadmap.png" height="150"> |
+| 2 | [Background](chapters/ch2_background/) | Setting the stage | <img src="assets/ch2.png" height="150"> |
+| 3 | [Methodology](chapters/ch3_methodology/) | RQ1 | <img src="assets/ch3.png" height="150"> |
 | 4 | [MLPF](chapters/ch4_mlpf/) | RQ2 | MLPF vs. ML/DNN baselines |
-| 5 | [FPQR](chapters/ch5_fpqr/) | RQ3 | <img src="assets/ch5.png" width="200"> |
-| 6 | [Conformal Prediction](chapters/ch6_conformal/) | RQ3 | <img src="assets/ch6.png" width="200"> |
-| 7 | [Multi-Target Forecasting](chapters/ch7_multitarget/) | RQ4 | <img src="assets/ch7.png" width="200"> |
+| 5 | [FPQR](chapters/ch5_fpqr/) | RQ3 | <img src="assets/ch5.png" height="150"> |
+| 6 | [Conformal Prediction](chapters/ch6_conformal/) | RQ3 | <img src="assets/ch6.png" height="150"> |
+| 7 | [Multi-Target Forecasting](chapters/ch7_multitarget/) | RQ4 | <img src="assets/ch7.png" height="150"> |
 | 8 | [Conclusion](chapters/ch10_conclusion/) | Synthesis | |
 
 Each chapter folder has its own `README.md` with the exact reproduction command and the thesis
