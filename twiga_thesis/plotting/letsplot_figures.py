@@ -17,7 +17,7 @@ from pathlib import Path
 import lets_plot as lp
 import pandas as pd
 
-from . import tokens as T
+from twiga_thesis.plotting import tokens
 
 HERE = Path(__file__).resolve().parent
 RESULTS = HERE.parent / "chapter-3-cwe-validation"
@@ -48,7 +48,7 @@ def margin_strip_lp() -> lp.core.PlotSpec:
     m = _margins()
     return (
         lp.ggplot(m, lp.aes(x="margin", y="metric"))
-        + lp.geom_vline(xintercept=0, color=T.TEXT_MUTED, linetype="dashed", size=0.5)
+        + lp.geom_vline(xintercept=0, color=tokens.TEXT_MUTED, linetype="dashed", size=0.5)
         + lp.geom_point(
             lp.aes(color="dataset", shape="dataset"),
             size=3.2,
@@ -62,7 +62,7 @@ def margin_strip_lp() -> lp.core.PlotSpec:
             labels=["-10", "-1", "0", "1", "10", "100"],
         )
         + lp.scale_y_discrete(name="", limits=ORDER)
-        + lp.scale_color_manual(name="", values=[T.PRIMARY, T.DANGER])
+        + lp.scale_color_manual(name="", values=[tokens.PRIMARY, tokens.DANGER])
         + lp.scale_shape_manual(name="", values=[21, 22])
         + twiga_theme(grid=False, legend_pos="bottom", legend_direction="horizontal", font_size=11)
         + lp.ggsize(760, 330)

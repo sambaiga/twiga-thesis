@@ -23,15 +23,15 @@ from matplotlib.ticker import MaxNLocator
 import numpy as np
 import pandas as pd
 
-from . import style as S, tokens as T
+from twiga_thesis.plotting import style, tokens
 
 PANEL = (0.40, 0.74)  # (fraction of \textwidth, height / width); 0.30 where three panels share a row
 # One colour per role, the same in every line plot of the thesis.
-FORECAST_COLOR = T.PRIMARY  # model forecast (solid line)
-OBSERVED_COLOR = T.HIGHLIGHT  # observations (small hollow markers, or a solid line for an aggregate)
-BAND_COLOR = T.PRIMARY_TINT  # prediction interval fill, edged in FORECAST_COLOR
-REFERENCE_COLOR = T.TEXT_MUTED  # nominal level, zero, record mean: dotted
-SEPARATOR_COLOR = T.GRID  # structural divider between groups of points
+FORECAST_COLOR = tokens.PRIMARY  # model forecast (solid line)
+OBSERVED_COLOR = tokens.HIGHLIGHT  # observations (small hollow markers, or a solid line for an aggregate)
+BAND_COLOR = tokens.PRIMARY_TINT  # prediction interval fill, edged in FORECAST_COLOR
+REFERENCE_COLOR = tokens.TEXT_MUTED  # nominal level, zero, record mean: dotted
+SEPARATOR_COLOR = tokens.GRID  # structural divider between groups of points
 LINE_WIDTH = 0.85
 BAND_EDGE = 0.2
 MARKER = {"ms": 1.8, "mew": 0.5}
@@ -55,13 +55,13 @@ COMPACT_RC = {
 
 def configure(latex: bool = True) -> None:
     """The thesis style with the compact line-plot sizes on top."""
-    S.configure(latex=latex)
+    style.configure(latex=latex)
     plt.rcParams.update(COMPACT_RC)
 
 
 def new_panel(fraction: float = PANEL[0], aspect: float = PANEL[1]) -> tuple[plt.Figure, plt.Axes]:
     """A single-axes figure authored at its final size (``fraction`` of the text width)."""
-    fig, ax = plt.subplots(figsize=S.panel(fraction, aspect))
+    fig, ax = plt.subplots(figsize=style.panel(fraction, aspect))
     return fig, ax
 
 
@@ -98,7 +98,7 @@ def set_y_axis(
     if from_zero:
         arrays = (*arrays, [0.0])
         floor = 0.0
-    lo, hi = S.pad_limits(*arrays, frac=eps_frac)
+    lo, hi = style.pad_limits(*arrays, frac=eps_frac)
     ticks = MaxNLocator(nbins=nbins, steps=[1, 2, 2.5, 5, 10]).tick_values(lo, hi)
     step = ticks[1] - ticks[0]
     bottom, top = np.floor(lo / (step / 2)) * (step / 2), np.ceil(hi / step) * step

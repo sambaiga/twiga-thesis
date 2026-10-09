@@ -26,7 +26,7 @@ from __future__ import annotations
 import matplotlib.dates as mdates
 import numpy as np
 
-from twiga_thesis.plotting import tokens as T
+from twiga_thesis.plotting import tokens
 
 SPINE = "gray"
 LEGEND_GAP_PT = 4.0
@@ -37,9 +37,9 @@ LEGEND_GAP_PT = 4.0
 # are neither the thesis's actual teal/orange nor tied to the same
 # semantic tokens every other thesis figure uses. Found 2026-09-27 comparing
 # a forecast panel directly against a production thesis figure.
-PREDICTED_COLOR = T.PRIMARY
-OBSERVED_COLOR = T.HIGHLIGHT
-BAND_COLOR = T.PRIMARY_TINT
+PREDICTED_COLOR = tokens.PRIMARY
+OBSERVED_COLOR = tokens.HIGHLIGHT
+BAND_COLOR = tokens.PRIMARY_TINT
 
 
 def _fmt2(v: float) -> str:

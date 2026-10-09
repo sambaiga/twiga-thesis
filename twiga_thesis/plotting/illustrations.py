@@ -28,7 +28,8 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from . import style as S, tokens as T
+from twiga_thesis.plotting import style, tokens
+
 from .icons import icon_patch
 
 ALPHA = 0.10
@@ -88,12 +89,12 @@ def cwe_measured() -> plt.Figure:
     h, mu, sig, y = d["hour"], d["mu"], d["sigma"], d["y"]
     lo, up = mu - Z * sig, mu + Z * sig
 
-    fig, ax = plt.subplots(figsize=S.panel(0.31, aspect=0.88))
-    ax.fill_between(h, lo, up, color=T.PRIMARY_TINT, zorder=1)
-    ax.plot(h, mu, color=T.PRIMARY, zorder=3)
+    fig, ax = plt.subplots(figsize=style.panel(0.31, aspect=0.88))
+    ax.fill_between(h, lo, up, color=tokens.PRIMARY_TINT, zorder=1)
+    ax.plot(h, mu, color=tokens.PRIMARY, zorder=3)
     inside = (y >= lo) & (y <= up)
-    ax.plot(h[inside], y[inside], "o", ms=2.0, color=T.TEXT_MUTED, zorder=4)
-    ax.plot(h[~inside], y[~inside], "o", ms=3.6, color=T.DANGER, zorder=5)
+    ax.plot(h[inside], y[inside], "o", ms=2.0, color=tokens.TEXT_MUTED, zorder=4)
+    ax.plot(h[~inside], y[~inside], "o", ms=3.6, color=tokens.DANGER, zorder=5)
 
     if (~inside).any():
         k = int(np.flatnonzero(~inside)[np.argmax(np.abs(y[~inside] - mu[~inside]))])
@@ -105,15 +106,15 @@ def cwe_measured() -> plt.Figure:
             ha="right",
             va="bottom",
             fontsize=13,
-            color=T.DANGER,
-            arrowprops={"arrowstyle": "-", "color": T.DANGER, "lw": 0.6, "alpha": 0.6},
+            color=tokens.DANGER,
+            arrowprops={"arrowstyle": "-", "color": tokens.DANGER, "lw": 0.6, "alpha": 0.6},
         )
     imax = int(np.argmax(up - lo))
     ax.annotate(
         "",
         xy=(h[imax], up[imax]),
         xytext=(h[imax], lo[imax]),
-        arrowprops={"arrowstyle": "<->", "color": T.WARNING, "lw": 1.1},
+        arrowprops={"arrowstyle": "<->", "color": tokens.WARNING, "lw": 1.1},
     )
     ax.annotate(
         r"$\gamma_w$",
@@ -121,7 +122,7 @@ def cwe_measured() -> plt.Figure:
         xytext=(9, 0),
         textcoords="offset points",
         fontsize=13,
-        color=T.WARNING,
+        color=tokens.WARNING,
         ha="left",
         va="center",
     )
@@ -134,12 +135,12 @@ def cwe_measured() -> plt.Figure:
 
 def cwe_kernel() -> plt.Figure:
     r"""The shared kernel and its reciprocal symmetry."""
-    fig, ax = plt.subplots(figsize=S.panel(0.31, aspect=0.88))
+    fig, ax = plt.subplots(figsize=style.panel(0.31, aspect=0.88))
     x = np.linspace(0.02, 4.0, 400)
-    ax.plot(x, _kernel(x), color=T.PRIMARY, lw=1.4)
-    ax.axvline(1.0, color=T.TRUTH, ls="--", lw=0.8)
+    ax.plot(x, _kernel(x), color=tokens.PRIMARY, lw=1.4)
+    ax.axvline(1.0, color=tokens.TRUTH, ls="--", lw=0.8)
     for v, lab in ((0.5, r"$\frac{1}{2}$"), (2.0, "2")):
-        ax.plot([v], [_kernel(v)], "o", color=T.WARNING, ms=4, zorder=5)
+        ax.plot([v], [_kernel(v)], "o", color=tokens.WARNING, ms=4, zorder=5)
         ax.annotate(
             lab,
             xy=(v, _kernel(v)),
@@ -147,10 +148,10 @@ def cwe_kernel() -> plt.Figure:
             textcoords="offset points",
             ha="center",
             fontsize=12,
-            color=T.WARNING,
+            color=tokens.WARNING,
         )
-    ax.annotate(r"$f(x)=f(1/x)$", xy=(1.45, 0.16), fontsize=11, color=T.WARNING)
-    ax.plot([1.0], [1.0], "o", color=T.PRIMARY, ms=5, zorder=5)
+    ax.annotate(r"$f(x)=f(1/x)$", xy=(1.45, 0.16), fontsize=11, color=tokens.WARNING)
+    ax.plot([1.0], [1.0], "o", color=tokens.PRIMARY, ms=5, zorder=5)
     ax.set_xlabel(r"ratio $x$")
     ax.set_ylabel(r"$f(x)=2x/(1+x^{2})$")
     ax.set_ylim(0, 1.14)
@@ -160,14 +161,14 @@ def cwe_kernel() -> plt.Figure:
 
 def cwe_surface() -> plt.Figure:
     r"""The score as a function of the two ratios."""
-    fig, ax = plt.subplots(figsize=S.panel(0.34, aspect=0.82))
+    fig, ax = plt.subplots(figsize=style.panel(0.34, aspect=0.82))
     g = np.linspace(0.05, 3.0, 240)
     g_a, g_w = np.meshgrid(g, g)
     fa, fw = _kernel(g_a), _kernel(g_w)
     cwe = np.where(fa + fw > 0, 2 * fa * fw / (fa + fw), 0.0)
-    cs = ax.contourf(g_a, g_w, cwe, levels=10, cmap=T.sequential_cmap())
-    ax.contour(g_a, g_w, cwe, levels=[0.5, 0.8, 0.95], colors=[T.TEXT_MUTED], linewidths=0.5, alpha=0.8)
-    ax.plot([1], [1], "*", color=T.DANGER, ms=12, zorder=6)
+    cs = ax.contourf(g_a, g_w, cwe, levels=10, cmap=tokens.sequential_cmap())
+    ax.contour(g_a, g_w, cwe, levels=[0.5, 0.8, 0.95], colors=[tokens.TEXT_MUTED], linewidths=0.5, alpha=0.8)
+    ax.plot([1], [1], "*", color=tokens.DANGER, ms=12, zorder=6)
     ax.set_xlabel(r"$\gamma_\alpha$")
     ax.set_ylabel(r"$\gamma_w$")
     fig.colorbar(cs, ax=ax, fraction=0.046, pad=0.03, label="CWE")
@@ -187,15 +188,15 @@ def _cond_forecast(constant: bool) -> plt.Figure:
     d = _many_days()
     hod, mu, sigma, y = d["hod"], d["mu"], d["sigma"], d["y"]
     half = _half_width(y, mu, sigma, constant)
-    color = T.WARNING if constant else T.PRIMARY
-    band = T.WARNING_TINT if constant else T.PRIMARY_TINT
+    color = tokens.WARNING if constant else tokens.PRIMARY
+    band = tokens.WARNING_TINT if constant else tokens.PRIMARY_TINT
 
     day = slice(0, 48)
     hours = hod[day] * 24
-    fig, ax = plt.subplots(figsize=S.panel(0.48, aspect=0.60))
+    fig, ax = plt.subplots(figsize=style.panel(0.48, aspect=0.60))
     ax.fill_between(hours, (mu - half)[day], (mu + half)[day], color=band, zorder=1)
     ax.plot(hours, mu[day], color=color, zorder=3)
-    ax.plot(hours, y[day], "o", ms=2.0, color=T.TEXT_MUTED, zorder=4)
+    ax.plot(hours, y[day], "o", ms=2.0, color=tokens.TEXT_MUTED, zorder=4)
     ax.set_xlabel("hour of day")
     ax.set_ylabel("net-load")
     ax.set_xticks([0, 6, 12, 18, 24])
@@ -207,14 +208,14 @@ def _cond_coverage(constant: bool) -> plt.Figure:
     d = _many_days()
     hod, mu, sigma, y = d["hod"], d["mu"], d["sigma"], d["y"]
     half = _half_width(y, mu, sigma, constant)
-    color = T.WARNING if constant else T.PRIMARY
+    color = tokens.WARNING if constant else tokens.PRIMARY
 
     hh = (hod * 48).astype(int) // 2
     cov = [float(np.mean(np.abs(y - mu)[hh == k] <= half[hh == k])) for k in range(24)]
     marginal = float(np.mean(np.abs(y - mu) <= half))
 
-    fig, ax = plt.subplots(figsize=S.panel(0.48, aspect=0.50))
-    ax.axhline(NOMINAL, color=T.TRUTH, ls="--", lw=0.8, zorder=2)
+    fig, ax = plt.subplots(figsize=style.panel(0.48, aspect=0.50))
+    ax.axhline(NOMINAL, color=tokens.TRUTH, ls="--", lw=0.8, zorder=2)
     ax.plot(np.arange(24) + 0.5, cov, "o-", color=color, ms=2.8, zorder=3)
     ax.set_ylim(0.55, 1.04)
     ax.set_xticks([0, 6, 12, 18, 24])
@@ -226,10 +227,12 @@ def _cond_coverage(constant: bool) -> plt.Figure:
         xycoords="axes fraction",
         ha="center",
         fontsize=12,
-        color=T.TEXT_MUTED,
+        color=tokens.TEXT_MUTED,
     )
     if not constant:
-        ax.annotate("nominal", xy=(0.7, NOMINAL), xytext=(0, 6), textcoords="offset points", fontsize=11, color=T.TRUTH)
+        ax.annotate(
+            "nominal", xy=(0.7, NOMINAL), xytext=(0, 6), textcoords="offset points", fontsize=11, color=tokens.TRUTH
+        )
     return fig
 
 
@@ -266,17 +269,17 @@ def _interval_case(scale: float) -> plt.Figure:
     picp = float(np.mean(np.abs(y - mu) <= half))
 
     calibrated = abs(picp - NOMINAL) < 0.02
-    color = T.PRIMARY if calibrated else T.DANGER
-    band = T.PRIMARY_TINT if calibrated else T.DANGER_TINT
+    color = tokens.PRIMARY if calibrated else tokens.DANGER
+    band = tokens.PRIMARY_TINT if calibrated else tokens.DANGER_TINT
 
     day = slice(0, 48)
     hours = hod[day] * 24
-    fig, ax = plt.subplots(figsize=S.panel(0.31, aspect=0.86))
+    fig, ax = plt.subplots(figsize=style.panel(0.31, aspect=0.86))
     ax.fill_between(hours, (mu - half)[day], (mu + half)[day], color=band, zorder=1)
     ax.plot(hours, mu[day], color=color, zorder=3)
     inside = np.abs(y - mu)[day] <= half[day]
-    ax.plot(hours[inside], y[day][inside], "o", ms=1.8, color=T.TEXT_MUTED, zorder=4)
-    ax.plot(hours[~inside], y[day][~inside], "o", ms=3.4, color=T.DANGER, zorder=5)
+    ax.plot(hours[inside], y[day][inside], "o", ms=1.8, color=tokens.TEXT_MUTED, zorder=4)
+    ax.plot(hours[~inside], y[day][~inside], "o", ms=3.4, color=tokens.DANGER, zorder=5)
     ax.annotate(
         rf"$\mathrm{{PICP}} = {picp:.2f}$",
         xy=(0.5, 0.03),
@@ -323,10 +326,10 @@ def reliability() -> plt.Figure:
     """Empirical against nominal coverage across the full range of levels."""
     fam = _forecast_family()
     levels = np.linspace(0.05, 0.95, 19)
-    colors = {"over-confident": T.DANGER, "calibrated": T.PRIMARY, "conservative": T.WARNING}
+    colors = {"over-confident": tokens.DANGER, "calibrated": tokens.PRIMARY, "conservative": tokens.WARNING}
 
-    fig, ax = plt.subplots(figsize=S.panel(0.46, aspect=0.92))
-    ax.plot([0, 1], [0, 1], ls="--", lw=0.8, color=T.TRUTH, zorder=1)
+    fig, ax = plt.subplots(figsize=style.panel(0.46, aspect=0.92))
+    ax.plot([0, 1], [0, 1], ls="--", lw=0.8, color=tokens.TRUTH, zorder=1)
     for name, (y, mu, sig) in fam.items():
         emp = [float(np.mean(np.abs(y - mu) <= stats_ppf(lv) * sig)) for lv in levels]
         ax.plot(levels, emp, "o-", ms=2.4, color=colors[name], label=name, zorder=3)
@@ -352,12 +355,12 @@ def _pit_panel(name: str) -> plt.Figure:
 
     y, mu, sig = _forecast_family()[name]
     pit = stats.norm.cdf((y - mu) / sig)
-    colors = {"over-confident": T.DANGER, "calibrated": T.PRIMARY, "conservative": T.WARNING}
+    colors = {"over-confident": tokens.DANGER, "calibrated": tokens.PRIMARY, "conservative": tokens.WARNING}
 
-    fig, ax = plt.subplots(figsize=S.panel(0.31, aspect=0.80))
+    fig, ax = plt.subplots(figsize=style.panel(0.31, aspect=0.80))
     # No alpha: nothing is drawn beneath, and blending shifts the hue off-palette.
     ax.hist(pit, bins=20, range=(0, 1), density=True, color=colors[name], zorder=3)
-    ax.axhline(1.0, color=T.TRUTH, ls="--", lw=0.8, zorder=4)
+    ax.axhline(1.0, color=tokens.TRUTH, ls="--", lw=0.8, zorder=4)
     ax.set_xlabel("PIT")
     ax.set_ylabel("density")
     ax.set_xlim(0, 1)
@@ -394,12 +397,12 @@ def reference_choice() -> plt.Figure:
     src = Path(__file__).resolve().parent.parent / "chapter-3-cwe-validation" / "s3523_reference_scales.csv"
     v = pd.read_csv(src).set_index("quantity")["value"]
     bars = [
-        ("spread of the target $y$", float(v["kappa_target"]), T.DANGER),
-        (r"spread of the residuals $y-\hat{\mu}$", float(v["kappa_residual"]), T.PRIMARY),
-        ("width a calibrated\ninterval actually needs", float(v["median_interval_width"]), T.INFO),
+        ("spread of the target $y$", float(v["kappa_target"]), tokens.DANGER),
+        (r"spread of the residuals $y-\hat{\mu}$", float(v["kappa_residual"]), tokens.PRIMARY),
+        ("width a calibrated\ninterval actually needs", float(v["median_interval_width"]), tokens.INFO),
     ]
 
-    fig, ax = plt.subplots(figsize=S.panel(0.50, aspect=0.62))
+    fig, ax = plt.subplots(figsize=style.panel(0.50, aspect=0.62))
     ypos = np.arange(len(bars))[::-1]
     for (_label, val, color), y in zip(bars, ypos, strict=False):
         ax.barh(y, val, height=0.55, color=color, zorder=3)
@@ -416,7 +419,7 @@ def reference_choice() -> plt.Figure:
         ha="left",
         va="center",
         fontsize=12,
-        color=T.DANGER,
+        color=tokens.DANGER,
     )
     return fig
 
@@ -433,9 +436,9 @@ def factorial_matrix() -> plt.Figure:
     g = pd.read_csv(src).groupby(["reference", "stratified"])["optimum"].mean()
 
     rows = [("marginal", "none"), ("stratified", "hour of day")]
-    fig, ax = plt.subplots(figsize=S.panel(0.52, aspect=0.78))
+    fig, ax = plt.subplots(figsize=style.panel(0.52, aspect=0.78))
 
-    ax.axvline(1.0, color=T.TEXT_MUTED, ls=":", lw=1.0, zorder=1)
+    ax.axvline(1.0, color=tokens.TEXT_MUTED, ls=":", lw=1.0, zorder=1)
     ax.annotate(
         "truth",
         xy=(1.0, -0.42),
@@ -444,7 +447,7 @@ def factorial_matrix() -> plt.Figure:
         ha="left",
         va="center",
         fontsize=10,
-        color=T.TEXT_MUTED,
+        color=tokens.TEXT_MUTED,
     )
 
     for i, (_label, strat) in enumerate(rows):
@@ -454,11 +457,11 @@ def factorial_matrix() -> plt.Figure:
             "",
             xy=(v_r, y),
             xytext=(v_t, y),
-            arrowprops={"arrowstyle": "->", "color": T.TEXT_MUTED, "lw": 0.9, "alpha": 0.6},
+            arrowprops={"arrowstyle": "->", "color": tokens.TEXT_MUTED, "lw": 0.9, "alpha": 0.6},
         )
-        for v, color, ref in ((v_t, T.DANGER, r"from $y$"), (v_r, T.PRIMARY, r"from $y-\hat{\mu}$")):
+        for v, color, ref in ((v_t, tokens.DANGER, r"from $y$"), (v_r, tokens.PRIMARY, r"from $y-\hat{\mu}$")):
             sound = abs(v - 1.0) < 0.005
-            ax.plot([v], [y], "o", color=T.PRIMARY if sound else color, ms=9 if sound else 7, zorder=4)
+            ax.plot([v], [y], "o", color=tokens.PRIMARY if sound else color, ms=9 if sound else 7, zorder=4)
             ax.annotate(
                 f"{v:.3f}",
                 xy=(v, y),
@@ -466,7 +469,7 @@ def factorial_matrix() -> plt.Figure:
                 textcoords="offset points",
                 ha="center",
                 fontsize=10.5,
-                color=T.PRIMARY if sound else color,
+                color=tokens.PRIMARY if sound else color,
             )
             if i == 0:  # name the two references once, on the top row only
                 ax.annotate(
@@ -507,13 +510,13 @@ def synthetic_series() -> plt.Figure:
     y = mu + rng.normal(0, sigma)
     half = Z * sigma
 
-    fig, ax = plt.subplots(figsize=S.panel(0.62, aspect=0.60))
-    ax.axhline(0, color=T.TEXT_MUTED, lw=0.7, ls=":", zorder=1)
-    ax.plot(hours, demand, color=T.TEXT_MUTED, ls="--", lw=1.0, zorder=2)
-    ax.fill_between(hours, 0, pv, color=T.tint(T.DANGER, 0.55), zorder=2)
-    ax.fill_between(hours, mu - half, mu + half, color=T.PRIMARY_TINT, zorder=3)
-    ax.plot(hours, mu, color=T.PRIMARY, zorder=4)
-    ax.plot(hours, y, "o", ms=2.0, color=T.TEXT_MUTED, zorder=5)
+    fig, ax = plt.subplots(figsize=style.panel(0.62, aspect=0.60))
+    ax.axhline(0, color=tokens.TEXT_MUTED, lw=0.7, ls=":", zorder=1)
+    ax.plot(hours, demand, color=tokens.TEXT_MUTED, ls="--", lw=1.0, zorder=2)
+    ax.fill_between(hours, 0, pv, color=tokens.tint(tokens.DANGER, 0.55), zorder=2)
+    ax.fill_between(hours, mu - half, mu + half, color=tokens.PRIMARY_TINT, zorder=3)
+    ax.plot(hours, mu, color=tokens.PRIMARY, zorder=4)
+    ax.plot(hours, y, "o", ms=2.0, color=tokens.TEXT_MUTED, zorder=5)
 
     ax.annotate(
         "demand",
@@ -522,9 +525,9 @@ def synthetic_series() -> plt.Figure:
         textcoords="offset points",
         ha="right",
         fontsize=10,
-        color=T.TEXT_MUTED,
+        color=tokens.TEXT_MUTED,
     )
-    ax.annotate("PV", xy=(12, pv.max() * 0.86), ha="center", fontsize=10, color=T.DANGER)
+    ax.annotate("PV", xy=(12, pv.max() * 0.86), ha="center", fontsize=10, color=tokens.DANGER)
     ax.annotate(
         "net-load",
         xy=(hours[6], mu[6]),
@@ -532,14 +535,14 @@ def synthetic_series() -> plt.Figure:
         textcoords="offset points",
         ha="center",
         fontsize=10,
-        color=T.PRIMARY,
+        color=tokens.PRIMARY,
     )
     imax = int(np.argmax(half))
     ax.annotate(
         "",
         xy=(hours[imax], (mu + half)[imax]),
         xytext=(hours[imax], (mu - half)[imax]),
-        arrowprops={"arrowstyle": "<->", "color": T.INFO, "lw": 1.2},
+        arrowprops={"arrowstyle": "<->", "color": tokens.INFO, "lw": 1.2},
     )
     ax.annotate(
         "widest\nspread",
@@ -549,7 +552,7 @@ def synthetic_series() -> plt.Figure:
         ha="right",
         va="top",
         fontsize=9.5,
-        color=T.INFO,
+        color=tokens.INFO,
     )
 
     ax.set_xlim(0, 24)
@@ -585,14 +588,14 @@ def _pq_contour(ax: plt.Axes, rho: float) -> None:
                 2 * radius * np.sqrt(vals[-1]),
                 2 * radius * np.sqrt(vals[0]),
                 angle=angle,
-                facecolor=T.PRIMARY_TINT,
-                edgecolor=T.PRIMARY,
+                facecolor=tokens.PRIMARY_TINT,
+                edgecolor=tokens.PRIMARY,
                 lw=width,
                 alpha=alpha,
                 zorder=3,
             )
         )
-    ax.plot(*_PQ_MU, "o", ms=3.2, color=T.PRIMARY, zorder=6)
+    ax.plot(*_PQ_MU, "o", ms=3.2, color=tokens.PRIMARY, zorder=6)
 
 
 def _pq_margin(ax: plt.Axes, i: int, horizontal: bool) -> None:
@@ -600,12 +603,12 @@ def _pq_margin(ax: plt.Axes, i: int, horizontal: bool) -> None:
     grid = np.linspace(0.0, _PQ_MU[i] + 4.2 * _PQ_SD[i], 240)
     dens = np.exp(-0.5 * ((grid - _PQ_MU[i]) / _PQ_SD[i]) ** 2)
     if horizontal:
-        ax.fill_between(grid, 0, dens, color=T.PRIMARY_TINT, lw=0)
-        ax.plot(grid, dens, color=T.PRIMARY, lw=1.0)
+        ax.fill_between(grid, 0, dens, color=tokens.PRIMARY_TINT, lw=0)
+        ax.plot(grid, dens, color=tokens.PRIMARY, lw=1.0)
         ax.set_ylim(0, 1.18)
     else:
-        ax.fill_betweenx(grid, 0, dens, color=T.PRIMARY_TINT, lw=0)
-        ax.plot(dens, grid, color=T.PRIMARY, lw=1.0)
+        ax.fill_betweenx(grid, 0, dens, color=tokens.PRIMARY_TINT, lw=0)
+        ax.plot(dens, grid, color=tokens.PRIMARY, lw=1.0)
         ax.set_xlim(0, 1.18)
     ax.axis("off")
 
@@ -620,7 +623,7 @@ def _pq_exceedance(rho: float) -> float:
 
 
 def _pq_panel(rho: float, title: str, note: str) -> plt.Figure:
-    fig = plt.figure(figsize=S.panel(0.46, aspect=1.02))
+    fig = plt.figure(figsize=style.panel(0.46, aspect=1.02))
     # The panel is laid out by hand; an automatic engine cannot place an
     # equal-aspect axes against two marginal strips without distorting it.
     fig.set_layout_engine("none")
@@ -638,8 +641,8 @@ def _pq_panel(rho: float, title: str, note: str) -> plt.Figure:
 
     th = np.linspace(0, np.pi / 2, 300)
     arc_x, arc_y = _S_RATED * np.cos(th), _S_RATED * np.sin(th)
-    ax.fill_between(arc_x, arc_y, 200, color=T.DANGER, alpha=0.10, lw=0, zorder=1)
-    ax.plot(arc_x, arc_y, color=T.DANGER, lw=1.5, zorder=4)
+    ax.fill_between(arc_x, arc_y, 200, color=tokens.DANGER, alpha=0.10, lw=0, zorder=1)
+    ax.plot(arc_x, arc_y, color=tokens.DANGER, lw=1.5, zorder=4)
 
     _pq_contour(ax, rho)
 
@@ -652,14 +655,14 @@ def _pq_panel(rho: float, title: str, note: str) -> plt.Figure:
     ax.set_yticks([0, 40, 80])
 
     # A transformer badge on the limit, so the arc reads as a nameplate.
-    ax.add_patch(Circle((146, 74), 7.5, facecolor=T.DANGER, ec="white", lw=1.1, zorder=6))
+    ax.add_patch(Circle((146, 74), 7.5, facecolor=tokens.DANGER, ec="white", lw=1.1, zorder=6))
     icon_patch(ax, "hdd-network-fill", (146, 74), 8.0, "white", zorder=7)
     ax.text(
         146,
         62,
         rf"$S = S^{{\mathrm{{rated}}}}$" "\n" rf"$= {_S_RATED:.0f}$ kVA",
         fontsize=8,
-        color=T.DANGER,
+        color=tokens.DANGER,
         ha="center",
         va="top",
         zorder=7,
@@ -670,7 +673,7 @@ def _pq_panel(rho: float, title: str, note: str) -> plt.Figure:
         114,
         rf"$\Pr(S > S^{{\mathrm{{rated}}}}) = {100 * _pq_exceedance(rho):.1f}\%$",
         fontsize=8.5,
-        color=T.DANGER,
+        color=tokens.DANGER,
         ha="right",
         va="top",
         zorder=7,
@@ -681,7 +684,7 @@ def _pq_panel(rho: float, title: str, note: str) -> plt.Figure:
         100,
         note,
         fontsize=7.5,
-        color=T.TEXT_MUTED,
+        color=tokens.TEXT_MUTED,
         ha="right",
         va="top",
         zorder=7,
@@ -747,20 +750,20 @@ def _conformal_panel(half_width: float, title: str) -> plt.Figure:
     covered = (np.abs(z_p) <= half_width) & (np.abs(z_q) <= half_width)
     rate = covered.mean()
 
-    fig, ax = plt.subplots(figsize=S.panel(0.46, aspect=1.0))
+    fig, ax = plt.subplots(figsize=style.panel(0.46, aspect=1.0))
     ax.add_patch(
         plt.Rectangle(
             (-half_width, -half_width),
             2 * half_width,
             2 * half_width,
-            facecolor=T.PRIMARY_TINT,
-            edgecolor=T.PRIMARY,
+            facecolor=tokens.PRIMARY_TINT,
+            edgecolor=tokens.PRIMARY,
             lw=1.4,
             zorder=2,
         )
     )
-    ax.plot(z_p[covered], z_q[covered], "o", ms=3.2, color=T.PRIMARY, alpha=0.75, mew=0, zorder=3)
-    ax.plot(z_p[~covered], z_q[~covered], "o", ms=3.6, color=T.DANGER, alpha=0.9, mew=0, zorder=4)
+    ax.plot(z_p[covered], z_q[covered], "o", ms=3.2, color=tokens.PRIMARY, alpha=0.75, mew=0, zorder=3)
+    ax.plot(z_p[~covered], z_q[~covered], "o", ms=3.6, color=tokens.DANGER, alpha=0.9, mew=0, zorder=4)
 
     lim = 3.6
     ax.set_xlim(-lim, lim)
@@ -771,7 +774,7 @@ def _conformal_panel(half_width: float, title: str) -> plt.Figure:
     ax.set_xticks([-3, 0, 3])
     ax.set_yticks([-3, 0, 3])
 
-    S.format_axes(ax)
+    style.format_axes(ax)
     ax.set_title(title + "\n" + rf"{100 * rate:.0f}\% jointly covered", fontsize=10, pad=4)
     fig.tight_layout(pad=0.3)
     return fig
@@ -843,15 +846,17 @@ def _cqr_panel(q_p: float, q_q: float, title: str) -> plt.Figure:
     covered_p, covered_q = np.abs(z_p) <= q_p, np.abs(z_q) <= q_q
     rate = (covered_p & covered_q).mean()
 
-    fig, ax = plt.subplots(figsize=S.panel(0.46, aspect=0.62))
+    fig, ax = plt.subplots(figsize=style.panel(0.46, aspect=0.62))
     rows = [(0, half_p, covered_p, z_p * _CQR_W_P), (1, half_q, covered_q, z_q * _CQR_W_Q)]
     for y, half, covered, signed in rows:
         ax.add_patch(
-            plt.Rectangle((-half, y - 0.3), 2 * half, 0.6, facecolor=T.PRIMARY_TINT, edgecolor=T.PRIMARY, lw=1.4)
+            plt.Rectangle(
+                (-half, y - 0.3), 2 * half, 0.6, facecolor=tokens.PRIMARY_TINT, edgecolor=tokens.PRIMARY, lw=1.4
+            )
         )
         jitter = np.random.default_rng(0).uniform(-0.18, 0.18, size=signed.size)
-        ax.plot(signed[covered], y + jitter[covered], "o", ms=3.0, color=T.PRIMARY, alpha=0.75, mew=0, zorder=3)
-        ax.plot(signed[~covered], y + jitter[~covered], "o", ms=3.4, color=T.DANGER, alpha=0.9, mew=0, zorder=4)
+        ax.plot(signed[covered], y + jitter[covered], "o", ms=3.0, color=tokens.PRIMARY, alpha=0.75, mew=0, zorder=3)
+        ax.plot(signed[~covered], y + jitter[~covered], "o", ms=3.4, color=tokens.DANGER, alpha=0.9, mew=0, zorder=4)
 
     ax.set_xlim(-2.2, 2.2)
     ax.set_ylim(-0.6, 1.6)
@@ -859,7 +864,7 @@ def _cqr_panel(q_p: float, q_q: float, title: str) -> plt.Figure:
     ax.set_yticklabels([r"$P$", r"$Q$"])
     ax.set_xlabel(r"Signed exceedance beyond $\hat{Q}(\tau)$, in units of $w_{i,h,d}$")
 
-    S.format_axes(ax)
+    style.format_axes(ax)
     ax.set_title(title + "\n" + rf"{100 * rate:.0f}\% jointly covered", fontsize=10, pad=4)
     fig.tight_layout(pad=0.3)
     return fig
@@ -949,7 +954,7 @@ CHAPTER: dict[str, str] = {
 
 def render_all(out: Path | None = None, latex: bool = True) -> None:
     """Render every illustration to ``out`` and to the thesis image folder."""
-    S.configure(latex=latex)
+    style.configure(latex=latex)
     here = Path(__file__).resolve().parent
     out = out or here / "output"
     out.mkdir(exist_ok=True)

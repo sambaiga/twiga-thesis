@@ -18,7 +18,7 @@ import pandas as pd
 import seaborn as sns
 from twiga.experiment.analysis import MINIMIZE_METRICS
 
-from twiga_thesis.plotting import style as S, tokens as T
+from twiga_thesis.plotting import style, tokens
 
 # Only genuine acronyms/special-cased tokens need an entry; every other
 # underscore-separated token is title-cased generically by display_name.
@@ -63,7 +63,7 @@ def thesis_palette(count: int) -> list[tuple[float, float, float]]:
     """
     if count < 0:
         raise ValueError("Palette size must not be negative")
-    base_colors = [to_rgb(color) for color in T.PALETTE]
+    base_colors = [to_rgb(color) for color in tokens.PALETTE]
     colors = []
     for index in range(count):
         base_color = base_colors[index % len(base_colors)]
@@ -195,13 +195,13 @@ def plot_forest(
     height = 0.35 * n_conditions + 1.2
     figures: dict[str, plt.Figure] = {}
     for metric in metric_cols:
-        fig, ax = plt.subplots(figsize=(S.TEXTWIDTH_IN, height))
+        fig, ax = plt.subplots(figsize=(style.TEXTWIDTH_IN, height))
         metric_data = data[data["metric"] == metric].sort_values("mean")
         ref_mean = metric_data.loc[metric_data["condition"] == reference, "mean"]
         if not ref_mean.empty:
-            ax.axvline(ref_mean.iloc[0], color=T.TEXT_MUTED, lw=0.7, ls="--", zorder=0)
+            ax.axvline(ref_mean.iloc[0], color=tokens.TEXT_MUTED, lw=0.7, ls="--", zorder=0)
         for row_index, (_, row) in enumerate(metric_data.iterrows()):
-            color = T.PRIMARY if row["condition"] == reference else T.TEXT_MUTED
+            color = tokens.PRIMARY if row["condition"] == reference else tokens.TEXT_MUTED
             ax.errorbar(
                 row["mean"],
                 row_index,
@@ -211,14 +211,14 @@ def plot_forest(
                 ms=5,
             )
         ax.set_yticks(range(len(metric_data)))
-        ax.set_yticklabels([S.tex_safe(display_name(condition)) for condition in metric_data["condition"]])
-        ax.set_xlabel(S.tex_safe(display_metric(metric, metric_display)))
+        ax.set_yticklabels([style.tex_safe(display_name(condition)) for condition in metric_data["condition"]])
+        ax.set_xlabel(style.tex_safe(display_metric(metric, metric_display)))
         # No in-figure title -- a caption carries the dataset/group/reference
         # (matching :func:`plot_dm_significance_matrix`'s own convention).
-        xlim = S.pad_limits(metric_data["lo"].to_numpy(), metric_data["hi"].to_numpy())
+        xlim = style.pad_limits(metric_data["lo"].to_numpy(), metric_data["hi"].to_numpy())
         if xlim is not None:
             ax.set_xlim(*xlim)
-        S.format_axes(ax)
+        style.format_axes(ax)
         fig.tight_layout()
         figures[metric] = fig
     return figures
@@ -270,7 +270,7 @@ def plot_metric_bars(
         if data.empty:
             continue
         data["Condition"] = data["condition"].map(
-            lambda condition: S.tex_safe(head_label(condition, backbone_prefixes, extra_acronyms))
+            lambda condition: style.tex_safe(head_label(condition, backbone_prefixes, extra_acronyms))
         )
         condition_values = data.groupby("Condition")[metric].median()
         if metric in target_values:
@@ -300,15 +300,15 @@ def plot_metric_bars(
                 errorbar="sd",
                 kind="bar",
                 capsize=0.4,
-                err_kws={"color": T.TEXT_MUTED, "linewidth": 0.7},
+                err_kws={"color": tokens.TEXT_MUTED, "linewidth": 0.7},
                 height=2.6,
-                aspect=S.TEXTWIDTH_IN / 2.6,
+                aspect=style.TEXTWIDTH_IN / 2.6,
             )
             axis = facet_grid.ax
             axis.tick_params(axis="x", labelrotation=45)
             for label in axis.get_xticklabels():
                 label.set_horizontalalignment("right")
-                if label.get_text() == S.tex_safe(head_label(reference, backbone_prefixes, extra_acronyms)):
+                if label.get_text() == style.tex_safe(head_label(reference, backbone_prefixes, extra_acronyms)):
                     label.set_fontweight("bold")
         else:
             facet_grid = sns.catplot(
@@ -325,19 +325,19 @@ def plot_metric_bars(
                 errorbar="sd",
                 kind="bar",
                 capsize=0.4,
-                err_kws={"color": T.TEXT_MUTED, "linewidth": 0.7},
+                err_kws={"color": tokens.TEXT_MUTED, "linewidth": 0.7},
                 height=height,
-                aspect=S.TEXTWIDTH_IN / height,
+                aspect=style.TEXTWIDTH_IN / height,
             )
             axis = facet_grid.ax
             for label in axis.get_yticklabels():
-                if label.get_text() == S.tex_safe(head_label(reference, backbone_prefixes, extra_acronyms)):
+                if label.get_text() == style.tex_safe(head_label(reference, backbone_prefixes, extra_acronyms)):
                     label.set_fontweight("bold")
         ax = facet_grid.ax
         if len(order) <= 8:
-            facet_grid.set_axis_labels("", S.tex_safe(display_metric(metric, metric_display)))
+            facet_grid.set_axis_labels("", style.tex_safe(display_metric(metric, metric_display)))
         else:
-            facet_grid.set_axis_labels(S.tex_safe(display_metric(metric, metric_display)), "")
+            facet_grid.set_axis_labels(style.tex_safe(display_metric(metric, metric_display)), "")
         # No in-figure title -- a caption carries the dataset/group/reference
         # (matching plot_forest's/plot_dm_significance_matrix's own convention).
         # No pad_limits() here, unlike plot_forest: a bar's length is only a
@@ -345,7 +345,7 @@ def plot_metric_bars(
         # (seaborn's own "bar" kind already does this by default), so
         # epsilon-padding away from zero -- correct for a dot's *position* --
         # would instead truncate every bar and misrepresent the comparison.
-        S.format_axes(ax)
+        style.format_axes(ax)
         facet_grid.figure.tight_layout()
         figures[metric] = facet_grid.figure
     return figures
@@ -467,9 +467,9 @@ def plot_metric_bar_grid(
         axis.tick_params(axis="x", labelrotation=45)
         for label in axis.get_xticklabels():
             label.set_horizontalalignment("right")
-            if label.get_text() == S.tex_safe(head_label(reference, backbone_prefixes, extra_acronyms)):
+            if label.get_text() == style.tex_safe(head_label(reference, backbone_prefixes, extra_acronyms)):
                 label.set_fontweight("bold")
-        S.format_axes(axis)
+        style.format_axes(axis)
     sns.move_legend(
         facet_grid,
         "lower center",
@@ -531,7 +531,7 @@ def plot_forest_grid(
     figure, axes = plt.subplots(
         row_count,
         column_count,
-        figsize=(S.TEXTWIDTH_IN, 2.2 * row_count),
+        figsize=(style.TEXTWIDTH_IN, 2.2 * row_count),
         squeeze=False,
     )
     for metric_index, metric in enumerate(available_metrics):
@@ -539,9 +539,9 @@ def plot_forest_grid(
         metric_frame = plot_data.loc[plot_data["metric"] == metric].sort_values("mean")
         reference_mean = metric_frame.loc[metric_frame["condition"] == reference, "mean"]
         if not reference_mean.empty:
-            axis.axvline(reference_mean.iloc[0], color=T.TEXT_MUTED, linewidth=0.7, linestyle="--", zorder=0)
+            axis.axvline(reference_mean.iloc[0], color=tokens.TEXT_MUTED, linewidth=0.7, linestyle="--", zorder=0)
         for row_index, row in enumerate(metric_frame.itertuples(index=False)):
-            color = T.PRIMARY if row.condition == reference else T.TEXT_MUTED
+            color = tokens.PRIMARY if row.condition == reference else tokens.TEXT_MUTED
             axis.errorbar(
                 row.mean,
                 row_index,
@@ -553,15 +553,15 @@ def plot_forest_grid(
         axis.set_yticks(range(len(metric_frame)))
         axis.set_yticklabels(
             [
-                S.tex_safe(head_label(condition, backbone_prefixes, extra_acronyms))
+                style.tex_safe(head_label(condition, backbone_prefixes, extra_acronyms))
                 for condition in metric_frame["condition"]
             ]
         )
-        axis.set_xlabel(S.tex_safe(display_metric(metric, metric_display)))
-        limits = S.pad_limits(metric_frame["lower"].to_numpy(), metric_frame["upper"].to_numpy())
+        axis.set_xlabel(style.tex_safe(display_metric(metric, metric_display)))
+        limits = style.pad_limits(metric_frame["lower"].to_numpy(), metric_frame["upper"].to_numpy())
         if limits is not None:
             axis.set_xlim(*limits)
-        S.format_axes(axis)
+        style.format_axes(axis)
 
     for empty_index in range(len(available_metrics), row_count * column_count):
         axes[empty_index // column_count, empty_index % column_count].set_axis_off()
@@ -605,7 +605,7 @@ def plot_dm_significance_matrix(
     image = ax.imshow(p_values_image, cmap=cmap, vmin=0, vmax=1)
     ax.plot(range(len(conditions)), range(len(conditions)), "wx")
 
-    labels = [S.tex_safe(head_label(condition)) for condition in conditions]
+    labels = [style.tex_safe(head_label(condition)) for condition in conditions]
     ax.set_xticks(range(len(conditions)))
     ax.set_xticklabels(labels, rotation=90)
     ax.set_yticks(range(len(conditions)))
@@ -615,7 +615,7 @@ def plot_dm_significance_matrix(
     colorbar.ax.set_yticklabels([r"$p < \alpha$", r"$p \geq \alpha$"])
     colorbar.set_label(rf"BH-adjusted DM test ($\alpha = {alpha:g}$)")
 
-    S.format_axes(ax)
+    style.format_axes(ax)
     return fig
 
 
@@ -657,37 +657,42 @@ def plot_good_bad_day(
     gap = (aggregated["worst"] - aggregated["best"]).sort_values()
     order = gap.index
 
-    fig, ax = plt.subplots(figsize=(S.TEXTWIDTH_IN, 0.4 * len(order) + 1.5))
+    fig, ax = plt.subplots(figsize=(style.TEXTWIDTH_IN, 0.4 * len(order) + 1.5))
     y = np.arange(len(order))
     for row_index, condition in enumerate(order):
         ax.plot(
             [aggregated.loc[condition, "best"], aggregated.loc[condition, "worst"]],
             [row_index, row_index],
-            color=T.TEXT_MUTED,
+            color=tokens.TEXT_MUTED,
             lw=1.0,
             zorder=1,
         )
     ax.scatter(
-        [aggregated.loc[condition, "best"] for condition in order], y, color=T.PRIMARY, s=30, zorder=2, label="Best Day"
+        [aggregated.loc[condition, "best"] for condition in order],
+        y,
+        color=tokens.PRIMARY,
+        s=30,
+        zorder=2,
+        label="Best Day",
     )
     ax.scatter(
         [aggregated.loc[condition, "worst"] for condition in order],
         y,
-        color=T.HIGHLIGHT,
+        color=tokens.HIGHLIGHT,
         s=30,
         zorder=2,
         label="Worst Day",
     )
     ax.set_yticks(y)
-    ax.set_yticklabels([S.tex_safe(display_name(condition)) for condition in order])
+    ax.set_yticklabels([style.tex_safe(display_name(condition)) for condition in order])
     ax.set_xlabel(display_metric(metric).upper() if len(metric) <= 5 else display_metric(metric))
     ax.legend(loc="lower right")
     # No in-figure title -- a caption carries the dataset/group (matching
     # :func:`plot_dm_significance_matrix`'s own convention).
-    xlim = S.pad_limits(aggregated["best"].to_numpy(), aggregated["worst"].to_numpy())
+    xlim = style.pad_limits(aggregated["best"].to_numpy(), aggregated["worst"].to_numpy())
     if xlim is not None:
         ax.set_xlim(*xlim)
-    S.format_axes(ax)
+    style.format_axes(ax)
     fig.tight_layout()
     return fig
 
@@ -831,7 +836,7 @@ def plot_primary_metric_comparison(
         errorbar="sd",
         kind="bar",
         capsize=0.4,
-        err_kws={"color": T.TEXT_MUTED, "linewidth": 0.5},
+        err_kws={"color": tokens.TEXT_MUTED, "linewidth": 0.5},
         palette=thesis_palette(len(hue_order)),
     )
     facet_grid.set_axis_labels("Dataset", "")
@@ -856,6 +861,6 @@ def plot_primary_metric_comparison(
         title=legend_title,
     )
     for axis in facet_grid.axes.flat:
-        S.format_axes(axis)
+        style.format_axes(axis)
     facet_grid.figure.tight_layout()
     return facet_grid.figure
