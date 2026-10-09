@@ -29,7 +29,7 @@ from twiga_thesis.plotting.illustrations import Z, _components, _profile
 OUT = Path(__file__).resolve().parent / "output"
 THESIS = Path(__file__).resolve().parents[2] / "Papers" / "PhD thesis -Final-Revision" / "Images" / "Chapter-3"
 DATA = Path(__file__).resolve().parents[2] / "examples" / "data"
-RESULTS = Path(__file__).resolve().parents[1] / "chapter-3-cwe-validation"
+RESULTS = Path(__file__).resolve().parents[1] / "cwe_validation"
 NOTE_SIZE = 8
 
 # The five metrics that rank the two candidates (PPS is zero for both on this target and carries no ranking).
