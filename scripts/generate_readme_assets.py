@@ -33,14 +33,14 @@ def make_banner() -> None:
     for i, color in enumerate(PALETTE):
         ax.add_patch(plt.Rectangle((i * 12 / n, 0), 12 / n, band_h, color=color, linewidth=0))
 
-    ax.text(0.5, 1.95, "twiga-thesis", fontsize=46, weight="bold", color=PALETTE[0], ha="left", va="center")
+    ax.text(6, 1.95, "twiga-thesis", fontsize=50, weight="bold", color=PALETTE[0], ha="center", va="center")
     ax.text(
-        0.52,
-        1.15,
+        6,
+        1.1,
         "Efficient and Robust Machine Learning for Net-Load Forecasting\nin Low-Voltage Distribution Systems",
-        fontsize=15,
+        fontsize=17,
         color=PALETTE[6],
-        ha="left",
+        ha="center",
         va="center",
         linespacing=1.6,
     )
