@@ -1,0 +1,15 @@
+{
+  "decisions": [
+    "DSS-UK"
+  ],
+  "scenarios": {
+    "DSS-UK": "DSS-UK:weak:0.4:0.4"
+  },
+  "epochs": 3,
+  "seed": 20260906,
+  "train_months": 12,
+  "test_months": 4,
+  "train_stride": 1,
+  "test_stride": 48,
+  "paths": 30
+}

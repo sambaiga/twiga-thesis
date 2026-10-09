@@ -1,0 +1,106 @@
+[project]
+name = "twiga-thesis"
+version = "0.1.0"
+description = "Per-chapter reproducibility code for the PhD thesis: Efficient and Robust Machine Learning for Net-Load Forecasting in Low-Voltage Distribution Systems."
+authors = [
+    { name = "sambaiga", email = "sambaiga@gmail.com" },
+]
+readme = "README.md"
+license = { text = "Apache-2.0" }
+requires-python = ">=3.12"
+
+dependencies = [
+    "twiga>=1.0.0",
+    "matplotlib>=3.9.0",
+    "scipy>=1.14.0",
+    "seaborn>=0.13.0",
+    "scienceplots>=2.1.1",
+    "cycler>=0.12.1",
+    "arviz>=0.20.0",
+]
+
+[project.optional-dependencies]
+nn = [
+    "twiga[nn]",
+]
+
+[project.urls]
+Homepage = "https://github.com/sambaiga/twiga-thesis"
+Repository = "https://github.com/sambaiga/twiga-thesis"
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build.targets.wheel]
+packages = ["twiga_thesis"]
+
+[dependency-groups]
+dev = [
+    "pytest>=8.0.0",
+    "pre-commit>=4.0.0",
+    "commitizen>=4.0.0",
+]
+
+[tool.ruff]
+target-version = "py312"
+exclude = ["__pycache__", "env", ".env", "venv", ".venv"]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    "B", "C4", "D", "E", "F", "UP", "I", "TID", "N", "PGH", "PTH", "Q", "S", "SIM", "TRY", "W", "YTT"
+]
+ignore = [
+    "D100", "D101", "D102", "D103", "D104", "D105", "D106", "D107",
+    "D200", "D401", "E402", "F401", "N812", "TRY003", "N803"
+]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["S101"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["twiga_thesis", "chapters"]
+known-third-party = ["twiga", "numpy", "pandas"]
+combine-as-imports = true
+force-sort-within-sections = true
+
+[tool.ruff.format]
+docstring-code-format = true
+
+[tool.ruff.lint.pydocstyle]
+convention = "google"
+
+[tool.ty.environment]
+python-version = "3.12"
+
+[tool.ty.rules]
+# False positives from missing type stubs for PyTorch, pandas, lets-plot, matplotlib.
+unknown-argument = "ignore"
+unresolved-attribute = "ignore"
+call-non-callable = "ignore"
+invalid-argument-type = "ignore"
+no-matching-overload = "ignore"
+not-subscriptable = "ignore"
+invalid-return-type = "ignore"
+invalid-assignment = "ignore"
+unsupported-operator = "ignore"
+not-iterable = "ignore"
+missing-argument = "ignore"
+
+[tool.bandit]
+exclude_dirs = ["tests"]
+skips = [
+    "B101",  # assert statements (common in ML validation)
+    "B404",  # subprocess import -- informational only, not a vulnerability
+    "B603",  # subprocess without shell=True (used in tooling)
+    "B607",  # partial executable path (common in cross-platform scripts)
+]
+
+[tool.codespell]
+skip = "*.ipynb,*.csv,*.json"
+ignore-words = "codespell.ignore"
+
+[tool.commitizen]
+name = "cz_conventional_commits"
+version_provider = "pep621"

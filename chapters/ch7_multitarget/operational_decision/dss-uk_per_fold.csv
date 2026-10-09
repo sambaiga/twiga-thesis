@@ -1,0 +1,241 @@
+tier,metric,target,model,value,fold,decision
+operational,Pr(event) predicted,hosting-capacity,joint,0.6896174863387978,2019-06..2019-10,DSS-UK
+operational,Pr(event) realised,hosting-capacity,joint,0.4016393442622951,2019-06..2019-10,DSS-UK
+operational,Event rate error (%),hosting-capacity,joint,71.70068027210884,2019-06..2019-10,DSS-UK
+operational,Brier score,hosting-capacity,joint,0.335719489981785,2019-06..2019-10,DSS-UK
+operational,Brier skill score,hosting-capacity,joint,-0.39693846488367024,2019-06..2019-10,DSS-UK
+operational,Reliability,hosting-capacity,joint,0.0972138620335342,2019-06..2019-10,DSS-UK
+operational,Resolution,hosting-capacity,joint,0.004825905329802133,2019-06..2019-10,DSS-UK
+operational,Peak relative economic value,hosting-capacity,joint,0.0,2019-06..2019-10,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,independent,0.5319672131147541,2019-06..2019-10,DSS-UK
+operational,Pr(event) realised,hosting-capacity,independent,0.4016393442622951,2019-06..2019-10,DSS-UK
+operational,Event rate error (%),hosting-capacity,independent,32.448979591836746,2019-06..2019-10,DSS-UK
+operational,Brier score,hosting-capacity,independent,0.2649271402550091,2019-06..2019-10,DSS-UK
+operational,Brier skill score,hosting-capacity,independent,-0.1023694591992046,2019-06..2019-10,DSS-UK
+operational,Reliability,hosting-capacity,independent,0.038540473390695586,2019-06..2019-10,DSS-UK
+operational,Resolution,hosting-capacity,independent,0.008976523901077048,2019-06..2019-10,DSS-UK
+operational,Peak relative economic value,hosting-capacity,independent,0.0612244897959186,2019-06..2019-10,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr shared grid,0.9472677595628415,2019-06..2019-10,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr shared grid,0.4016393442622951,2019-06..2019-10,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr shared grid,135.8503401360544,2019-06..2019-10,DSS-UK
+operational,Brier score,hosting-capacity,fpqr shared grid,0.5419763205828779,2019-06..2019-10,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr shared grid,-1.2551790761966886,2019-06..2019-10,DSS-UK
+operational,Reliability,hosting-capacity,fpqr shared grid,0.30425246030823294,2019-06..2019-10,DSS-UK
+operational,Resolution,hosting-capacity,fpqr shared grid,0.0016413074347054568,2019-06..2019-10,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr shared grid,0.0,2019-06..2019-10,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr per-target grid,0.9516393442622951,2019-06..2019-10,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr per-target grid,0.4016393442622951,2019-06..2019-10,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr per-target grid,136.9387755102041,2019-06..2019-10,DSS-UK
+operational,Brier score,hosting-capacity,fpqr per-target grid,0.5599362477231329,2019-06..2019-10,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr per-target grid,-1.3299108501848225,2019-06..2019-10,DSS-UK
+operational,Reliability,hosting-capacity,fpqr per-target grid,0.3374187779433681,2019-06..2019-10,DSS-UK
+operational,Resolution,hosting-capacity,fpqr per-target grid,0.015735017468422464,2019-06..2019-10,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr per-target grid,0.0,2019-06..2019-10,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr shared + copula,0.9420765027322404,2019-06..2019-10,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr shared + copula,0.4016393442622951,2019-06..2019-10,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr shared + copula,134.5578231292517,2019-06..2019-10,DSS-UK
+operational,Brier score,hosting-capacity,fpqr shared + copula,0.5422040072859745,2019-06..2019-10,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr shared + copula,-1.2561264871245301,2019-06..2019-10,DSS-UK
+operational,Reliability,hosting-capacity,fpqr shared + copula,0.2999915914745744,2019-06..2019-10,DSS-UK
+operational,Resolution,hosting-capacity,fpqr shared + copula,0.001057677701987905,2019-06..2019-10,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr shared + copula,0.0,2019-06..2019-10,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr per-target + copula,0.928415300546448,2019-06..2019-10,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr per-target + copula,0.4016393442622951,2019-06..2019-10,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr per-target + copula,131.156462585034,2019-06..2019-10,DSS-UK
+operational,Brier score,hosting-capacity,fpqr per-target + copula,0.5419854280510019,2019-06..2019-10,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr per-target + copula,-1.2552169726338027,2019-06..2019-10,DSS-UK
+operational,Reliability,hosting-capacity,fpqr per-target + copula,0.30689758146124263,2019-06..2019-10,DSS-UK
+operational,Resolution,hosting-capacity,fpqr per-target + copula,0.005161246976619188,2019-06..2019-10,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr per-target + copula,0.0,2019-06..2019-10,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr shared + clayton copula,0.9469945355191257,2019-06..2019-10,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr shared + clayton copula,0.4016393442622951,2019-06..2019-10,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr shared + clayton copula,135.7823129251701,2019-06..2019-10,DSS-UK
+operational,Brier score,hosting-capacity,fpqr shared + clayton copula,0.5332604735883425,2019-06..2019-10,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr shared + clayton copula,-1.218912185878918,2019-06..2019-10,DSS-UK
+operational,Reliability,hosting-capacity,fpqr shared + clayton copula,0.2992613290349362,2019-06..2019-10,DSS-UK
+operational,Resolution,hosting-capacity,fpqr shared + clayton copula,0.006543506666446405,2019-06..2019-10,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr shared + clayton copula,0.0,2019-06..2019-10,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr per-target + clayton copula,0.9532786885245902,2019-06..2019-10,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr per-target + clayton copula,0.4016393442622951,2019-06..2019-10,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr per-target + clayton copula,137.3469387755102,2019-06..2019-10,DSS-UK
+operational,Brier score,hosting-capacity,fpqr per-target + clayton copula,0.5646174863387978,2019-06..2019-10,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr per-target + clayton copula,-1.349389618861243,2019-06..2019-10,DSS-UK
+operational,Reliability,hosting-capacity,fpqr per-target + clayton copula,0.332838026091052,2019-06..2019-10,DSS-UK
+operational,Resolution,hosting-capacity,fpqr per-target + clayton copula,0.01089997329294624,2019-06..2019-10,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr per-target + clayton copula,0.0,2019-06..2019-10,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr shared + vine copula,0.9431693989071038,2019-06..2019-10,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr shared + vine copula,0.4016393442622951,2019-06..2019-10,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr shared + vine copula,134.82993197278913,2019-06..2019-10,DSS-UK
+operational,Brier score,hosting-capacity,fpqr shared + vine copula,0.5353734061930784,2019-06..2019-10,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr shared + vine copula,-1.2277041592892868,2019-06..2019-10,DSS-UK
+operational,Reliability,hosting-capacity,fpqr shared + vine copula,0.3032985407584781,2019-06..2019-10,DSS-UK
+operational,Resolution,hosting-capacity,fpqr shared + vine copula,0.003947156666010182,2019-06..2019-10,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr shared + vine copula,0.0,2019-06..2019-10,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr per-target + vine copula,0.9330601092896175,2019-06..2019-10,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr per-target + vine copula,0.4016393442622951,2019-06..2019-10,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr per-target + vine copula,132.312925170068,2019-06..2019-10,DSS-UK
+operational,Brier score,hosting-capacity,fpqr per-target + vine copula,0.5433788706739526,2019-06..2019-10,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr per-target + vine copula,-1.261015127512192,2019-06..2019-10,DSS-UK
+operational,Reliability,hosting-capacity,fpqr per-target + vine copula,0.3198930053199179,2019-06..2019-10,DSS-UK
+operational,Resolution,hosting-capacity,fpqr per-target + vine copula,0.01849919318341785,2019-06..2019-10,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr per-target + vine copula,0.0,2019-06..2019-10,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,joint,0.6672086720867209,2019-07..2019-11,DSS-UK
+operational,Pr(event) realised,hosting-capacity,joint,0.3821138211382114,2019-07..2019-11,DSS-UK
+operational,Event rate error (%),hosting-capacity,joint,74.60992907801418,2019-07..2019-11,DSS-UK
+operational,Brier score,hosting-capacity,joint,0.35015356820234866,2019-07..2019-11,DSS-UK
+operational,Brier skill score,hosting-capacity,joint,-0.4830552444942142,2019-07..2019-11,DSS-UK
+operational,Reliability,hosting-capacity,joint,0.13827860696230254,2019-07..2019-11,DSS-UK
+operational,Resolution,hosting-capacity,joint,0.028618076394433766,2019-07..2019-11,DSS-UK
+operational,Peak relative economic value,hosting-capacity,joint,0.013157894736842268,2019-07..2019-11,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,independent,0.5813008130081301,2019-07..2019-11,DSS-UK
+operational,Pr(event) realised,hosting-capacity,independent,0.3821138211382114,2019-07..2019-11,DSS-UK
+operational,Event rate error (%),hosting-capacity,independent,52.12765957446807,2019-07..2019-11,DSS-UK
+operational,Brier score,hosting-capacity,independent,0.28629629629629627,2019-07..2019-11,DSS-UK
+operational,Brier skill score,hosting-capacity,independent,-0.21259145203434104,2019-07..2019-11,DSS-UK
+operational,Reliability,hosting-capacity,independent,0.052398118691331874,2019-07..2019-11,DSS-UK
+operational,Resolution,hosting-capacity,independent,0.003262577286838206,2019-07..2019-11,DSS-UK
+operational,Peak relative economic value,hosting-capacity,independent,0.031163434903047293,2019-07..2019-11,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr shared grid,0.9463414634146341,2019-07..2019-11,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr shared grid,0.3821138211382114,2019-07..2019-11,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr shared grid,147.65957446808508,2019-07..2019-11,DSS-UK
+operational,Brier score,hosting-capacity,fpqr shared grid,0.5614995483288165,2019-07..2019-11,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr shared grid,-1.378198954833893,2019-07..2019-11,DSS-UK
+operational,Reliability,hosting-capacity,fpqr shared grid,0.3250487404022404,2019-07..2019-11,DSS-UK
+operational,Resolution,hosting-capacity,fpqr shared grid,0.0021440592230588034,2019-07..2019-11,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr shared grid,0.0,2019-07..2019-11,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr per-target grid,0.7219512195121951,2019-07..2019-11,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr per-target grid,0.3821138211382114,2019-07..2019-11,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr per-target grid,88.93617021276593,2019-07..2019-11,DSS-UK
+operational,Brier score,hosting-capacity,fpqr per-target grid,0.3735501355013551,2019-07..2019-11,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr per-target grid,-0.5821500559910417,2019-07..2019-11,DSS-UK
+operational,Reliability,hosting-capacity,fpqr per-target grid,0.15426484160223997,2019-07..2019-11,DSS-UK
+operational,Resolution,hosting-capacity,fpqr per-target grid,0.01751452658650755,2019-07..2019-11,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr per-target grid,0.039473684210526196,2019-07..2019-11,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr shared + copula,0.9460704607046071,2019-07..2019-11,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr shared + copula,0.3821138211382114,2019-07..2019-11,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr shared + copula,147.5886524822695,2019-07..2019-11,DSS-UK
+operational,Brier score,hosting-capacity,fpqr shared + copula,0.5648690153568203,2019-07..2019-11,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr shared + copula,-1.392470138111236,2019-07..2019-11,DSS-UK
+operational,Reliability,hosting-capacity,fpqr shared + copula,0.3361497926945081,2019-07..2019-11,DSS-UK
+operational,Resolution,hosting-capacity,fpqr shared + copula,0.011066367699324271,2019-07..2019-11,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr shared + copula,0.0,2019-07..2019-11,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr per-target + copula,0.6525745257452574,2019-07..2019-11,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr per-target + copula,0.3821138211382114,2019-07..2019-11,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr per-target + copula,70.78014184397162,2019-07..2019-11,DSS-UK
+operational,Brier score,hosting-capacity,fpqr per-target + copula,0.3224028906955736,2019-07..2019-11,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr per-target + copula,-0.3655188503172824,2019-07..2019-11,DSS-UK
+operational,Reliability,hosting-capacity,fpqr per-target + copula,0.09685327407837571,2019-07..2019-11,DSS-UK
+operational,Resolution,hosting-capacity,fpqr per-target + copula,0.010949749899779645,2019-07..2019-11,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr per-target + copula,0.04149797570850168,2019-07..2019-11,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr shared + clayton copula,0.948780487804878,2019-07..2019-11,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr shared + clayton copula,0.3821138211382114,2019-07..2019-11,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr shared + clayton copula,148.29787234042553,2019-07..2019-11,DSS-UK
+operational,Brier score,hosting-capacity,fpqr shared + clayton copula,0.5619421860885275,2019-07..2019-11,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr shared + clayton copula,-1.380073721537887,2019-07..2019-11,DSS-UK
+operational,Reliability,hosting-capacity,fpqr shared + clayton copula,0.3269996258885148,2019-07..2019-11,DSS-UK
+operational,Resolution,hosting-capacity,fpqr shared + clayton copula,0.001439138559900012,2019-07..2019-11,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr shared + clayton copula,0.0,2019-07..2019-11,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr per-target + clayton copula,0.7314363143631436,2019-07..2019-11,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr per-target + clayton copula,0.3821138211382114,2019-07..2019-11,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr per-target + clayton copula,91.41843971631204,2019-07..2019-11,DSS-UK
+operational,Brier score,hosting-capacity,fpqr per-target + clayton copula,0.3738482384823849,2019-07..2019-11,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr per-target + clayton copula,-0.5834126539753643,2019-07..2019-11,DSS-UK
+operational,Reliability,hosting-capacity,fpqr per-target + clayton copula,0.15440334233245376,2019-07..2019-11,DSS-UK
+operational,Resolution,hosting-capacity,fpqr per-target + clayton copula,0.016347683635325707,2019-07..2019-11,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr per-target + clayton copula,0.05263157894736863,2019-07..2019-11,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr shared + vine copula,0.94579945799458,2019-07..2019-11,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr shared + vine copula,0.3821138211382114,2019-07..2019-11,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr shared + vine copula,147.51773049645388,2019-07..2019-11,DSS-UK
+operational,Brier score,hosting-capacity,fpqr shared + vine copula,0.5597831978319783,2019-07..2019-11,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr shared + vine copula,-1.3709294512877936,2019-07..2019-11,DSS-UK
+operational,Reliability,hosting-capacity,fpqr shared + vine copula,0.31955927933353406,2019-07..2019-11,DSS-UK
+operational,Resolution,hosting-capacity,fpqr shared + vine copula,0.0004117919227972765,2019-07..2019-11,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr shared + vine copula,0.0,2019-07..2019-11,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr per-target + vine copula,0.6376693766937669,2019-07..2019-11,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr per-target + vine copula,0.3821138211382114,2019-07..2019-11,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr per-target + vine copula,66.87943262411345,2019-07..2019-11,DSS-UK
+operational,Brier score,hosting-capacity,fpqr per-target + vine copula,0.32342366757000907,2019-07..2019-11,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr per-target + vine copula,-0.36984229189996287,2019-07..2019-11,DSS-UK
+operational,Reliability,hosting-capacity,fpqr per-target + vine copula,0.1090834516281671,2019-07..2019-11,DSS-UK
+operational,Resolution,hosting-capacity,fpqr per-target + vine copula,0.022572070668441878,2019-07..2019-11,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr per-target + vine copula,0.07894736842105299,2019-07..2019-11,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,joint,0.5948087431693989,2019-08..2019-12,DSS-UK
+operational,Pr(event) realised,hosting-capacity,joint,0.4016393442622951,2019-08..2019-12,DSS-UK
+operational,Event rate error (%),hosting-capacity,joint,48.095238095238095,2019-08..2019-12,DSS-UK
+operational,Brier score,hosting-capacity,joint,0.3092987249544627,2019-08..2019-12,DSS-UK
+operational,Brier skill score,hosting-capacity,joint,-0.28700090081694785,2019-08..2019-12,DSS-UK
+operational,Reliability,hosting-capacity,joint,0.09219984291767538,2019-08..2019-12,DSS-UK
+operational,Resolution,hosting-capacity,joint,0.02522069524700048,2019-08..2019-12,DSS-UK
+operational,Peak relative economic value,hosting-capacity,joint,0.020547945205479257,2019-08..2019-12,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,independent,0.5169398907103825,2019-08..2019-12,DSS-UK
+operational,Pr(event) realised,hosting-capacity,independent,0.4016393442622951,2019-08..2019-12,DSS-UK
+operational,Event rate error (%),hosting-capacity,independent,28.70748299319727,2019-08..2019-12,DSS-UK
+operational,Brier score,hosting-capacity,independent,0.2933697632058288,2019-08..2019-12,DSS-UK
+operational,Brier skill score,hosting-capacity,independent,-0.22072003230515969,2019-08..2019-12,DSS-UK
+operational,Reliability,hosting-capacity,independent,0.0693117888138862,2019-08..2019-12,DSS-UK
+operational,Resolution,hosting-capacity,independent,0.01657457870275226,2019-08..2019-12,DSS-UK
+operational,Peak relative economic value,hosting-capacity,independent,0.0,2019-08..2019-12,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr shared grid,0.9677595628415301,2019-08..2019-12,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr shared grid,0.4016393442622951,2019-08..2019-12,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr shared grid,140.95238095238096,2019-08..2019-12,DSS-UK
+operational,Brier score,hosting-capacity,fpqr shared grid,0.5665755919854281,2019-08..2019-12,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr shared grid,-1.3575373528406796,2019-08..2019-12,DSS-UK
+operational,Reliability,hosting-capacity,fpqr shared grid,0.32972863396570085,2019-08..2019-12,DSS-UK
+operational,Resolution,hosting-capacity,fpqr shared grid,0.0039058340474512317,2019-08..2019-12,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr shared grid,0.0,2019-08..2019-12,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr per-target grid,0.889344262295082,2019-08..2019-12,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr per-target grid,0.4016393442622951,2019-08..2019-12,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr per-target grid,121.42857142857144,2019-08..2019-12,DSS-UK
+operational,Brier score,hosting-capacity,fpqr per-target grid,0.4796265938069217,2019-08..2019-12,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr per-target grid,-0.9957400677165844,2019-08..2019-12,DSS-UK
+operational,Reliability,hosting-capacity,fpqr per-target grid,0.24376993009267595,2019-08..2019-12,DSS-UK
+operational,Resolution,hosting-capacity,fpqr per-target grid,0.007546177619746552,2019-08..2019-12,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr per-target grid,0.0,2019-08..2019-12,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr shared + copula,0.9639344262295082,2019-08..2019-12,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr shared + copula,0.4016393442622951,2019-08..2019-12,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr shared + copula,140.0,2019-08..2019-12,DSS-UK
+operational,Brier score,hosting-capacity,fpqr shared + copula,0.5612750455373406,2019-08..2019-12,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr shared + copula,-1.3354816264405307,2019-08..2019-12,DSS-UK
+operational,Reliability,hosting-capacity,fpqr shared + copula,0.32515973664442577,2019-08..2019-12,DSS-UK
+operational,Resolution,hosting-capacity,fpqr shared + copula,0.006144190726343018,2019-08..2019-12,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr shared + copula,0.0,2019-08..2019-12,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr per-target + copula,0.8773224043715847,2019-08..2019-12,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr per-target + copula,0.4016393442622951,2019-08..2019-12,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr per-target + copula,118.43537414965986,2019-08..2019-12,DSS-UK
+operational,Brier score,hosting-capacity,fpqr per-target + copula,0.47306921675774144,2019-08..2019-12,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr per-target + copula,-0.9684546329947508,2019-08..2019-12,DSS-UK
+operational,Reliability,hosting-capacity,fpqr per-target + copula,0.2467299144161749,2019-08..2019-12,DSS-UK
+operational,Resolution,hosting-capacity,fpqr per-target + copula,0.01573897376216649,2019-08..2019-12,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr per-target + copula,0.0,2019-08..2019-12,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr shared + clayton copula,0.9704918032786886,2019-08..2019-12,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr shared + clayton copula,0.4016393442622951,2019-08..2019-12,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr shared + clayton copula,141.63265306122452,2019-08..2019-12,DSS-UK
+operational,Brier score,hosting-capacity,fpqr shared + clayton copula,0.5700364298724955,2019-08..2019-12,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr shared + clayton copula,-1.3719379989438698,2019-08..2019-12,DSS-UK
+operational,Reliability,hosting-capacity,fpqr shared + clayton copula,0.3241585200782073,2019-08..2019-12,DSS-UK
+operational,Resolution,hosting-capacity,fpqr shared + clayton copula,3.456511584197514e-05,2019-08..2019-12,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr shared + clayton copula,0.0,2019-08..2019-12,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr per-target + clayton copula,0.8830601092896175,2019-08..2019-12,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr per-target + clayton copula,0.4016393442622951,2019-08..2019-12,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr per-target + clayton copula,119.86394557823131,2019-08..2019-12,DSS-UK
+operational,Brier score,hosting-capacity,fpqr per-target + clayton copula,0.4707285974499089,2019-08..2019-12,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr per-target + clayton copula,-0.9587152486565402,2019-08..2019-12,DSS-UK
+operational,Reliability,hosting-capacity,fpqr per-target + clayton copula,0.2420843311327751,2019-08..2019-12,DSS-UK
+operational,Resolution,hosting-capacity,fpqr per-target + clayton copula,0.01430170694508189,2019-08..2019-12,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr per-target + clayton copula,0.0,2019-08..2019-12,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr shared + vine copula,0.9707650273224043,2019-08..2019-12,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr shared + vine copula,0.4016393442622951,2019-08..2019-12,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr shared + vine copula,141.70068027210883,2019-08..2019-12,DSS-UK
+operational,Brier score,hosting-capacity,fpqr shared + vine copula,0.5703551912568305,2019-08..2019-12,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr shared + vine copula,-1.3732643742428476,2019-08..2019-12,DSS-UK
+operational,Reliability,hosting-capacity,fpqr shared + vine copula,0.3310275338277387,2019-08..2019-12,DSS-UK
+operational,Resolution,hosting-capacity,fpqr shared + vine copula,0.0035131205129189545,2019-08..2019-12,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr shared + vine copula,0.0,2019-08..2019-12,DSS-UK
+operational,Pr(event) predicted,hosting-capacity,fpqr per-target + vine copula,0.8795081967213115,2019-08..2019-12,DSS-UK
+operational,Pr(event) realised,hosting-capacity,fpqr per-target + vine copula,0.4016393442622951,2019-08..2019-12,DSS-UK
+operational,Event rate error (%),hosting-capacity,fpqr per-target + vine copula,118.9795918367347,2019-08..2019-12,DSS-UK
+operational,Brier score,hosting-capacity,fpqr per-target + vine copula,0.4653460837887068,2019-08..2019-12,DSS-UK
+operational,Brier skill score,hosting-capacity,fpqr per-target + vine copula,-0.9363184543223684,2019-08..2019-12,DSS-UK
+operational,Reliability,hosting-capacity,fpqr per-target + vine copula,0.2321785643398271,2019-08..2019-12,DSS-UK
+operational,Resolution,hosting-capacity,fpqr per-target + vine copula,0.00746080143962987,2019-08..2019-12,DSS-UK
+operational,Peak relative economic value,hosting-capacity,fpqr per-target + vine copula,0.0,2019-08..2019-12,DSS-UK

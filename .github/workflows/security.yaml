@@ -1,0 +1,33 @@
+name: Twiga Thesis Security Checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 6 * * 1"  # weekly Monday 06:00 UTC
+
+permissions:
+  contents: read
+
+jobs:
+  pip-audit:
+    name: Dependency CVE scan (pip-audit)
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683  # v4
+
+      - uses: astral-sh/setup-uv@cec208311dfd045dd5311c1add060b2062131d57  # v8.0.0
+        with:
+          enable-cache: true
+          cache-dependency-glob: "uv.lock"
+
+      - name: Install pip-audit
+        run: uv tool install pip-audit
+
+      - name: Audit dependencies
+        run: pip-audit --requirement <(uv export --no-dev --format requirements-txt | grep -v "^-e \|file://") --strict
+
+  # bandit and detect-secrets are covered by pre-commit hooks on every commit.

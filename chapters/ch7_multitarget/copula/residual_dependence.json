@@ -1,0 +1,36 @@
+{
+  "scenario": "DSS-EU:weak:0.4:0.4",
+  "epochs": 40,
+  "seed": 20260904,
+  "raw_mean_abs": 0.351,
+  "residual_mean_abs": 0.304,
+  "raw": {
+    "pq": 0.244,
+    "pv": -0.697,
+    "qv": 0.112
+  },
+  "residual_independent": {
+    "pq": -0.207,
+    "pv": -0.354,
+    "qv": 0.423
+  },
+  "residual_joint": {
+    "pq": -0.15,
+    "pv": -0.359,
+    "qv": 0.402
+  },
+  "asserted": {
+    "pq": -0.064,
+    "pv": -0.336,
+    "qv": 0.358
+  },
+  "asserted_pq_min": -0.313,
+  "asserted_pq_max": 0.159,
+  "residual_pq_daily_sd": 0.327,
+  "asserted_pv_min": -0.437,
+  "asserted_pv_max": -0.191,
+  "residual_pv_daily_sd": 0.217,
+  "asserted_qv_min": 0.25,
+  "asserted_qv_max": 0.457,
+  "residual_qv_daily_sd": 0.227
+}

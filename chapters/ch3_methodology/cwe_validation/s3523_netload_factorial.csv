@@ -1,0 +1,26 @@
+seed,reference,stratified,optimum
+0,target,none,1.17
+0,target,hour of day,1.06
+0,residual,none,1.04
+0,residual,hour of day,1.0
+0,interval score,---,1.0
+1,target,none,1.17
+1,target,hour of day,1.06
+1,residual,none,1.03
+1,residual,hour of day,1.0
+1,interval score,---,1.0
+2,target,none,1.1600000000000001
+2,target,hour of day,1.05
+2,residual,none,1.03
+2,residual,hour of day,1.0
+2,interval score,---,1.0
+3,target,none,1.17
+3,target,hour of day,1.05
+3,residual,none,1.04
+3,residual,hour of day,1.0
+3,interval score,---,1.0
+4,target,none,1.15
+4,target,hour of day,1.07
+4,residual,none,1.03
+4,residual,hour of day,1.0
+4,interval score,---,1.0

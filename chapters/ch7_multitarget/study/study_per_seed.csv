@@ -1,0 +1,43 @@
+tier,metric,target,model,value,seed
+marginal,NRMSE,p_kw,independent,0.07940723671994611,1
+marginal,CRPS,p_kw,independent,11.038995548062474,1
+marginal,Winkler,p_kw,independent,81.51203495155855,1
+marginal,PICP (diagnostic),p_kw,independent,0.90625,1
+marginal,NMPI (diagnostic),p_kw,independent,0.2995794583818812,1
+marginal,NRMSE,q_kvar,independent,0.16986316769363832,1
+marginal,CRPS,q_kvar,independent,4.285412754293489,1
+marginal,Winkler,q_kvar,independent,27.947203522762383,1
+marginal,PICP (diagnostic),q_kvar,independent,0.8229166666666666,1
+marginal,NMPI (diagnostic),q_kvar,independent,0.33579703185914944,1
+marginal,NRMSE,v_lv_pu,independent,0.07525408468952419,1
+marginal,CRPS,v_lv_pu,independent,0.0015870955593197242,1
+marginal,Winkler,v_lv_pu,independent,0.010521379918389867,1
+marginal,PICP (diagnostic),v_lv_pu,independent,0.9114583333333334,1
+marginal,NMPI (diagnostic),v_lv_pu,independent,0.23153669577964645,1
+joint,Energy score,"P,Q,V",independent,13.264379898874362,1
+joint,Variogram score,"P,Q,V",independent,4.443408324491439,1
+operational,Pr(S > rating) predicted,S,independent,0.03359375,1
+operational,Pr(S > rating) realised,S,independent,0.0,1
+operational,Exceedance error (%),S,independent,,1
+operational,Brier score,S,independent,0.008658854166666665,1
+marginal,NRMSE,p_kw,fpqr shared + copula,0.10567594969664176,1
+marginal,CRPS,p_kw,fpqr shared + copula,15.48643794687191,1
+marginal,Winkler,p_kw,fpqr shared + copula,114.76284883353487,1
+marginal,PICP (diagnostic),p_kw,fpqr shared + copula,0.9583333333333334,1
+marginal,NMPI (diagnostic),p_kw,fpqr shared + copula,0.40818196204842305,1
+marginal,NRMSE,q_kvar,fpqr shared + copula,0.14389650539914062,1
+marginal,CRPS,q_kvar,fpqr shared + copula,4.325383470570947,1
+marginal,Winkler,q_kvar,fpqr shared + copula,39.37332608251412,1
+marginal,PICP (diagnostic),q_kvar,fpqr shared + copula,0.7604166666666666,1
+marginal,NMPI (diagnostic),q_kvar,fpqr shared + copula,0.390553008328538,1
+marginal,NRMSE,v_lv_pu,fpqr shared + copula,0.10393403818836035,1
+marginal,CRPS,v_lv_pu,fpqr shared + copula,0.002082273790573744,1
+marginal,Winkler,v_lv_pu,fpqr shared + copula,0.016413996399070905,1
+marginal,PICP (diagnostic),v_lv_pu,fpqr shared + copula,0.8177083333333334,1
+marginal,NMPI (diagnostic),v_lv_pu,fpqr shared + copula,0.24345076012250313,1
+joint,Energy score,"P,Q,V",fpqr shared + copula,18.06974402202087,1
+joint,Variogram score,"P,Q,V",fpqr shared + copula,7.277445101747841,1
+operational,Pr(S > rating) predicted,S,fpqr shared + copula,0.07734375,1
+operational,Pr(S > rating) realised,S,fpqr shared + copula,0.0,1
+operational,Exceedance error (%),S,fpqr shared + copula,,1
+operational,Brier score,S,fpqr shared + copula,0.026914062500000002,1

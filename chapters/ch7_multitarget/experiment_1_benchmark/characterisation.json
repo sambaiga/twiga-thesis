@@ -1,0 +1,184 @@
+{
+  "DSS-EU:weak:0.4:0.4": {
+    "p_kw": {
+      "ar_order": 11,
+      "seasonal_periods": [
+        1,
+        48,
+        96
+      ],
+      "dominant_period": 1,
+      "suggested_lags": [
+        1,
+        7,
+        24,
+        48,
+        96,
+        336
+      ],
+      "stationarity": "fractional",
+      "integration_order": 1
+    },
+    "q_kvar": {
+      "ar_order": 4,
+      "seasonal_periods": [
+        1,
+        48,
+        96
+      ],
+      "dominant_period": 1,
+      "suggested_lags": [
+        1,
+        7,
+        24,
+        48,
+        96,
+        336
+      ],
+      "stationarity": "fractional",
+      "integration_order": 1
+    },
+    "v_lv_pu": {
+      "ar_order": 7,
+      "seasonal_periods": [
+        1,
+        48,
+        96
+      ],
+      "dominant_period": 1,
+      "suggested_lags": [
+        1,
+        7,
+        24,
+        48,
+        96,
+        336
+      ],
+      "stationarity": "fractional",
+      "integration_order": 1
+    }
+  },
+  "DSS-EU:stiff:0.4:0.4": {
+    "p_kw": {
+      "ar_order": 9,
+      "seasonal_periods": [
+        1,
+        48,
+        96
+      ],
+      "dominant_period": 1,
+      "suggested_lags": [
+        1,
+        7,
+        24,
+        48,
+        96,
+        336
+      ],
+      "stationarity": "fractional",
+      "integration_order": 1
+    },
+    "q_kvar": {
+      "ar_order": 1,
+      "seasonal_periods": [
+        1,
+        48,
+        96
+      ],
+      "dominant_period": 1,
+      "suggested_lags": [
+        1,
+        7,
+        24,
+        48,
+        96,
+        336
+      ],
+      "stationarity": "fractional",
+      "integration_order": 1
+    },
+    "v_lv_pu": {
+      "ar_order": 6,
+      "seasonal_periods": [
+        1,
+        48,
+        96
+      ],
+      "dominant_period": 1,
+      "suggested_lags": [
+        1,
+        7,
+        24,
+        48,
+        96,
+        336
+      ],
+      "stationarity": "fractional",
+      "integration_order": 1
+    }
+  },
+  "DSS-US:0:0.4:0.4": {
+    "p_kw": {
+      "ar_order": 5,
+      "seasonal_periods": [
+        1,
+        48,
+        144
+      ],
+      "dominant_period": 1,
+      "suggested_lags": [
+        1,
+        7,
+        24,
+        48,
+        144,
+        336
+      ],
+      "stationarity": "fractional",
+      "integration_order": 1
+    },
+    "q_kvar": {
+      "ar_order": 5,
+      "seasonal_periods": [
+        1,
+        48,
+        96
+      ],
+      "dominant_period": 1,
+      "suggested_lags": [
+        1,
+        7,
+        24,
+        48,
+        96,
+        336
+      ],
+      "stationarity": "fractional",
+      "integration_order": 1
+    },
+    "v_lv_pu": {
+      "ar_order": 15,
+      "seasonal_periods": [
+        1,
+        48,
+        96
+      ],
+      "dominant_period": 1,
+      "suggested_lags": [
+        1,
+        7,
+        24,
+        48,
+        96,
+        336
+      ],
+      "stationarity": "fractional",
+      "integration_order": 1
+    }
+  },
+  "implied_lookback": {
+    "longest_suggested_lag": 336,
+    "days": 7.0,
+    "current_lookback": 96
+  }
+}

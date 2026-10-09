@@ -1,0 +1,21 @@
+{
+  "eu_median_err": -24,
+  "eu_worst_err": -89,
+  "eu_cond_median": -26,
+  "eu_near_zero_cells": 8,
+  "eu_near_zero_dcor": 0.24,
+  "eu_corr_min": -0.89,
+  "eu_corr_max": 0.94,
+  "us_median_err": -29,
+  "us_worst_err": -100,
+  "us_cond_median": -19,
+  "us_near_zero_cells": 79,
+  "us_near_zero_dcor": 0.46,
+  "us_corr_min": -0.97,
+  "us_corr_max": 0.98,
+  "eu_boot_err": -89,
+  "eu_boot_lo": -93,
+  "eu_boot_hi": -85,
+  "eu_worst_joint_pct": 2.5,
+  "eu_worst_indep_pct": 0.3
+}

@@ -1,0 +1,21 @@
+{
+  "scenario": "DSS-EU:weak:0.4:0.4",
+  "epochs": 2,
+  "seeds": [
+    1
+  ],
+  "backbone": {
+    "latent_size": 128.0,
+    "hidden_dim": 512.0,
+    "num_layers": 3.0,
+    "dropout": 0.1,
+    "lr": 0.001,
+    "weight_decay": 0.0001
+  },
+  "rated_kva": 201.07045981440075,
+  "metric_days": 4,
+  "paths": 20,
+  "train_windows": 11760,
+  "val_windows": 1680,
+  "test_windows": 3360
+}

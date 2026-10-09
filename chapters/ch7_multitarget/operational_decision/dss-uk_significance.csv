@@ -1,0 +1,46 @@
+condition_a,condition_b,p_value,p_adjusted,significant,winner
+fpqr shared grid,joint,0.0,0.0,True,joint
+fpqr shared grid,independent,0.0,0.0,True,independent
+fpqr shared + vine copula,joint,0.0,0.0,True,joint
+fpqr shared + vine copula,independent,0.0,0.0,True,independent
+fpqr shared + copula,joint,0.0,0.0,True,joint
+fpqr shared + copula,independent,0.0,0.0,True,independent
+fpqr shared + clayton copula,joint,0.0,0.0,True,joint
+fpqr shared + clayton copula,independent,0.0,0.0,True,independent
+fpqr per-target grid,independent,5.474028673890796e-05,0.0002737014336945398,True,independent
+fpqr per-target + clayton copula,independent,8.868753705248977e-05,0.000399093916736204,True,independent
+fpqr per-target + vine copula,independent,0.002181694927861022,0.007728770583391165,True,independent
+fpqr per-target + copula,independent,0.002019045624131688,0.007728770583391165,True,independent
+fpqr per-target grid,joint,0.002232755946313003,0.007728770583391165,True,joint
+fpqr per-target + clayton copula,joint,0.002561722854198756,0.008234109174210287,True,joint
+fpqr per-target + clayton copula,fpqr per-target + vine copula,0.00855127040418624,0.02565381121255872,True,fpqr per-target + vine copula
+fpqr per-target + vine copula,joint,0.02651265889788157,0.07018056767086298,False,joint
+fpqr per-target + copula,joint,0.026102177713568486,0.07018056767086298,False,joint
+fpqr per-target + clayton copula,fpqr per-target + copula,0.029741930213556533,0.07435482553389133,False,fpqr per-target + copula
+fpqr per-target + copula,fpqr per-target + vine copula,0.2334231394153814,0.5528442775627455,False,fpqr per-target + vine copula
+fpqr shared + copula,fpqr shared + vine copula,0.40911084694061306,0.9204994056163794,False,fpqr shared + vine copula
+fpqr per-target + vine copula,fpqr shared + clayton copula,0.9708030487049011,0.999817365048971,False,fpqr per-target + vine copula
+fpqr per-target + clayton copula,fpqr per-target grid,0.655356944009508,0.999817365048971,False,fpqr per-target + clayton copula
+fpqr per-target + clayton copula,fpqr shared + clayton copula,0.9495089741838185,0.999817365048971,False,fpqr per-target + clayton copula
+fpqr per-target + clayton copula,fpqr shared + copula,0.9569347149015107,0.999817365048971,False,fpqr per-target + clayton copula
+fpqr shared + vine copula,fpqr shared grid,0.7317117055890658,0.999817365048971,False,fpqr shared + vine copula
+fpqr per-target + clayton copula,fpqr shared + vine copula,0.9529059712637103,0.999817365048971,False,fpqr per-target + clayton copula
+fpqr per-target + clayton copula,fpqr shared grid,0.9599038563671223,0.999817365048971,False,fpqr per-target + clayton copula
+fpqr shared + copula,fpqr shared grid,0.608113802797642,0.999817365048971,False,fpqr shared + copula
+fpqr per-target + copula,fpqr per-target grid,0.9895347344141537,0.999817365048971,False,fpqr per-target + copula
+fpqr shared + clayton copula,fpqr shared grid,0.7042396818322995,0.999817365048971,False,fpqr shared + clayton copula
+fpqr per-target + vine copula,fpqr per-target grid,0.9978307312174814,0.999817365048971,False,fpqr per-target + vine copula
+fpqr shared + clayton copula,fpqr shared + vine copula,0.5358150855571171,0.999817365048971,False,fpqr shared + clayton copula
+fpqr per-target + copula,fpqr shared + clayton copula,0.9685817509873956,0.999817365048971,False,fpqr per-target + copula
+fpqr per-target + copula,fpqr shared + copula,0.9718074269585758,0.999817365048971,False,fpqr per-target + copula
+fpqr per-target grid,fpqr shared grid,0.9611830419492968,0.999817365048971,False,fpqr per-target grid
+fpqr per-target grid,fpqr shared + vine copula,0.954566612625849,0.999817365048971,False,fpqr per-target grid
+fpqr per-target grid,fpqr shared + copula,0.9578215741938615,0.999817365048971,False,fpqr per-target grid
+fpqr per-target grid,fpqr shared + clayton copula,0.9511107901151353,0.999817365048971,False,fpqr per-target grid
+fpqr per-target + copula,fpqr shared + vine copula,0.9709214533134224,0.999817365048971,False,fpqr per-target + copula
+fpqr per-target + copula,fpqr shared grid,0.9745183653213754,0.999817365048971,False,fpqr per-target + copula
+fpqr per-target + vine copula,fpqr shared grid,0.9766325091974065,0.999817365048971,False,fpqr per-target + vine copula
+fpqr per-target + vine copula,fpqr shared + vine copula,0.9730391414026484,0.999817365048971,False,fpqr per-target + vine copula
+fpqr per-target + vine copula,fpqr shared + copula,0.9742208100339812,0.999817365048971,False,fpqr per-target + vine copula
+fpqr shared + clayton copula,fpqr shared + copula,0.5964598290243216,0.999817365048971,False,fpqr shared + clayton copula
+independent,joint,0.999817365048971,0.999817365048971,False,independent

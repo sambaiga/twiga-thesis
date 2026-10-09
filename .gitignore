@@ -1,0 +1,23 @@
+__pycache__/
+*.py[cod]
+.venv/
+.env
+*.egg-info/
+
+# Chapter scripts write their own generated results/figures here.
+# (data/ has its own .gitignore -- see data/README.md for what's not committed and why.)
+**/results/
+**/figures/output/
+*.ckpt
+*.pt
+*.pth
+
+# Local tooling
+.ruff_cache/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.secrets.baseline.local
+
+.DS_Store
