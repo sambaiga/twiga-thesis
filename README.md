@@ -30,14 +30,14 @@ expected runtime, and which thesis table/figure number each output corresponds t
 
 | Chapter | Research question | Directory | Reproduces |
 |---|---|---|---|
-| 1. Introduction | — | [`chapters/ch1_introduction/`](chapters/ch1_introduction/) | Thesis roadmap illustration |
-| 2. Background | — | [`chapters/ch2_background/`](chapters/ch2_background/) | UQ taxonomy, calibration/interval-validity illustrations |
-| 3. Methodology | **RQ1** — How can ML algorithms for net-load forecasting at secondary substations be developed and evaluated, considering the influence of meteorological variables on forecasting accuracy? | [`chapters/ch3_methodology/`](chapters/ch3_methodology/) | Rank-fusion feature-selection evidence, the CWE metric and its validation |
-| 4. MLPF | **RQ2** — How can a lightweight DNN be designed to improve both computational efficiency and forecasting performance in LV net-load forecasting? | [`chapters/ch4_mlpf/`](chapters/ch4_mlpf/) | MLPF benchmark against ML and deep-learning baselines |
-| 5. FPQR | **RQ3** (part 1) — How can lightweight DNN models be developed to produce well-calibrated forecasts while balancing accuracy and predictive-uncertainty performance? | [`chapters/ch5_fpqr/`](chapters/ch5_fpqr/) | FPQR experiments 1-4, quantile-fraction placement diagnostics |
-| 6. Conformal prediction | **RQ3** (part 2) — the same question, answered via MLPGAM plus horizon-wise adaptive conformal calibration | [`chapters/ch6_conformal/`](chapters/ch6_conformal/) | Architectural study, design ablation, probabilistic benchmark |
-| 7. Multi-target forecasting | **RQ4** — How can lightweight DNN-based models be designed to generate well-calibrated multi-target probabilistic forecasts of LV network variables for uncertainty-aware network decision-making? | [`chapters/ch7_multitarget/`](chapters/ch7_multitarget/) | Joint P/Q/V benchmark, dependence-cost analysis, operational decision experiment |
-| 10. Conclusion | — | [`chapters/ch10_conclusion/`](chapters/ch10_conclusion/) | (no separate figures at present) |
+| 1. Introduction | N/A | [`chapters/ch1_introduction/`](chapters/ch1_introduction/) | Thesis roadmap illustration |
+| 2. Background | N/A | [`chapters/ch2_background/`](chapters/ch2_background/) | UQ taxonomy, calibration/interval-validity illustrations |
+| 3. Methodology | **RQ1**: How can ML algorithms for net-load forecasting at secondary substations be developed and evaluated, considering the influence of meteorological variables on forecasting accuracy? | [`chapters/ch3_methodology/`](chapters/ch3_methodology/) | Rank-fusion feature-selection evidence, the CWE metric and its validation |
+| 4. MLPF | **RQ2**: How can a lightweight DNN be designed to improve both computational efficiency and forecasting performance in LV net-load forecasting? | [`chapters/ch4_mlpf/`](chapters/ch4_mlpf/) | MLPF benchmark against ML and deep-learning baselines |
+| 5. FPQR | **RQ3** (part 1): How can lightweight DNN models be developed to produce well-calibrated forecasts while balancing accuracy and predictive-uncertainty performance? | [`chapters/ch5_fpqr/`](chapters/ch5_fpqr/) | FPQR experiments 1-4, quantile-fraction placement diagnostics |
+| 6. Conformal prediction | **RQ3** (part 2): the same question, answered via MLPGAM plus horizon-wise adaptive conformal calibration | [`chapters/ch6_conformal/`](chapters/ch6_conformal/) | Architectural study, design ablation, probabilistic benchmark |
+| 7. Multi-target forecasting | **RQ4**: How can lightweight DNN-based models be designed to generate well-calibrated multi-target probabilistic forecasts of LV network variables for uncertainty-aware network decision-making? | [`chapters/ch7_multitarget/`](chapters/ch7_multitarget/) | Joint P/Q/V benchmark, dependence-cost analysis, operational decision experiment |
+| 10. Conclusion | N/A | [`chapters/ch10_conclusion/`](chapters/ch10_conclusion/) | (no separate figures at present) |
 
 RQ3's thesis text covers both FPQR (Chapter 5) and MLPGAM/conformal calibration (Chapter 6)
 together, so both chapters are tagged RQ3 rather than inventing a split the thesis itself doesn't
@@ -64,15 +64,6 @@ uv run ty check twiga_thesis chapters
 uv run pytest
 ```
 
-## Dependency note
-
-This repository currently depends on an **unreleased** `twiga` (local editable install of
-`twiga-forecast`, version 1.1.0): several chapter scripts use metrics/config APIs
-(`pairwise_dm_table`, `mcs_ranking`, `ExperimentConfig`, stratified CWE, multi-target conformal,
-etc.) added after the last PyPI release (`1.0.0`). Once `twiga` 1.1.0 is published, switch
-`pyproject.toml`'s dependency back from the `[tool.uv.sources]` editable override to a plain
-version pin.
-
 ## Resolved during initial cleanup
 
 - All `chapters/` internal imports (`sys.path.insert`-style and bare sibling-module imports
@@ -86,4 +77,4 @@ version pin.
   fetch_sps_uk_raw` + `build_sps_uk_parquet`), verified end-to-end against the real Zenodo files.
   One assumption (averaging six weather stations into single Ghi/Temperature columns) is not
   specified in the thesis text and could not be checked against the original parquet file, which
-  could not be located in this project — see `data/README.md` for the precise caveat.
+  could not be located in this project, see `data/README.md` for the precise caveat.

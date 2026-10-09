@@ -28,6 +28,6 @@ jobs:
         run: uv tool install pip-audit
 
       - name: Audit dependencies
-        run: pip-audit --requirement <(uv export --no-dev --format requirements-txt | grep -v "^-e \|file://\|git+") --strict
+        run: pip-audit --requirement <(uv export --no-dev --format requirements-txt | grep -v "^-e \|file://") --strict
 
   # bandit and detect-secrets are covered by pre-commit hooks on every commit.
