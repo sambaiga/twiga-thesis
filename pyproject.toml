@@ -111,10 +111,13 @@ name = "cz_conventional_commits"
 version_provider = "pep621"
 
 [tool.uv.sources]
-# Pinned to the exact commit on main that is version 1.1.0 (merged, not yet
-# released to PyPI), rather than a local editable path, so this resolves the
-# same way in CI as it does locally -- CI checks out only this repo, not a
-# twiga-forecast sibling, and `main` will keep moving past 1.1.0 over time.
-# Switch to a plain version pin ("twiga>=1.1.0" above, with this whole table
-# removed) once 1.1.0 is on PyPI.
-twiga = { git = "https://github.com/sambaiga/twiga-forecast.git", rev = "8707753" }
+# Tracks the main branch rather than a local editable path, so this resolves
+# the same way in CI as it does locally -- CI checks out only this repo, not
+# a twiga-forecast sibling. A bare commit SHA is not reliably fetchable from
+# GitHub unless it is the tip of an advertised ref (confirmed: using the 1.1.0
+# merge commit's short SHA directly failed in CI with "could not read
+# Username ... terminal prompts disabled", because an arbitrary SHA fetch
+# falls back to a path git treats as requiring auth), so `main` is used
+# instead. Switch to a plain version pin ("twiga>=1.1.0" above, with this
+# whole table removed) once 1.1.0 is on PyPI.
+twiga = { git = "https://github.com/sambaiga/twiga-forecast.git", branch = "main" }

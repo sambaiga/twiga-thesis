@@ -3876,7 +3876,7 @@ wheels = [
 [[package]]
 name = "twiga"
 version = "1.1.0"
-source = { git = "https://github.com/sambaiga/twiga-forecast.git?rev=8707753#870775369f1efe3760ad11766dc80cca762831d0" }
+source = { git = "https://github.com/sambaiga/twiga-forecast.git?branch=main#870775369f1efe3760ad11766dc80cca762831d0" }
 dependencies = [
     { name = "antropy" },
     { name = "astral" },
@@ -3949,8 +3949,8 @@ requires-dist = [
     { name = "scienceplots", specifier = ">=2.1.1" },
     { name = "scipy", specifier = ">=1.14.0" },
     { name = "seaborn", specifier = ">=0.13.0" },
-    { name = "twiga", git = "https://github.com/sambaiga/twiga-forecast.git?rev=8707753" },
-    { name = "twiga", extras = ["nn"], marker = "extra == 'nn'", git = "https://github.com/sambaiga/twiga-forecast.git?rev=8707753" },
+    { name = "twiga", git = "https://github.com/sambaiga/twiga-forecast.git?branch=main" },
+    { name = "twiga", extras = ["nn"], marker = "extra == 'nn'", git = "https://github.com/sambaiga/twiga-forecast.git?branch=main" },
 ]
 provides-extras = ["nn"]
 
