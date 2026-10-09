@@ -1,80 +1,90 @@
-# twiga-thesis
+<div align="center">
 
-Per-chapter reproducibility code for the PhD thesis *Efficient and Robust Machine Learning for
-Net-Load Forecasting in Low-Voltage Distribution Systems*. This repository holds the experiment,
-analysis, and figure-generation scripts for each thesis chapter; the forecasting library itself
-is [`twiga`](https://github.com/sambaiga/twiga-forecast), installed here as an ordinary external
-dependency (via PyPI), not vendored.
+<img src="assets/banner.png" alt="twiga-thesis" width="100%">
 
-## Install
+[![CI](https://github.com/sambaiga/twiga-thesis/actions/workflows/ci.yaml/badge.svg)](https://github.com/sambaiga/twiga-thesis/actions/workflows/ci.yaml)
+[![Security](https://github.com/sambaiga/twiga-thesis/actions/workflows/security.yaml/badge.svg)](https://github.com/sambaiga/twiga-thesis/actions/workflows/security.yaml)
+[![License: Apache 2.0](https://img.shields.io/badge/license-Apache%202.0-blue.svg)](LICENSE)
+[![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](pyproject.toml)
+[![twiga](https://img.shields.io/pypi/v/twiga?label=twiga)](https://pypi.org/project/twiga/)
+
+Per-chapter reproducibility code for the thesis. Depends on
+[`twiga`](https://github.com/sambaiga/twiga-forecast) from PyPI, not vendored.
+
+</div>
+
+<br>
+
+<img src="assets/roadmap.png" alt="Thesis roadmap: chapters and research questions" width="100%">
+
+## Chapters
+
+| # | Chapter | RQ | Reproduces |
+|---|---|---|---|
+| 1 | [Introduction](chapters/ch1_introduction/) | n/a | roadmap illustration |
+| 2 | [Background](chapters/ch2_background/) | n/a | UQ taxonomy, calibration illustrations |
+| 3 | [Methodology](chapters/ch3_methodology/) | RQ1 | rank-fusion feature selection, CWE metric |
+| 4 | [MLPF](chapters/ch4_mlpf/) | RQ2 | MLPF vs. ML/DNN baselines |
+| 5 | [FPQR](chapters/ch5_fpqr/) | RQ3 | FPQR experiments, quantile-fraction diagnostics |
+| 6 | [Conformal Prediction](chapters/ch6_conformal/) | RQ3 | architectural study, design ablation |
+| 7 | [Multi-Target Forecasting](chapters/ch7_multitarget/) | RQ4 | joint P/Q/V benchmark, decision experiment |
+| 10 | [Conclusion](chapters/ch10_conclusion/) | n/a | synthesis |
+
+Each chapter folder has its own `README.md` with the exact reproduction command and the thesis
+table/figure each output maps to. RQ3 covers both Chapter 5 (FPQR) and Chapter 6 (MLPGAM +
+conformal calibration), per the thesis's own framing.
+
+## Quickstart
 
 ```bash
-uv sync --extra nn --dev
+uv sync --extra nn --dev   # omit --extra nn for Chapters 3-4 only (no torch needed)
 ```
 
-`--extra nn` pulls in PyTorch and Lightning, needed for Chapters 5-7 (the neural-network
-architectures). Omit it if you only need Chapter 3's metric validation or Chapter 4's tree-based
-baselines.
-
-To develop against an unreleased `twiga` change instead of the published PyPI version, point uv at
-a local checkout:
+<details>
+<summary>Developing against an unreleased <code>twiga</code> change</summary>
 
 ```bash
 uv add --editable ../twiga-forecast
 ```
 
-## Chapters
-
-Each row links to that chapter's own `README.md`, which gives the exact reproduction command,
-expected runtime, and which thesis table/figure number each output corresponds to.
-
-| Chapter | Research question | Directory | Reproduces |
-|---|---|---|---|
-| 1. Introduction | N/A | [`chapters/ch1_introduction/`](chapters/ch1_introduction/) | Thesis roadmap illustration |
-| 2. Background | N/A | [`chapters/ch2_background/`](chapters/ch2_background/) | UQ taxonomy, calibration/interval-validity illustrations |
-| 3. Methodology | **RQ1**: How can ML algorithms for net-load forecasting at secondary substations be developed and evaluated, considering the influence of meteorological variables on forecasting accuracy? | [`chapters/ch3_methodology/`](chapters/ch3_methodology/) | Rank-fusion feature-selection evidence, the CWE metric and its validation |
-| 4. MLPF | **RQ2**: How can a lightweight DNN be designed to improve both computational efficiency and forecasting performance in LV net-load forecasting? | [`chapters/ch4_mlpf/`](chapters/ch4_mlpf/) | MLPF benchmark against ML and deep-learning baselines |
-| 5. FPQR | **RQ3** (part 1): How can lightweight DNN models be developed to produce well-calibrated forecasts while balancing accuracy and predictive-uncertainty performance? | [`chapters/ch5_fpqr/`](chapters/ch5_fpqr/) | FPQR experiments 1-4, quantile-fraction placement diagnostics |
-| 6. Conformal prediction | **RQ3** (part 2): the same question, answered via MLPGAM plus horizon-wise adaptive conformal calibration | [`chapters/ch6_conformal/`](chapters/ch6_conformal/) | Architectural study, design ablation, probabilistic benchmark |
-| 7. Multi-target forecasting | **RQ4**: How can lightweight DNN-based models be designed to generate well-calibrated multi-target probabilistic forecasts of LV network variables for uncertainty-aware network decision-making? | [`chapters/ch7_multitarget/`](chapters/ch7_multitarget/) | Joint P/Q/V benchmark, dependence-cost analysis, operational decision experiment |
-| 10. Conclusion | N/A | [`chapters/ch10_conclusion/`](chapters/ch10_conclusion/) | (no separate figures at present) |
-
-RQ3's thesis text covers both FPQR (Chapter 5) and MLPGAM/conformal calibration (Chapter 6)
-together, so both chapters are tagged RQ3 rather than inventing a split the thesis itself doesn't
-make.
+</details>
 
 ## Data
 
-See [`data/README.md`](data/README.md). In short: MLVS-PT is unpublished and available from the
-author on request; SPS-UK is public and partially auto-fetched (see that file for the one open
-gap); Chapter 7's power-flow records are resolved via the `EXTERNAL_DATA_DIR` environment
-variable, documented in the same file.
+See [`data/README.md`](data/README.md): MLVS-PT is unpublished (available from the author on
+request); SPS-UK is public with a working fetch + assembly pipeline; Chapter 7's power-flow
+records resolve via `EXTERNAL_DATA_DIR`.
 
-## Project structure and tooling
+## Tooling
 
-This repository mirrors `twiga-forecast`'s own conventions: Ruff for linting and formatting
-(Google-style docstrings), `ty` for type checking, pre-commit hooks (Ruff, Bandit, detect-secrets,
-Commitizen-style commits), and a GitHub Actions CI workflow running the same checks plus `pytest`.
+Ruff, `ty`, pre-commit (Bandit, detect-secrets, Commitizen), and CI mirror `twiga-forecast`'s own
+conventions.
 
 ```bash
 uv run pre-commit install --hook-type commit-msg --hook-type pre-commit --hook-type pre-push
-uv run ruff check .
-uv run ruff format --check .
+uv run ruff check . && uv run ruff format --check .
 uv run ty check twiga_thesis chapters
 uv run pytest
 ```
 
-## Resolved during initial cleanup
+<details>
+<summary>Notes from the initial reorganization</summary>
 
-- All `chapters/` internal imports (`sys.path.insert`-style and bare sibling-module imports
-  inherited from the original monorepo's flat `experiment/` layout) have been converted to
-  absolute package imports. `uv run ty check twiga_thesis chapters` is fully clean (0 diagnostics).
-  Along the way this also caught and fixed a real bug: two output-artifact directories
-  (`ch5_fpqr/qvn_pit/`, `ch5_fpqr/qvn_forecast_examples/`) had been given `__init__.py` files during
-  the reorganization, which made Python's import system treat them as packages shadowing the
-  real same-named `.py` modules.
-- SPS-UK now has a working, documented raw-to-parquet pipeline (`twiga_thesis.datasets.
-  fetch_sps_uk_raw` + `build_sps_uk_parquet`), verified end-to-end against the real Zenodo files.
-  One assumption (averaging six weather stations into single Ghi/Temperature columns) is not
-  specified in the thesis text and could not be checked against the original parquet file, which
-  could not be located in this project, see `data/README.md` for the precise caveat.
+- All `chapters/` internal imports were converted from `sys.path.insert`-style and bare
+  sibling-module imports to absolute package imports (`uv run ty check twiga_thesis chapters` is
+  fully clean). This also caught a real bug: two output-artifact directories had been given
+  `__init__.py` files, shadowing the real same-named `.py` modules.
+- SPS-UK's raw-to-parquet pipeline (`twiga_thesis.datasets`) is verified end-to-end against the
+  real Zenodo files. One assumption, averaging six weather stations into single Ghi/Temperature
+  columns, isn't specified in the thesis text and couldn't be checked against the original
+  parquet; see `data/README.md`.
+
+</details>
+
+---
+
+<div align="center">
+
+Licensed under [Apache 2.0](LICENSE) · Built on [`twiga`](https://github.com/sambaiga/twiga-forecast)
+
+</div>
