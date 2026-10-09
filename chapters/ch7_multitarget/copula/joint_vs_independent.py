@@ -50,9 +50,9 @@ from twiga.models.nn.mlpfnormal_model import MLPFNormalConfig, MLPFNormalModel  
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "shared"))
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from forecast_examples import _cfg, build_windows  # noqa: E402
-from thesis_figures.style import configure  # noqa: E402
-from thesis_figures.tokens import HIGHLIGHT, PALETTE, PRIMARY, TEXT_DARK as TEXT  # noqa: E402
+from chapters.ch7_multitarget.shared.forecast_examples import _cfg, build_windows  # noqa: E402
+from twiga_thesis.plotting.style import configure  # noqa: E402
+from twiga_thesis.plotting.tokens import HIGHLIGHT, PALETTE, PRIMARY, TEXT_DARK as TEXT  # noqa: E402
 
 # Diverging map built from the thesis palette rather than matplotlib's RdBu:
 # teal for negative correlation, white at zero, orange for positive. These are

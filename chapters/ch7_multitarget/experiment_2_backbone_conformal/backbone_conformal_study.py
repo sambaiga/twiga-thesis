@@ -665,7 +665,7 @@ def latest_run_for_group(runs: list[dict], group: str) -> dict | None:
 def significance_report(group: str = "backbone", alpha: float = 0.05) -> None:
     """Print a Winkler-score DM/MCS significance table for one condition group.
 
-    Reuses ``experiment.common.significance`` per that chapter's own rule:
+    Reuses ``twiga.core.metrics`` per that chapter's own rule:
     CWE is a diagnostic and never decides a comparison, only the Winkler
     score (a proper scoring rule) does. Mirrors ``fpqr_gating_ablation.py``'s
     own ``significance_report`` exactly.
@@ -674,7 +674,7 @@ def significance_report(group: str = "backbone", alpha: float = 0.05) -> None:
     section above), not a fixed path -- a re-run of one dataset alone is
     picked up automatically.
     """
-    from experiment.common.significance import mcs_ranking, pairwise_dm_table  # noqa: PLC0415
+    from twiga.core.metrics import mcs_ranking, pairwise_dm_table  # noqa: PLC0415
 
     run = latest_run_for_group(discover_runs(), group)
     if run is None:

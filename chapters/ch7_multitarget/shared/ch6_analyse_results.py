@@ -41,8 +41,15 @@ OUT_DIR = script_dir.parent / "results" / "analysis"
 
 sys.path.insert(0, str(script_dir))
 sys.path.insert(0, str(script_dir.parent / "experiment_2_backbone_conformal"))
-import backbone_conformal_study as bcs  # noqa: E402
-from experiment.common.comparison_plots import (  # noqa: E402
+import chapters.ch7_multitarget.experiment_2_backbone_conformal.backbone_conformal_study as bcs  # noqa: E402
+import chapters.ch7_multitarget.experiment_2_backbone_conformal.fpqr_gating_ablation as fga  # noqa: E402
+from twiga_thesis.analysis import (  # noqa: E402
+    dm_and_mcs,
+    fold_level,
+    kupiec_table,
+    metric_table,
+)
+from twiga_thesis.plotting.comparison_plots import (  # noqa: E402
     display_name as _base_display_name,
     plot_dm_significance_matrix,
     plot_good_bad_day,
@@ -51,22 +58,16 @@ from experiment.common.comparison_plots import (  # noqa: E402
     plot_normalized_comparison,
     save_metric_figures,
 )
-from experiment.common.result_analysis import (  # noqa: E402
-    dm_and_mcs,
-    fold_level,
-    kupiec_table,
-    metric_table,
-)
-import fpqr_gating_ablation as fga  # noqa: E402
 
 sys.path.insert(0, str(script_dir.parent.parent))
-from thesis_figures import style as S  # noqa: E402
 from twiga.core.utils import slugify  # noqa: E402
 from twiga.experiment.analysis import aggregate_fold_metrics, joint_interval_coverage  # noqa: E402
 from twiga.experiment.run_catalog import (  # noqa: E402
     discover_runs as discover_experiment_runs,
     latest_run_for_group,
 )
+
+from twiga_thesis.plotting import style as S  # noqa: E402
 
 # ── Chapter 6 acronym tokens, layered onto shared comparison labels ─────────
 _EXTRA_ACRONYMS = {

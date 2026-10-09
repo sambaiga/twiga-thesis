@@ -15,17 +15,17 @@ but the results section never reports the test.
    matching ``significance.py``'s rule and ``Chapter-7.tex``'s own stated
    protocol (the WS decides comparisons). Rendered via
     ``experiment/common/comparison_plots.py``'s ``plot_dm_significance_matrix``
-   (matplotlib + ``thesis_figures``, shared with Chapter 5 and any future
+   (matplotlib + ``twiga_thesis.plotting``, shared with Chapter 5 and any future
    chapter that needs the same figure), not ``twiga.core.plot``'s lets-plot
    version this script used previously — every other Chapter 7 figure
    (calibration timing, design-ablation summary, forest plots, forecast
-   examples) is matplotlib/``thesis_figures``-styled, and the lets-plot
+   examples) is matplotlib/``twiga_thesis.plotting``-styled, and the lets-plot
    output looked visibly out of place (different palette, different
    "Twiga Forecast" watermark branding) next to them.
 2. The **Model Confidence Set** at the same group, so a null DM result on one
    pair is not mistaken for "no significant difference anywhere in the group".
 3. A **forest plot** (``experiment/common/comparison_plots.py``'s
-   ``plot_forest``, same matplotlib/``thesis_figures`` convention) with
+   ``plot_forest``, same matplotlib/``twiga_thesis.plotting`` convention) with
    bootstrap 95% CI per condition vs. the group's reference, one panel per
    metric.
 4. A **Cohen's d effect-size table** for Winkler score, condition vs.
@@ -45,16 +45,17 @@ import argparse
 from pathlib import Path
 import sys
 
-from experiment.common.comparison_plots import bootstrap_ci, plot_dm_significance_matrix, plot_forest  # noqa: E402
-from experiment.common.significance import mcs_ranking, pairwise_dm_table
 import numpy as np
 import pandas as pd
+from twiga.core.metrics import mcs_ranking, pairwise_dm_table
 from twiga.core.plot import cohen_d  # noqa: E402
 from twiga.experiment.analysis import aggregate_fold_metrics  # noqa: E402
 
+from twiga_thesis.plotting.comparison_plots import bootstrap_ci, plot_dm_significance_matrix, plot_forest  # noqa: E402
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from conditions import ABLATION_SPEC  # noqa: E402
+from chapters.ch6_conformal.design_ablation.conditions import ABLATION_SPEC  # noqa: E402
 
 DATASETS = ["MLVS-PT", "MLVS-UK"]
 GROUPS = ["best_config", "gating"]

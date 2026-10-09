@@ -96,17 +96,18 @@ import numpy as np
 import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "shared"))
-from experiment.common.significance import pairwise_dm_table  # noqa: E402
-from forecast_examples import (  # noqa: E402
+from twiga.core.metrics import pairwise_dm_table  # noqa: E402
+from twiga.core.utils import get_logger
+from twiga.experiment import start_run
+
+from chapters.ch7_multitarget.shared.forecast_examples import (  # noqa: E402
     _cfg,
     backbone_settings,
     build_backtest_folds,
     fit_and_predict,
     hosting_capacity_rows,
 )
-from tune_backbone import tune as tune_backbone  # noqa: E402
-from twiga.core.utils import get_logger
-from twiga.experiment import start_run
+from chapters.ch7_multitarget.shared.tune_backbone import tune as tune_backbone  # noqa: E402
 
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent
@@ -275,7 +276,7 @@ def run_fold(windows, args, backbone, registry, include_voltage, voltage_band):
 def family_significance(table: pd.DataFrame) -> pd.DataFrame:
     """Pairwise Diebold-Mariano on the Brier score, joint against independent, per fold.
 
-    Reuses ``experiment.common.significance``'s
+    Reuses ``twiga.core.metrics``'s
     ``pairwise_dm_table`` rather than a separate reimplementation, per that
     module's own chapter-agnostic design.
     """

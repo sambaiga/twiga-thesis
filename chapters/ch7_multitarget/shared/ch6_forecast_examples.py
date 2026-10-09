@@ -59,10 +59,11 @@ import sys
 import matplotlib
 
 matplotlib.use("Agg")
-from experiment.common.comparison_plots import display_name  # noqa: E402
 import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
+
+from twiga_thesis.plotting.comparison_plots import display_name  # noqa: E402
 
 script_dir = Path(__file__).resolve().parent
 OUT = script_dir.parent / "results" / "analysis" / "forecast_examples"
@@ -70,16 +71,16 @@ OUT = script_dir.parent / "results" / "analysis" / "forecast_examples"
 sys.path.insert(0, str(script_dir))
 sys.path.insert(0, str(script_dir.parent / "experiment_2_backbone_conformal"))
 sys.path.insert(0, str(script_dir.parent / "experiment_1_benchmark"))
-import backbone_conformal_study as bcs  # noqa: E402
-from forecast_examples import build_windows  # noqa: E402
-import fpqr_gating_ablation as fga  # noqa: E402
-import multitarget_experiment as mte  # noqa: E402
+import chapters.ch7_multitarget.experiment_1_benchmark.multitarget_experiment as mte  # noqa: E402
+import chapters.ch7_multitarget.experiment_2_backbone_conformal.backbone_conformal_study as bcs  # noqa: E402
+import chapters.ch7_multitarget.experiment_2_backbone_conformal.fpqr_gating_ablation as fga  # noqa: E402
+from chapters.ch7_multitarget.shared.forecast_examples import build_windows  # noqa: E402
 
 sys.path.insert(0, str(script_dir.parent.parent))
-from thesis_figures.style import configure, pad_limits, panel, tex_safe  # noqa: E402
+from twiga_thesis.plotting.style import configure, pad_limits, panel, tex_safe  # noqa: E402
 
 sys.path.insert(0, str(script_dir.parent.parent / "common"))
-from forecast_panels import draw  # noqa: E402
+from twiga_thesis.plotting.forecast_panels import draw  # noqa: E402
 
 _FAN_LEVELS = np.array([0.05, 0.5, 0.95])
 

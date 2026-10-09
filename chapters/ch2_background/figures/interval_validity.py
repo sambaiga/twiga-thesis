@@ -15,7 +15,7 @@ estimated over 120 days of the same process, not only the day shown. Replaces th
 Usage::
 
     MPLBACKEND=Agg uv run python -c "import sys; sys.path.insert(0, 'experiment'); \
-        from thesis_figures import ch2_interval_validity as V; V.render()"
+        from twiga_thesis.plotting import ch2_interval_validity as V; V.render()"
 """
 
 from __future__ import annotations

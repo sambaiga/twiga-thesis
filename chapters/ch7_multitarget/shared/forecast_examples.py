@@ -76,10 +76,11 @@ from twiga.models.nn.mlpgamnormal_model import MLPGAMNormalConfig, MLPGAMNormalM
 from twiga.utils.data_loading import load_dataset  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from experiment.common.forecast_panels import draw, place_legend_below
-from experiment.common.significance import mcs_ranking, pairwise_dm_table
-from thesis_figures.style import configure, pad_limits, panel  # noqa: E402
-from thesis_figures.tokens import (  # noqa: E402
+from twiga.core.metrics import mcs_ranking, pairwise_dm_table
+
+from twiga_thesis.plotting.forecast_panels import draw, place_legend_below
+from twiga_thesis.plotting.style import configure, pad_limits, panel  # noqa: E402
+from twiga_thesis.plotting.tokens import (  # noqa: E402
     HIGHLIGHT,
     PRIMARY,
     diverging_cmap,
@@ -984,7 +985,7 @@ def pointwise_losses(preds, truth, targets, rated, days, voltage_band=(0.9, 1.1)
     stationary loss differential, so any pointwise score serves, and the scores
     used here are the ones the comparison rests on: the Winkler score (the one
     Chapter-6.tex actually specifies for significance -- see
-    ``experiment.common.significance``'s documentation for
+    ``twiga.core.metrics``'s documentation for
     why CWE cannot furnish a loss series at all), the continuous ranked
     probability score for the marginal tier, the energy score for the joint
     tier, and the Brier contribution for the operational event.

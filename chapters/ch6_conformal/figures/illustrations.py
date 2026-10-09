@@ -1,14 +1,14 @@
 r"""Concept illustrations for Chapter 7.
 
 Same production treatment as `illustrations.py`'s Chapter 6/3 figures: clean
-vector lines through :func:`thesis_figures.style.style`, a title per panel, and
+vector lines through :func:`twiga_thesis.plotting.style.style`, a title per panel, and
 colour-coded inline text callouts rather than a legend box, matching
 `fig_ch6_constraint_independent.pdf`. These are arguments, not measurements, so
 each is captioned "Schematic" in the chapter rather than styled to look
 measured.
 
 Run:  uv run python -c "import sys; sys.path.insert(0,'experiment');
-      from thesis_figures import ch7_illustrations as F; F.render_all()"
+      from twiga_thesis.plotting import ch7_illustrations as F; F.render_all()"
 """
 
 from __future__ import annotations

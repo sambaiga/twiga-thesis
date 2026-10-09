@@ -64,14 +64,26 @@ uv run ty check twiga_thesis chapters
 uv run pytest
 ```
 
-## Known limitations
+## Dependency note
 
-- A broader internal-import cleanup across the chapter scripts is a follow-up, not yet done: many
-  scripts under `chapters/` still use `sys.path.insert`-style imports and bare sibling-module
-  imports (`from thesis_figures import ...`, `from fpqr_gating_ablation import ...`) inherited from
-  the original monorepo layout, where everything lived flat under one `experiment/` directory.
-  `uv run ty check twiga_thesis chapters` currently reports ~270 unresolved-import diagnostics from
-  this; CI and pre-commit only type-check `twiga_thesis` (the new shared package) for now, not
-  `chapters/`, until this is cleaned up.
-- The SPS-UK raw-to-parquet assembly step is not yet a verified, reproducible script (see
-  `data/README.md`).
+This repository currently depends on an **unreleased** `twiga` (local editable install of
+`twiga-forecast`, version 1.1.0): several chapter scripts use metrics/config APIs
+(`pairwise_dm_table`, `mcs_ranking`, `ExperimentConfig`, stratified CWE, multi-target conformal,
+etc.) added after the last PyPI release (`1.0.0`). Once `twiga` 1.1.0 is published, switch
+`pyproject.toml`'s dependency back from the `[tool.uv.sources]` editable override to a plain
+version pin.
+
+## Resolved during initial cleanup
+
+- All `chapters/` internal imports (`sys.path.insert`-style and bare sibling-module imports
+  inherited from the original monorepo's flat `experiment/` layout) have been converted to
+  absolute package imports. `uv run ty check twiga_thesis chapters` is fully clean (0 diagnostics).
+  Along the way this also caught and fixed a real bug: two output-artifact directories
+  (`ch5_fpqr/qvn_pit/`, `ch5_fpqr/qvn_forecast_examples/`) had been given `__init__.py` files during
+  the reorganization, which made Python's import system treat them as packages shadowing the
+  real same-named `.py` modules.
+- SPS-UK now has a working, documented raw-to-parquet pipeline (`twiga_thesis.datasets.
+  fetch_sps_uk_raw` + `build_sps_uk_parquet`), verified end-to-end against the real Zenodo files.
+  One assumption (averaging six weather stations into single Ghi/Temperature columns) is not
+  specified in the thesis text and could not be checked against the original parquet file, which
+  could not be located in this project — see `data/README.md` for the precise caveat.

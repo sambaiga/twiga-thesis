@@ -21,7 +21,9 @@ import pandas as pd
 from scipy import stats
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from cwe_validation import (  # noqa: E402
+from twiga.core.metrics.interval import interval_coverage, nmpi, winkler_score  # noqa: E402
+
+from chapters.ch3_methodology.cwe_validation.cwe_validation import (  # noqa: E402
     ALPHA,
     NOMINAL,
     _fit_intervals,
@@ -30,7 +32,6 @@ from cwe_validation import (  # noqa: E402
     score_all,
     stratified_cwe,
 )
-from twiga.core.metrics.interval import interval_coverage, nmpi, winkler_score  # noqa: E402
 
 OUT = Path(__file__).resolve().parent
 SEEDS = range(5)

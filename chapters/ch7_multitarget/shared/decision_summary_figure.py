@@ -30,8 +30,8 @@ OUT = script_dir.parent / "figures"
 ANALYSIS_ROOT = script_dir.parent / "results" / "analysis" / "multitarget_decision"
 
 sys.path.insert(0, str(script_dir.parent.parent))
-from thesis_figures.style import configure  # noqa: E402
-from thesis_figures.tokens import PALETTE  # noqa: E402
+from twiga_thesis.plotting.style import configure  # noqa: E402
+from twiga_thesis.plotting.tokens import PALETTE  # noqa: E402
 
 HEAD_LABEL = {"fpqr_anchor_outer": "FPQR", "qr": "QR", "bnn": "BNN", "laplace": "Laplace"}
 HEADS = ["fpqr_anchor_outer", "qr", "bnn", "laplace"]

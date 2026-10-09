@@ -10,7 +10,7 @@ license = { text = "Apache-2.0" }
 requires-python = ">=3.12"
 
 dependencies = [
-    "twiga>=1.0.0",
+    "twiga>=1.1.0",
     "matplotlib>=3.9.0",
     "scipy>=1.14.0",
     "seaborn>=0.13.0",
@@ -42,6 +42,9 @@ dev = [
     "commitizen>=4.0.0",
     "ruff>=0.14.14",
     "ty>=0.0.28",
+    "ipython>=9.0.0",
+    "ipykernel>=7.0.0",
+    "tensorboard>=2.19.0",
 ]
 
 [tool.ruff]
@@ -106,3 +109,12 @@ ignore-words = "codespell.ignore"
 [tool.commitizen]
 name = "cz_conventional_commits"
 version_provider = "pep621"
+
+[tool.uv.sources]
+# Pinned to the exact commit on main that is version 1.1.0 (merged, not yet
+# released to PyPI), rather than a local editable path, so this resolves the
+# same way in CI as it does locally -- CI checks out only this repo, not a
+# twiga-forecast sibling, and `main` will keep moving past 1.1.0 over time.
+# Switch to a plain version pin ("twiga>=1.1.0" above, with this whole table
+# removed) once 1.1.0 is on PyPI.
+twiga = { git = "https://github.com/sambaiga/twiga-forecast.git", rev = "8707753" }

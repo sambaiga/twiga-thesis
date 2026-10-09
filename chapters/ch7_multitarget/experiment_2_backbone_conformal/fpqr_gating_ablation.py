@@ -651,7 +651,7 @@ def latest_run_for_group(runs: list[dict], group: str) -> dict | None:
 def significance_report(group: str, alpha: float = 0.05) -> None:
     """Print a Winkler-score DM/MCS significance table for one condition group.
 
-    Reuses ``experiment.common.significance`` per
+    Reuses ``twiga.core.metrics`` per
     that chapter's own rule: CWE is a diagnostic and never decides a
     comparison, only the Winkler score (a proper scoring rule) does.
 
@@ -661,7 +661,7 @@ def significance_report(group: str, alpha: float = 0.05) -> None:
     """
     import sys
 
-    from experiment.common.significance import mcs_ranking, pairwise_dm_table  # noqa: PLC0415
+    from twiga.core.metrics import mcs_ranking, pairwise_dm_table  # noqa: PLC0415
 
     run = latest_run_for_group(discover_runs(), group)
     if run is None:

@@ -38,7 +38,7 @@ from rich.console import Console
 from rich.table import Table
 import scipy.signal as signal
 from sklearn.preprocessing import MinMaxScaler, StandardScaler
-from twiga.core.config import DataPipelineConfig, ForecasterConfig
+from twiga.core.config import DataPipelineConfig, ExperimentConfig
 from twiga.core.plot.matplot_theme import configure_matlib_style
 from twiga.core.utils.logger import configure, get_logger, log_section
 from twiga.forecaster.core import TwigaForecaster
@@ -199,8 +199,8 @@ def build_model_configs(cal: list, exog: list, lags: list) -> list:
     ]
 
 
-def build_forecaster_config() -> ForecasterConfig:
-    return ForecasterConfig(
+def build_forecaster_config() -> ExperimentConfig:
+    return ExperimentConfig(
         split_freq="months",
         window="expanding",
         train_size=TRAIN_SIZE_MONTHS,

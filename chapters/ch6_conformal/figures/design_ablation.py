@@ -12,7 +12,7 @@ groups disagree in direction between MLVS-PT and SPS-UK (most visibly
 comparison the chapter needs to make.
 
 Run:  uv run python -c "import sys; sys.path.insert(0,'experiment');
-      from thesis_figures import ch7_design_ablation as F; F.render_all()"
+      from twiga_thesis.plotting import ch7_design_ablation as F; F.render_all()"
 """
 
 from __future__ import annotations

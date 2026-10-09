@@ -10,7 +10,7 @@ regular weight, no italics.
 Usage::
 
     MPLBACKEND=Agg uv run python -c "import sys; sys.path.insert(0, 'experiment'); \
-        from thesis_figures import ch1_roadmap as R; R.render()"
+        from twiga_thesis.plotting import ch1_roadmap as R; R.render()"
 """
 
 from __future__ import annotations

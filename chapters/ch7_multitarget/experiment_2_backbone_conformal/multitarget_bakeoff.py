@@ -53,7 +53,7 @@ from twiga.models.nn.mlpfmvnormal_model import MLPFMVNormalConfig, MLPFMVNormalM
 from twiga.models.nn.mlpfnormal_model import MLPFNormalConfig, MLPFNormalModel
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "shared"))
-from forecast_examples import _cfg, build_windows, sample_parametric  # noqa: E402
+from chapters.ch7_multitarget.shared.forecast_examples import _cfg, build_windows, sample_parametric  # noqa: E402
 
 script_dir = Path(__file__).resolve().parent
 OUT = script_dir.parent / "bakeoff"

@@ -30,15 +30,6 @@ script_dir = Path(__file__).resolve().parent
 sys.path.insert(0, str(script_dir.parent))
 sys.path.insert(0, str(script_dir.parents[1]))
 
-from shared.conditions import PROPOSED  # noqa: E402
-from shared.protocol import (  # noqa: E402
-    CHAPTER_DATASETS,
-    DATASETS,
-    DEFAULT_OUTPUT_ROOT,
-    QR_QUANTILES,
-    base_config,
-    experiment_output_dir,
-)
 from twiga.core.utils import slugify  # noqa: E402
 from twiga.models.nn import MLPFConfig, MLPGAMConfig, MLPGAMCRCConfig, MLPGAMQRConfig  # noqa: E402
 from twiga.models.nn.mlpf_model import MLPFModel  # noqa: E402
@@ -48,6 +39,16 @@ from twiga.models.nn.mlpgamcrc_model import MLPGAMCRCModel  # noqa: E402
 from twiga.models.nn.mlpgamlaplace_model import MLPGAMLaplaceConfig, MLPGAMLaplaceModel  # noqa: E402
 from twiga.models.nn.mlpgamqr_model import MLPGAMQRModel  # noqa: E402
 from twiga.utils.run_forecast import build_data_config, load_and_preprocess  # noqa: E402
+
+from chapters.ch6_conformal.shared.conditions import PROPOSED  # noqa: E402
+from chapters.ch6_conformal.shared.protocol import (  # noqa: E402
+    CHAPTER_DATASETS,
+    DATASETS,
+    DEFAULT_OUTPUT_ROOT,
+    QR_QUANTILES,
+    base_config,
+    experiment_output_dir,
+)
 
 # name: (experiment, config class, model class, HPO cache file, overrides, conditions whose inference time is used)
 MODELS = {

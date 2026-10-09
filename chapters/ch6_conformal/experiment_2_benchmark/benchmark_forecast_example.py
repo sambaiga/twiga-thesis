@@ -2,10 +2,11 @@ r"""Forecast example for the probabilistic benchmark: one CRC good day, shown fo
 
 The day is CRC's best interval day: the (date, fold) with the highest daily CWE of ``mlpgam_crc``, ties broken by the
 lowest daily Winkler score, restricted to days for which every reported head has a forecast.
-The same day is then drawn for CRC, QR, BNN and Laplace, one single-plot figure per head in the compact thesis
-line-plot style of ``thesis_figures.line_style`` (observed values, forecast, 90% interval), each panel's y-axis fitted
-to its own data; no title (the thesis caption carries it). Nothing is retrained: each head's saved
-``predictions.parquet``/``metrics.parquet`` are read from the latest benchmark run that contains it.
+The same day is then drawn for CRC, QR, BNN and Laplace, one single-plot figure per head in the compact
+thesis line-plot style of ``twiga_thesis.plotting.line_style`` (observed values, forecast, 90% interval),
+each panel's y-axis fitted to its own data; no title (the thesis caption carries it). Nothing is
+retrained: each head's saved ``predictions.parquet``/``metrics.parquet`` are read from the latest
+benchmark run that contains it.
 
 Usage::
 
@@ -28,14 +29,24 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 script_dir = Path(__file__).resolve().parent
-sys.path.insert(0, str(script_dir.parents[1]))  # experiment/ (thesis_figures, common)
+sys.path.insert(0, str(script_dir.parents[1]))  # experiment/ (twiga_thesis.plotting, common)
 sys.path.insert(0, str(script_dir.parent))  # chapter directory (shared.*)
 sys.path.insert(0, str(script_dir.parents[1] / "common"))
 
-from shared.forecast_examples import best_interval_day, condition_dir, daily_error, day_frame  # noqa: E402
-from shared.protocol import ALPHA, CHAPTER_DATASETS, DEFAULT_OUTPUT_ROOT, experiment_output_dir  # noqa: E402
-from thesis_figures import line_style as LS  # noqa: E402
-from thesis_figures.style import tex_safe  # noqa: E402
+from chapters.ch6_conformal.shared.forecast_examples import (  # noqa: E402
+    best_interval_day,
+    condition_dir,
+    daily_error,
+    day_frame,
+)
+from chapters.ch6_conformal.shared.protocol import (  # noqa: E402
+    ALPHA,
+    CHAPTER_DATASETS,
+    DEFAULT_OUTPUT_ROOT,
+    experiment_output_dir,
+)
+from twiga_thesis.plotting import line_style as LS  # noqa: E402
+from twiga_thesis.plotting.style import tex_safe  # noqa: E402
 
 IMAGES_DIR = script_dir.parents[2] / "Papers" / "PhD thesis -Final-Revision" / "Images" / "Chapter-7"
 HEADS = {"mlpgam_crc": "crc", "mlpgam_qr": "qr", "mlpgam_bnn": "bnn", "mlpgam_laplace": "laplace"}
@@ -81,7 +92,7 @@ def main() -> None:
     date, fold = crc_good_day(metrics)
     days = {c: day_frame(paths[c], date, fold) for c in HEADS}
 
-    out = args.output_root / "analysis" / "thesis_figures" / "probabilistic_benchmark" / "forecast_example"
+    out = args.output_root / "analysis" / "twiga_thesis.plotting" / "probabilistic_benchmark" / "forecast_example"
     out.mkdir(parents=True, exist_ok=True)
     rows = []
     for condition, short in HEADS.items():

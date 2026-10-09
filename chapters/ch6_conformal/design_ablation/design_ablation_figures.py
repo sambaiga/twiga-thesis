@@ -36,16 +36,17 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # experiment/ (thesis_figures, common)
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # experiment/ (twiga_thesis.plotting, common)
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # chapter directory (shared.*)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from design_ablation_significance import _fold_level  # noqa: E402
-from thesis_figures import (
+from twiga.core.plot import bootstrap_ci  # noqa: E402
+
+from chapters.ch6_conformal.design_ablation.design_ablation_significance import _fold_level  # noqa: E402
+from twiga_thesis.plotting import (
     style as S,  # noqa: E402
     tokens as T,  # noqa: E402
 )
-from twiga.core.plot import bootstrap_ci  # noqa: E402
 
 DATASETS = ["MLVS-PT", "MLVS-UK"]
 TRAINING_MODE_REF = "two_stage_batch"

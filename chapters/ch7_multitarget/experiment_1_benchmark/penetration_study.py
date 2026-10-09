@@ -91,12 +91,18 @@ from pathlib import Path
 import sys
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "experiment_2_backbone_conformal"))
-from backbone_conformal_study import BACKBONES, DATASETS, DSS_UK, DSS_US  # noqa: E402
 import numpy as np
 import pandas as pd
 from twiga.core.utils import configure, get_logger
 from twiga.experiment import Condition, ExperimentEngine, ExperimentSpec
 from twiga.utils.run_forecast import PipelineConfig
+
+from chapters.ch7_multitarget.experiment_2_backbone_conformal.backbone_conformal_study import (  # noqa: E402
+    BACKBONES,
+    DATASETS,
+    DSS_UK,
+    DSS_US,
+)
 
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent

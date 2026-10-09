@@ -68,9 +68,14 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "experiment_2_backbone_conformal"))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "shared"))
-from backbone_conformal_decision import DEFAULT_OUTPUT_ROOT  # noqa: E402
-from backbone_conformal_study import DATASETS  # noqa: E402
-from multitarget_decision import (  # noqa: E402
+from twiga.core.utils import configure, get_logger, slugify
+from twiga.experiment import Condition, ExperimentEngine, ExperimentSpec, start_run
+from twiga.models.nn.mlpffpqr_model import MLPFFPQRConfig
+from twiga.utils.run_forecast import PipelineConfig
+
+from chapters.ch7_multitarget.experiment_2_backbone_conformal.backbone_conformal_study import DATASETS  # noqa: E402
+from chapters.ch7_multitarget.experiment_3_decision.backbone_conformal_decision import DEFAULT_OUTPUT_ROOT  # noqa: E402
+from chapters.ch7_multitarget.experiment_3_decision.multitarget_decision import (  # noqa: E402
     HEADS,
     INCLUDE_VOLTAGE,
     SCENARIOS,
@@ -79,10 +84,6 @@ from multitarget_decision import (  # noqa: E402
     build_condition_scorer,
     decision_rating,
 )
-from twiga.core.utils import configure, get_logger, slugify
-from twiga.experiment import Condition, ExperimentEngine, ExperimentSpec, start_run
-from twiga.models.nn.mlpffpqr_model import MLPFFPQRConfig
-from twiga.utils.run_forecast import PipelineConfig
 
 log = get_logger(__name__)
 

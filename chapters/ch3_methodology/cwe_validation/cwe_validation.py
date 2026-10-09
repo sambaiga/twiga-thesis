@@ -27,11 +27,12 @@ from __future__ import annotations
 from pathlib import Path
 import sys
 
-from metric_definitions import cwc_score, gaussian_crps
 import numpy as np
 import pandas as pd
 from scipy import stats
 from twiga.core.metrics.interval import cwe_score, interval_coverage, nmpi, winkler_score
+
+from chapters.ch3_methodology.cwe_validation.metric_definitions import cwc_score, gaussian_crps
 
 ALPHA = 0.10
 NOMINAL = 1.0 - ALPHA
@@ -472,7 +473,7 @@ def cwc_eta_sensitivity(alpha: float = ALPHA, n: int = 200_000, seed: int = 0) -
 def reference_scales(seed: int = 0) -> pd.DataFrame:
     """The three width scales the metrics section quotes, from the actual series.
 
-    Written to CSV so that the illustration in ``thesis_figures`` reports the same
+    Written to CSV so that the illustration in ``twiga_thesis.plotting`` reports the same
     numbers as the text rather than recomputing them from a simplified profile.
     """
     d = make_synthetic_netload(seed=seed)

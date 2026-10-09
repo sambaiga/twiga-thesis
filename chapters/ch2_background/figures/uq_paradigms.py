@@ -14,7 +14,7 @@ comparable.
 Usage::
 
     MPLBACKEND=Agg uv run python -c "import sys; sys.path.insert(0, 'experiment'); \
-        from thesis_figures import ch2_uq_paradigms as U; U.render()"
+        from twiga_thesis.plotting import ch2_uq_paradigms as U; U.render()"
 """
 
 from __future__ import annotations

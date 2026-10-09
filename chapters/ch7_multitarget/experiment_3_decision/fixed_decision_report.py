@@ -5,7 +5,7 @@ it) and writes, under ``<experiment-root>/analysis``:
 
 Per scenario (``analysis/<scenario>/``), following the Chapter 6 benchmark
 report's conventions (fold-level losses, DM with Benjamini-Hochberg adjustment
-and the 95% MCS through :mod:`experiment.common.result_analysis`, a
+and the 95% MCS through :mod:`twiga_thesis.analysis`, a
 ``metric_table`` ranking, a ``conclusion.md``):
 
 * ``probability_<event>.csv``: Brier, fair Brier, Brier skill, reliability and
@@ -54,9 +54,9 @@ from statsmodels.stats.multitest import multipletests  # noqa: E402
 script_dir = Path(__file__).resolve().parent
 sys.path[:0] = [str(script_dir), str(script_dir.parents[1])]
 
-from experiment.common.result_analysis import dm_and_mcs, metric_table  # noqa: E402
-import fixed_decision_sweep as sweep  # noqa: E402
-from thesis_figures import style as S, tokens as T  # noqa: E402
+import chapters.ch7_multitarget.experiment_3_decision.fixed_decision_sweep as sweep  # noqa: E402
+from twiga_thesis.analysis import dm_and_mcs, metric_table  # noqa: E402
+from twiga_thesis.plotting import style as S, tokens as T  # noqa: E402
 
 HEADS = {"fpqr_anchor": "FPQR", "qr": "QR", "bnn": "BNN", "laplace": "Laplace"}
 # CQR variants as "CQR (<score>, <coverage>)", e.g. quantile_unscaled_marginal -> "CQR (unscaled, marginal)".

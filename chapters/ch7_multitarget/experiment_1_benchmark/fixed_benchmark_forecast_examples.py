@@ -9,7 +9,7 @@ over the four heads, each target's divided by its mean absolute observation so P
 the panels compare like with like.
 
 One single-plot figure per (record, condition, target), in the panel style of Chapter 7's
-``calibration_forecast_example.py`` (``thesis_figures.line_style.forecast_panel``), with one y-range per (record,
+``calibration_forecast_example.py`` (``twiga_thesis.plotting.line_style.forecast_panel``), with one y-range per (record,
 target) across the four heads, and one per head across its native forecast (saved again as ``<head>_none``) and
 its conformal variants, so interval widths read across the panels of one subfigure grid; no title and no model
 label (the thesis's subfigure captions carry them, the file name carries the model).
@@ -38,8 +38,8 @@ import pandas as pd  # noqa: E402
 script_dir = Path(__file__).resolve().parent
 sys.path[:0] = [str(script_dir), str(script_dir.parents[1])]
 
-import fixed_benchmark_tables as fbt  # noqa: E402
-from thesis_figures import line_style as LS  # noqa: E402
+import chapters.ch7_multitarget.experiment_1_benchmark.fixed_benchmark_tables as fbt  # noqa: E402
+from twiga_thesis.plotting import line_style as LS  # noqa: E402
 
 ALPHA = 0.1
 IMAGES_DIR = script_dir.parents[2] / "Papers" / "PhD thesis -Final-Revision" / "Images" / "Chapter-6"

@@ -31,16 +31,21 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 script_dir = Path(__file__).resolve().parent
-sys.path.insert(0, str(script_dir.parents[1]))  # experiment/ (thesis_figures, common)
+sys.path.insert(0, str(script_dir.parents[1]))  # experiment/ (twiga_thesis.plotting, common)
 sys.path.insert(0, str(script_dir.parent))  # chapter directory (shared.*)
 sys.path.insert(0, str(script_dir.parents[1] / "common"))
 
-from experiment.common.comparison_plots import head_label  # noqa: E402
-from forecast_panels import draw  # noqa: E402
-from shared.ch7_analyse_results import EXPERIMENTS  # noqa: E402
-from shared.protocol import CHAPTER_DATASETS, DEFAULT_OUTPUT_ROOT, experiment_output_dir  # noqa: E402
-from thesis_figures.style import configure, panel, tex_safe  # noqa: E402
 from twiga.core.utils import slugify  # noqa: E402
+
+from chapters.ch6_conformal.shared.ch7_analyse_results import EXPERIMENTS  # noqa: E402
+from chapters.ch6_conformal.shared.protocol import (  # noqa: E402
+    CHAPTER_DATASETS,
+    DEFAULT_OUTPUT_ROOT,
+    experiment_output_dir,
+)
+from twiga_thesis.plotting.comparison_plots import head_label  # noqa: E402
+from twiga_thesis.plotting.forecast_panels import draw  # noqa: E402
+from twiga_thesis.plotting.style import configure, panel, tex_safe  # noqa: E402
 
 _FAN_LEVELS = np.array([0.05, 0.5, 0.95])
 

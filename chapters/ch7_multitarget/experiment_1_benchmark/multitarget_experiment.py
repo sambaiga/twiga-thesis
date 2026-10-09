@@ -63,7 +63,7 @@ its own support a claim that one model beats another.
 
 Higher is better for CWE, stratified CWE and PICP; lower is better for CRPS and
 the Winkler score. Significance between conditions rests on the Winkler score
-via ``experiment.common.significance``'s ``pairwise_dm_table``/``mcs_ranking``,
+via ``twiga.core.metrics``'s ``pairwise_dm_table``/``mcs_ranking``,
 never on CWE, per that module's own rule and ``Chapter-6.tex``'s
 (``subsec:ch6-metrics``) explicit adoption of it.
 

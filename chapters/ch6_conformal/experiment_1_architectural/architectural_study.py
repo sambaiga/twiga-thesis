@@ -60,7 +60,12 @@ import sys
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from shared.conditions import (  # noqa: E402
+from twiga.core.utils import configure, get_logger  # noqa: E402
+from twiga.experiment import Condition, ExperimentEngine, ExperimentSpec  # noqa: E402
+from twiga.models.nn import MLPFConfig, MLPGAMConfig, MLPGAMCRCConfig  # noqa: E402
+from twiga.utils.run_forecast import setup_environment  # noqa: E402
+
+from chapters.ch6_conformal.shared.conditions import (  # noqa: E402
     DEFAULT_TRIALS_PER_PARAM,
     INTERVAL_METRIC_TYPES,
     MLPGAM_HPO_PINS,
@@ -73,9 +78,9 @@ from shared.conditions import (  # noqa: E402
     SHARED_HPO_VARIANT,
     trial_budget,
 )
-from shared.gate_faithfulness import make_gate_faithfulness_scorer  # noqa: E402
-from shared.mlpgam_interpretability import make_interpretability_scorer  # noqa: E402
-from shared.protocol import (  # noqa: E402
+from chapters.ch6_conformal.shared.gate_faithfulness import make_gate_faithfulness_scorer  # noqa: E402
+from chapters.ch6_conformal.shared.mlpgam_interpretability import make_interpretability_scorer  # noqa: E402
+from chapters.ch6_conformal.shared.protocol import (  # noqa: E402
     CHAPTER_DATASETS,
     CV_FOLDS,
     DEFAULT_EPOCHS,
@@ -87,10 +92,6 @@ from shared.protocol import (  # noqa: E402
     experiment_output_dir,
     protocol_check,
 )
-from twiga.core.utils import configure, get_logger  # noqa: E402
-from twiga.experiment import Condition, ExperimentEngine, ExperimentSpec  # noqa: E402
-from twiga.models.nn import MLPFConfig, MLPGAMConfig, MLPGAMCRCConfig  # noqa: E402
-from twiga.utils.run_forecast import setup_environment  # noqa: E402
 
 log = get_logger(__name__)
 

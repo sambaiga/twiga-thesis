@@ -47,9 +47,10 @@ import argparse
 from pathlib import Path
 
 import pandas as pd
-from qvn_forecast_examples import GROUP_CONDITIONS, latest_predictions
 from twiga.experiment.analysis import aggregate_fold_metrics
 from twiga.experiment.run_catalog import load_group_csv
+
+from chapters.ch5_fpqr.qvn_forecast_examples import GROUP_CONDITIONS, latest_predictions
 
 script_dir = Path(__file__).resolve().parent
 RUNS_DIR = script_dir / "results" / "chapter_5_fpqr" / "runs"

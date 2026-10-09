@@ -8,9 +8,10 @@ condition reports a proper scoring rule through its ``metric_types`` wherever th
 
 from __future__ import annotations
 
-from shared.protocol import ALPHA, DEFAULT_HPO_TRIALS
 from twiga.core.config import ConformalConfig
 from twiga.models.nn import MLPFConfig, MLPGAMConfig
+
+from chapters.ch6_conformal.shared.protocol import ALPHA, DEFAULT_HPO_TRIALS
 
 # ── Metric types ─────────────────────────────────────────────────────────────
 # "quantile"/"parametric" add CRPS (and the pinball loss / NLL), as in Chapter 6. The engine's calibrated (conformal)

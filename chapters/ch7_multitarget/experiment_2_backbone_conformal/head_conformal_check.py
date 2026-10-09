@@ -59,7 +59,11 @@ import matplotlib
 
 matplotlib.use("Agg")
 
-from backbone_conformal_study import (  # noqa: E402
+import matplotlib.pyplot as plt  # noqa: E402
+import numpy as np  # noqa: E402
+import pandas as pd  # noqa: E402
+
+from chapters.ch7_multitarget.experiment_2_backbone_conformal.backbone_conformal_study import (  # noqa: E402
     BACKBONES,
     CALIBRATED_CONFORMAL_VARIANTS,
     CONFORMAL_VARIANTS,
@@ -72,19 +76,15 @@ from backbone_conformal_study import (  # noqa: E402
     SPEC_DSS_US,
     SPEC_MLVS_PT_3PHASE,
 )
-import matplotlib.pyplot as plt  # noqa: E402
-import numpy as np  # noqa: E402
-import pandas as pd  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from thesis_figures.style import (  # noqa: E402
+from twiga_thesis.plotting.style import (  # noqa: E402
     configure as configure_style,  # noqa: E402
     pad_limits,
     panel,
 )
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "common"))
-from forecast_panels import draw, place_legend_below  # noqa: E402
 from twiga.core.utils import configure, get_logger, slugify
 from twiga.experiment import Condition, ExperimentEngine, ExperimentSpec
 from twiga.models.nn.mlpfbnn_model import MLPFBNNConfig
@@ -97,6 +97,8 @@ from twiga.models.nn.nhitsbnn_model import NHITSBNNConfig
 from twiga.models.nn.nhitslaplace_model import NHITSLaplaceConfig
 from twiga.models.nn.nhitsqr_model import NHITSQRConfig
 from twiga.utils.run_forecast import PipelineConfig
+
+from twiga_thesis.plotting.forecast_panels import draw, place_legend_below  # noqa: E402
 
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent

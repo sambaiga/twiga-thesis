@@ -25,11 +25,12 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 
-from thesis_figures import (  # noqa: E402
+from twiga.core.utils import get_logger  # noqa: E402
+
+from twiga_thesis.plotting import (  # noqa: E402
     style as S,
     tokens as T,
 )
-from twiga.core.utils import get_logger  # noqa: E402
 
 log = get_logger(__name__)
 

@@ -84,18 +84,7 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "experiment_2_backbone_conformal"))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "shared"))
-from backbone_conformal_study import (  # noqa: E402
-    CONFORMAL_VARIANTS,
-    DATASETS,
-    DSS_UK,
-    DSS_US,
-    HEADS,
-    QR_HPO_VARIANT,
-)
-from experiment.common.significance import pairwise_dm_table  # noqa: E402
-from forecast_examples import hosting_capacity_rows  # noqa: E402
-from operational_decision import INCLUDE_VOLTAGE, VOLTAGE_BANDS  # noqa: E402
-from tune_backbone import tune as tune_backbone  # noqa: E402
+from twiga.core.metrics import pairwise_dm_table  # noqa: E402
 from twiga.core.metrics.interval import get_interval_metrics
 from twiga.core.utils import configure, get_logger, slugify
 from twiga.distributions.ml.utils import get_sigma_from_quantile_levels
@@ -103,6 +92,21 @@ from twiga.experiment import Condition, ExperimentEngine, ExperimentSpec, start_
 from twiga.models.nn import MLPFConfig
 from twiga.utils.data_loading import load_dataset
 from twiga.utils.run_forecast import PipelineConfig
+
+from chapters.ch7_multitarget.experiment_2_backbone_conformal.backbone_conformal_study import (  # noqa: E402
+    CONFORMAL_VARIANTS,
+    DATASETS,
+    DSS_UK,
+    DSS_US,
+    HEADS,
+    QR_HPO_VARIANT,
+)
+from chapters.ch7_multitarget.experiment_3_decision.operational_decision import (  # noqa: E402
+    INCLUDE_VOLTAGE,
+    VOLTAGE_BANDS,
+)
+from chapters.ch7_multitarget.shared.forecast_examples import hosting_capacity_rows  # noqa: E402
+from chapters.ch7_multitarget.shared.tune_backbone import tune as tune_backbone  # noqa: E402
 
 # Same nominal level throughout the project (Chapter 5/7's own convention,
 # and TwigaForecaster's own `interval_alpha` default): a 90% central

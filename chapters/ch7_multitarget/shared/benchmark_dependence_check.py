@@ -58,8 +58,8 @@ from twiga.core.metrics.parametric import energy_score  # noqa: E402
 from twiga.core.utils import get_logger  # noqa: E402
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
-from thesis_figures.style import configure  # noqa: E402
-from thesis_figures.tokens import (  # noqa: E402
+from twiga_thesis.plotting.style import configure  # noqa: E402
+from twiga_thesis.plotting.tokens import (  # noqa: E402
     DANGER,
     HIGHLIGHT,
     PALETTE,

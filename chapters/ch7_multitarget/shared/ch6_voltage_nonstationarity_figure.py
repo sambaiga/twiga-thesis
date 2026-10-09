@@ -29,9 +29,10 @@ import pandas as pd  # noqa: E402
 script_dir = Path(__file__).resolve().parent
 sys.path.insert(0, str(script_dir.parent.parent))  # repo "experiment" package root
 
-from thesis_figures import style as S  # noqa: E402
-from thesis_figures.tokens import HIGHLIGHT, PRIMARY, TEXT_MUTED  # noqa: E402
 from twiga.utils.data_loading import load_dataset  # noqa: E402
+
+from twiga_thesis.plotting import style as S  # noqa: E402
+from twiga_thesis.plotting.tokens import HIGHLIGHT, PRIMARY, TEXT_MUTED  # noqa: E402
 
 OUT_DIR = script_dir.parent / "results" / "analysis" / "multitarget_experiment" / "benchmark" / "figures"
 

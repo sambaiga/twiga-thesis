@@ -38,7 +38,7 @@ from twiga.models.nn.mlpfnormal_model import MLPFNormalConfig, MLPFNormalModel
 log = get_logger(__name__)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from forecast_examples import GRID_LEVELS, build_backtest_folds
+from chapters.ch7_multitarget.shared.forecast_examples import GRID_LEVELS, build_backtest_folds
 
 script_dir = Path(__file__).resolve().parent
 OUT = script_dir / "backbone_params.json"  # rebound per record in main()

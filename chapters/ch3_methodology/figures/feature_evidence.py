@@ -11,7 +11,7 @@ the same real dataset files and the same
 path the thesis text names, not from illustrative or synthetic numbers.
 
 Run:  uv run python -c "import sys; sys.path.insert(0,'experiment');
-      from thesis_figures import ch3_features as F; F.render_all()"
+      from twiga_thesis.plotting import ch3_features as F; F.render_all()"
 """
 
 from __future__ import annotations

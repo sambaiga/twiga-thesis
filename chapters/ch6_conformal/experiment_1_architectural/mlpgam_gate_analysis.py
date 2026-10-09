@@ -50,18 +50,8 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt  # noqa: E402
 import pandas as pd  # noqa: E402
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # experiment/ (thesis_figures, common)
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # experiment/ (twiga_thesis.plotting, common)
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # chapter directory (shared.*)
-from shared.gate_faithfulness import (  # noqa: E402
-    compute_gate_sensitivity_correlation,
-    compute_mlpgam_feature_sensitivity,
-    extract_mlpgam_gate_importances,
-    sample_batch,
-    unwrap_network,
-)
-from shared.protocol import DATASETS, experiment_output_dir  # noqa: E402
-from thesis_figures.style import configure, format_axes, panel, style  # noqa: E402
-from thesis_figures.tokens import DANGER, PRIMARY  # noqa: E402
 from twiga.core.config import ExperimentConfig  # noqa: E402
 from twiga.models.nn import MLPGAMConfig  # noqa: E402
 from twiga.utils.run_forecast import (  # noqa: E402
@@ -72,6 +62,17 @@ from twiga.utils.run_forecast import (  # noqa: E402
     setup_environment,
     split_data,
 )
+
+from chapters.ch6_conformal.shared.gate_faithfulness import (  # noqa: E402
+    compute_gate_sensitivity_correlation,
+    compute_mlpgam_feature_sensitivity,
+    extract_mlpgam_gate_importances,
+    sample_batch,
+    unwrap_network,
+)
+from chapters.ch6_conformal.shared.protocol import DATASETS, experiment_output_dir  # noqa: E402
+from twiga_thesis.plotting.style import configure, format_axes, panel, style  # noqa: E402
+from twiga_thesis.plotting.tokens import DANGER, PRIMARY  # noqa: E402
 
 script_dir = Path(__file__).resolve().parent
 OUTPUT_DIR = experiment_output_dir("mlpgam_gate_analysis")

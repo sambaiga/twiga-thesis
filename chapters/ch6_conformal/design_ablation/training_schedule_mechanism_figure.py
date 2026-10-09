@@ -34,11 +34,11 @@ import numpy as np
 import pandas as pd
 from tensorboard.backend.event_processing.event_accumulator import EventAccumulator
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # experiment/ (thesis_figures, common)
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # experiment/ (twiga_thesis.plotting, common)
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # chapter directory (shared.*)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from thesis_figures import (
+from twiga_thesis.plotting import (
     style as S,  # noqa: E402
     tokens as T,  # noqa: E402
 )

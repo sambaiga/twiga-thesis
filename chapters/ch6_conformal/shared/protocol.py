@@ -179,7 +179,7 @@ def base_config(
     hpo_epochs: int = DEFAULT_HPO_EPOCHS,
 ) -> PipelineConfig:
     """Shared :class:`PipelineConfig`; the dataset fields come from each spec's dataset entry (Chapter 6 pattern)."""
-    from shared.metrics import INTERVAL_METRICS, POINT_METRICS  # noqa: PLC0415
+    from chapters.ch6_conformal.shared.metrics import INTERVAL_METRICS, POINT_METRICS  # noqa: PLC0415
 
     return PipelineConfig(
         output_dir=f"{output_dir}/",

@@ -6,7 +6,11 @@ settings come from :mod:`shared.protocol`.
 
 from __future__ import annotations
 
-from shared.protocol import (
+from twiga.core.config import ConformalConfig
+from twiga.experiment import Condition, ExperimentEngine, ExperimentSpec
+from twiga.models.nn import MLPGAMConfig, MLPGAMCRCConfig
+
+from chapters.ch6_conformal.shared.protocol import (
     CV_CALIB_MONTHS,
     CV_FOLDS,
     CV_STRIDE_MONTHS,
@@ -16,9 +20,6 @@ from shared.protocol import (
     DATASETS,
     EARLY_STOP_PATIENCE,
 )
-from twiga.core.config import ConformalConfig
-from twiga.experiment import Condition, ExperimentEngine, ExperimentSpec
-from twiga.models.nn import MLPGAMConfig, MLPGAMCRCConfig
 
 
 def make_conformal_config(

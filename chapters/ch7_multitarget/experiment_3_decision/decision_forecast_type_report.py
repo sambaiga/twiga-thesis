@@ -43,9 +43,10 @@ import pandas as pd  # noqa: E402
 script_dir = Path(__file__).resolve().parent
 sys.path[:0] = [str(script_dir), str(script_dir.parents[1])]
 
-from experiment.common.result_analysis import dm_and_mcs  # noqa: E402
 from matplotlib.colors import LinearSegmentedColormap  # noqa: E402
-from thesis_figures import line_style as LS, style as S, tokens as T  # noqa: E402
+
+from twiga_thesis.analysis import dm_and_mcs  # noqa: E402
+from twiga_thesis.plotting import line_style as LS, style as S, tokens as T  # noqa: E402
 
 HEADS = {"fpqr_anchor": "FPQR", "qr": "QR", "laplace": "Laplace", "bnn": "BNN"}
 HEAD_TEX = {"fpqr_anchor": r"\ac{FPQR}", "qr": r"\ac{QR}", "laplace": "Laplace", "bnn": r"\ac{BNN}"}

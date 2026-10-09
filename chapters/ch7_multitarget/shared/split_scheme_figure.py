@@ -2,7 +2,7 @@ r"""CV split-scheme figure for Chapter 6, in the thesis's own production style.
 
 Same pattern as ``experiment/ch6_conformal/split_scheme_figure.py``:
 one Gantt row per fold, coloured by Train / Val / Calib / Test, through
-:mod:`thesis_figures.style` so it sits in the document as a vector PDF with
+:mod:`twiga_thesis.plotting.style` so it sits in the document as a vector PDF with
 the same serif type, palette and spine treatment as every other chapter's
 figures, rather than the lets-plot PNG ``ExperimentEngine`` emits for a
 quick sanity check during a run.
@@ -27,7 +27,11 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "experiment_2_backbone_conformal"))
 
-from backbone_conformal_study import (  # noqa: E402
+from twiga.core.backtester import TimeBasedCV  # noqa: E402
+from twiga.core.utils import get_logger  # noqa: E402
+from twiga.utils.run_forecast import PipelineConfig, load_and_preprocess  # noqa: E402
+
+from chapters.ch7_multitarget.experiment_2_backbone_conformal.backbone_conformal_study import (  # noqa: E402
     DSS_UK as BACKBONE_DSS_UK,  # noqa: E402
     DSS_US,
     MLVS_PT_3PHASE,
@@ -35,14 +39,14 @@ from backbone_conformal_study import (  # noqa: E402
     SPEC_DSS_US,
     SPEC_MLVS_PT_3PHASE,
 )
-from fpqr_gating_ablation import DSS_EU_REFERENCE, SPEC_DSS_EU  # noqa: E402
-from thesis_figures import (
+from chapters.ch7_multitarget.experiment_2_backbone_conformal.fpqr_gating_ablation import (  # noqa: E402
+    DSS_EU_REFERENCE,
+    SPEC_DSS_EU,
+)
+from twiga_thesis.plotting import (
     style as S,  # noqa: E402
     tokens as T,  # noqa: E402
 )
-from twiga.core.backtester import TimeBasedCV  # noqa: E402
-from twiga.core.utils import get_logger  # noqa: E402
-from twiga.utils.run_forecast import PipelineConfig, load_and_preprocess  # noqa: E402
 
 log = get_logger(__name__)
 

@@ -42,17 +42,18 @@ script_dir = Path(__file__).resolve().parent
 sys.path.insert(0, str(script_dir.parent))
 sys.path.insert(0, str(script_dir.parents[1]))
 
-from experiment.common.comparison_plots import (  # noqa: E402
+from twiga.core.utils import slugify  # noqa: E402
+
+from chapters.ch6_conformal.shared import ch7_analyse_results as analysis  # noqa: E402
+from chapters.ch6_conformal.shared.ch7_analyse_results import load_full  # noqa: E402
+from chapters.ch6_conformal.shared.protocol import CHAPTER_DATASETS, DEFAULT_OUTPUT_ROOT  # noqa: E402
+from twiga_thesis.analysis import dm_and_mcs, fold_level, metric_table  # noqa: E402
+from twiga_thesis.plotting import line_style as LS, style as S, tokens as T  # noqa: E402
+from twiga_thesis.plotting.comparison_plots import (  # noqa: E402
     head_label,
     plot_dm_significance_matrix,
     thesis_palette,
 )
-from experiment.common.result_analysis import dm_and_mcs, fold_level, metric_table  # noqa: E402
-from shared import ch7_analyse_results as analysis  # noqa: E402
-from shared.ch7_analyse_results import load_full  # noqa: E402
-from shared.protocol import CHAPTER_DATASETS, DEFAULT_OUTPUT_ROOT  # noqa: E402
-from thesis_figures import line_style as LS, style as S, tokens as T  # noqa: E402
-from twiga.core.utils import slugify  # noqa: E402
 
 IMAGES_DIR = script_dir.parents[2] / "Papers" / "PhD thesis -Final-Revision" / "Images" / "Chapter-7"
 SLUG = {"MLVS-PT": "pt", "MLVS-UK": "uk"}
@@ -337,8 +338,8 @@ HORIZON_STYLE = {
 def plot_horizon(profile: pd.DataFrame, out: Path) -> None:
     """Coverage and mean interval width by time of day, one single-axes figure per (quantity, dataset).
 
-    In the compact thesis line-plot style (``thesis_figures.line_style``): 0.40 text width, 0.85 pt lines, y-axis from
-    the plotted data rounded to round ticks, legend below the axes.
+    In the compact thesis line-plot style (``twiga_thesis.plotting.line_style``): 0.40 text width,
+    0.85 pt lines, y-axis from the plotted data rounded to round ticks, legend below the axes.
     """
     with plt.rc_context(LS.COMPACT_RC):
         for dataset in dict.fromkeys(profile["dataset"]):
@@ -382,7 +383,7 @@ def plot_gating_penalty(clean: pd.DataFrame, noisy: pd.DataFrame | None, dataset
     Each line is relative to the ungated model of its own input set (0 = no gate), so a point below zero is a gate
     setting that improves on the ungated model. The tuned gate is drawn apart, since its penalty is set by the
     hyperparameter search rather than fixed. Markers are the mean over the ten folds; bands one standard error.
-    Compact thesis line-plot style (``thesis_figures.line_style``).
+    Compact thesis line-plot style (``twiga_thesis.plotting.line_style``).
     """
     with plt.rc_context(LS.COMPACT_RC):
         fig, ax = LS.new_panel()

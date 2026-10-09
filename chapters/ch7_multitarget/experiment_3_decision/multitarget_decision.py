@@ -44,23 +44,6 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "experiment_2_backbone_conformal"))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "experiment_1_benchmark"))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "shared"))
-from backbone_conformal_decision import (  # noqa: E402
-    DEFAULT_OUTPUT_ROOT,
-    INTERVAL_ALPHA,
-    family_significance,
-    interval_metric_rows,
-    sample_calibrated_ensemble,
-    sample_quantile_ensemble,
-)
-from backbone_conformal_study import DATASETS, DSS_UK, DSS_US  # noqa: E402
-from forecast_examples import hosting_capacity_rows  # noqa: E402
-from multitarget_experiment import (  # noqa: E402
-    _FPQR_STABILITY_PINS,
-    _REFERENCE_TRAINING_PINS,
-    FPQR_ANCHOR_OUTER_HPO_VARIANT,
-    SHARED_HPO_VARIANT,
-)
-from operational_decision import INCLUDE_VOLTAGE, VOLTAGE_BANDS  # noqa: E402
 from twiga.core.config import ConformalConfig
 from twiga.core.utils import configure, get_logger, slugify
 from twiga.distributions.ml.utils import get_sigma_from_quantile_levels
@@ -72,6 +55,31 @@ from twiga.models.nn.mlpflaplace_model import MLPFLaplaceConfig
 from twiga.models.nn.mlpfqr_model import MLPFQRConfig
 from twiga.utils.data_loading import load_dataset
 from twiga.utils.run_forecast import PipelineConfig
+
+from chapters.ch7_multitarget.experiment_1_benchmark.multitarget_experiment import (  # noqa: E402
+    _FPQR_STABILITY_PINS,
+    _REFERENCE_TRAINING_PINS,
+    FPQR_ANCHOR_OUTER_HPO_VARIANT,
+    SHARED_HPO_VARIANT,
+)
+from chapters.ch7_multitarget.experiment_2_backbone_conformal.backbone_conformal_study import (  # noqa: E402
+    DATASETS,
+    DSS_UK,
+    DSS_US,
+)
+from chapters.ch7_multitarget.experiment_3_decision.backbone_conformal_decision import (  # noqa: E402
+    DEFAULT_OUTPUT_ROOT,
+    INTERVAL_ALPHA,
+    family_significance,
+    interval_metric_rows,
+    sample_calibrated_ensemble,
+    sample_quantile_ensemble,
+)
+from chapters.ch7_multitarget.experiment_3_decision.operational_decision import (  # noqa: E402
+    INCLUDE_VOLTAGE,
+    VOLTAGE_BANDS,
+)
+from chapters.ch7_multitarget.shared.forecast_examples import hosting_capacity_rows  # noqa: E402
 
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent

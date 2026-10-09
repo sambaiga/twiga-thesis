@@ -9,7 +9,7 @@ computed by simulation, so the two panels differ only in the dependence.
 Usage::
 
     MPLBACKEND=Agg uv run python -c "import sys; sys.path.insert(0, 'experiment'); \
-        from thesis_figures import ch6_illustrations as I; I.render()"
+        from twiga_thesis.plotting import ch6_illustrations as I; I.render()"
 """
 
 from __future__ import annotations

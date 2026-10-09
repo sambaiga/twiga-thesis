@@ -27,10 +27,16 @@ from __future__ import annotations
 import numpy as np
 import pandas as pd
 from scipy.stats import spearmanr
-from shared.gate_faithfulness import extract_mlpgam_gate_importances, feature_names, gate_faithfulness, unwrap_network
 import torch
 from twiga.core.data.processing import unstack_features
 from twiga.core.utils import get_logger
+
+from chapters.ch6_conformal.shared.gate_faithfulness import (
+    extract_mlpgam_gate_importances,
+    feature_names,
+    gate_faithfulness,
+    unwrap_network,
+)
 
 log = get_logger(__name__)
 

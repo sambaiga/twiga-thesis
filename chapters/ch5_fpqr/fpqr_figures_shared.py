@@ -26,7 +26,7 @@ adaptive grid does not. Every panel here develops that one idea:
 All panels are SYNTHETIC illustrations, not results; the captions say so.
 
 Run:  uv run python -c "import sys; sys.path.insert(0,'experiment');
-      from thesis_figures import fpqr_figures as F; F.render_all()"
+      from twiga_thesis.plotting import fpqr_figures as F; F.render_all()"
 """
 
 from __future__ import annotations

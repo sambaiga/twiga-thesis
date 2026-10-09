@@ -25,7 +25,7 @@ per window. The energy and variogram scores use targets standardised by their ca
 three are fair (unbiased) ensemble estimators, so ensembles of different size compare.
 
 **Significance.** As everywhere in the thesis, the Diebold-Mariano test with Benjamini-Hochberg adjustment and the
-Model Confidence Set (``experiment.common.result_analysis.dm_and_mcs``), here on per-window losses (one score per
+Model Confidence Set (``twiga_thesis.analysis.dm_and_mcs``), here on per-window losses (one score per
 forecast day), which gives hundreds of paired observations per record instead of a handful of folds: between heads
 per target for A, between scenario forms per head for B.
 
@@ -47,10 +47,11 @@ import pandas as pd
 script_dir = Path(__file__).resolve().parent
 sys.path[:0] = [str(script_dir), str(script_dir.parents[1])]
 
-from experiment.common.result_analysis import dm_and_mcs  # noqa: E402
 from twiga.core.metrics.decision import probability_scores  # noqa: E402
 from twiga.distributions.conformal.multitarget import Predictive  # noqa: E402
 from twiga.distributions.scenarios import schaake_shuffle  # noqa: E402
+
+from twiga_thesis.analysis import dm_and_mcs  # noqa: E402
 
 ALPHA = 0.1
 TARGETS = ("P", "Q", "V")
@@ -256,10 +257,12 @@ def plot_scenarios(dataset_dir: Path, heads: list[str], day: str, members: int, 
     The window is the one issued on ``day``; ``members`` paths are drawn thin, the observations on top.
     """
     import matplotlib  # noqa: PLC0415
+    import matplotlib.dates  # noqa: PLC0415
 
     matplotlib.use("Agg")
     from matplotlib import pyplot as plt  # noqa: PLC0415
-    from thesis_figures import tokens as T  # noqa: PLC0415
+
+    from twiga_thesis.plotting import tokens as T  # noqa: PLC0415
 
     rng = np.random.default_rng(SEED)
     target_day = pd.Timestamp(day, tz="UTC")
@@ -319,7 +322,8 @@ def plot_outputs(dataset_dir: Path, heads: list[str], day: str, out: Path, latex
     from matplotlib import pyplot as plt  # noqa: PLC0415
     from matplotlib.lines import Line2D  # noqa: PLC0415
     from matplotlib.patches import Patch  # noqa: PLC0415
-    from thesis_figures import line_style as LS  # noqa: PLC0415
+
+    from twiga_thesis.plotting import line_style as LS  # noqa: PLC0415
 
     LS.configure(latex=latex)
     units = UNITS["mlvs" if dataset_dir.name.startswith("mlvs") else "dss"]
@@ -386,7 +390,8 @@ def plot_copula(dataset_dir: Path, heads: list[str], day: str, out: Path, latex:
     from matplotlib import pyplot as plt  # noqa: PLC0415
     from matplotlib.lines import Line2D  # noqa: PLC0415
     from matplotlib.patches import Patch  # noqa: PLC0415
-    from thesis_figures import line_style as LS  # noqa: PLC0415
+
+    from twiga_thesis.plotting import line_style as LS  # noqa: PLC0415
 
     LS.configure(latex=latex)
     units = UNITS["mlvs" if dataset_dir.name.startswith("mlvs") else "dss"]

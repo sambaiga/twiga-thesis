@@ -25,7 +25,7 @@ import pandas as pd
 import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from learned_tau import SPLITS, build, find_head  # noqa: E402
+from chapters.ch5_fpqr.learned_tau import SPLITS, build, find_head  # noqa: E402
 
 script_dir = Path(__file__).resolve().parent
 DATASET = "MLVS-PT"

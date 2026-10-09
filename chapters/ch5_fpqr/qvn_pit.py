@@ -44,7 +44,6 @@ import pandas as pd
 import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from learned_tau import SPLITS, find_head  # noqa: E402
 from lets_plot import ggsave  # noqa: E402
 from twiga.core.plot import plot_pit_histogram, plot_reliability_diagram  # noqa: E402
 from twiga.models.nn.mlpffpqr_model import MLPFFPQRConfig  # noqa: E402
@@ -56,6 +55,8 @@ from twiga.utils.run_forecast import (  # noqa: E402
     load_and_preprocess,
     split_data,
 )
+
+from chapters.ch5_fpqr.learned_tau import SPLITS, find_head  # noqa: E402
 
 script_dir = Path(__file__).resolve().parent
 OUT = script_dir / "qvn_pit"

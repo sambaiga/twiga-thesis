@@ -44,9 +44,9 @@ import matplotlib.pyplot as plt  # noqa: E402
 import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # experiment/ (thesis_figures, common)
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # experiment/ (twiga_thesis.plotting, common)
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # chapter directory (shared.*)
-from thesis_figures.style import configure, panel, tex_safe  # noqa: E402
+from twiga_thesis.plotting.style import configure, panel, tex_safe  # noqa: E402
 
 # draw/_format_axes are ch7_multitarget/forecast_examples.py's own
 # panel style (hollow-marker actual, dashed prediction, translucent band),
@@ -58,7 +58,7 @@ from thesis_figures.style import configure, panel, tex_safe  # noqa: E402
 # median to the middle level and draws one band from the outer two, exactly
 # reproducing the same visual convention for one interval.
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "common"))
-from forecast_panels import draw  # noqa: E402
+from twiga_thesis.plotting.forecast_panels import draw  # noqa: E402
 
 script_dir = Path(__file__).resolve().parent
 OUT = script_dir / "mlpgam_forecast_examples"

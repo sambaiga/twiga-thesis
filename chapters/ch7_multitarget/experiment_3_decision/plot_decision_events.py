@@ -38,9 +38,9 @@ import pandas as pd  # noqa: E402
 script_dir = Path(__file__).resolve().parent
 sys.path[:0] = [str(script_dir), str(script_dir.parent / "experiment_1_benchmark"), str(script_dir.parents[1])]
 
-import decision_scoring as ds  # noqa: E402
-import fixed_decision_sweep as sweep  # noqa: E402
-from thesis_figures import style as S, tokens as T  # noqa: E402
+import chapters.ch7_multitarget.experiment_3_decision.decision_scoring as ds  # noqa: E402
+import chapters.ch7_multitarget.experiment_3_decision.fixed_decision_sweep as sweep  # noqa: E402
+from twiga_thesis.plotting import style as S, tokens as T  # noqa: E402
 
 TEST_MONTH_START = 6
 NETWORK_LABEL = {"DSS-UK:weak": "DSS-UK weak", "DSS-UK:stiff": "DSS-UK stiff", "DSS-US:8": "DSS-US rank 8"}

@@ -14,7 +14,7 @@ no multiple-comparison correction; Chapter 7's design-ablation groups run up
 to fifteen conditions, where that correction matters).
 
 Run:  uv run python -c "import sys; sys.path.insert(0,'experiment');
-      from thesis_figures import ch7_significance as F; F.render_all()"
+      from twiga_thesis.plotting import ch7_significance as F; F.render_all()"
 """
 
 from __future__ import annotations

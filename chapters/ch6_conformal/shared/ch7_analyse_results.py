@@ -28,18 +28,24 @@ import numpy as np
 import pandas as pd
 
 script_dir = Path(__file__).resolve().parent
-# The chapter directory (for ``shared.*``) and ``experiment/`` (for ``thesis_figures``).
+# The chapter directory (for ``shared.*``) and ``experiment/`` (for ``twiga_thesis.plotting``).
 sys.path.insert(0, str(script_dir.parent))
 sys.path.insert(0, str(script_dir.parents[1]))
 
-from shared.protocol import CHAPTER_DATASETS, DEFAULT_OUTPUT_ROOT  # noqa: E402
+from chapters.ch6_conformal.shared.protocol import CHAPTER_DATASETS, DEFAULT_OUTPUT_ROOT  # noqa: E402
 
 RESULTS_ROOT = DEFAULT_OUTPUT_ROOT
 OUT_DIR = RESULTS_ROOT / "analysis"
 FIG_DIR = OUT_DIR / "figures"
 IMAGES_DIR = script_dir.parents[2] / "Papers" / "PhD thesis -Final-Revision" / "Images" / "Chapter-7"
 
-from experiment.common.comparison_plots import (
+from chapters.ch6_conformal.shared.metrics import cwe_comparison  # noqa: E402
+from twiga_thesis.analysis import dm_and_mcs, fold_level, kupiec_table, metric_table
+from twiga_thesis.plotting import (  # noqa: E402
+    style as S,
+    tokens as T,
+)
+from twiga_thesis.plotting.comparison_plots import (
     display_name,
     head_label,
     plot_dm_significance_matrix,
@@ -50,12 +56,6 @@ from experiment.common.comparison_plots import (
     plot_normalized_comparison,
     plot_primary_metric_comparison,
     save_metric_figures,
-)
-from experiment.common.result_analysis import dm_and_mcs, fold_level, kupiec_table, metric_table
-from shared.metrics import cwe_comparison  # noqa: E402
-from thesis_figures import (  # noqa: E402
-    style as S,
-    tokens as T,
 )
 
 DATASETS = list(CHAPTER_DATASETS)
@@ -459,7 +459,8 @@ def plot_fold_coverage(
     """
     from matplotlib.colors import LinearSegmentedColormap, Normalize  # noqa: PLC0415
     from matplotlib.ticker import MultipleLocator  # noqa: PLC0415
-    from shared.ch7_architectural_analysis import _tex_label  # noqa: PLC0415
+
+    from chapters.ch6_conformal.shared.ch7_architectural_analysis import _tex_label  # noqa: PLC0415
 
     starts = pd.to_datetime(full[full["dataset"] == dataset].groupby("Folds")["timestamp"].min())
     conditions = sorted(conditions, key=lambda c: c != "mlpgam_crc")  # the proposed head first
@@ -500,20 +501,20 @@ def plot_fold_coverage(
     plt.close(fig)
 
 
-def thesis_figures(experiment: str, datasets: list[str], copy_to_images: bool = False) -> None:
+def render_single_figures(experiment: str, datasets: list[str], copy_to_images: bool = False) -> None:
     """Single-plot thesis figures for ``experiment``, in the style of the architectural evaluation's figures.
 
     Chapter 5-style cross-dataset bars per metric (error metrics as the paired relative score), Chapter 6-style
     significance matrices on the decisive metrics, and per-fold coverage. Written to
-    ``<analysis>/thesis_figures/<experiment>``; ``copy_to_images`` copies the PDFs to the thesis as
+    ``<analysis>/twiga_thesis.plotting/<experiment>``; ``copy_to_images`` copies the PDFs to the thesis as
     ``fig_ch7_<short>_<name>.pdf`` (``short`` = ``bench`` for the probabilistic benchmark).
     """
     import shutil  # noqa: PLC0415
 
-    from shared import ch7_architectural_analysis as arch  # noqa: PLC0415
+    from chapters.ch6_conformal.shared import ch7_architectural_analysis as arch  # noqa: PLC0415
 
     conditions = EXPERIMENTS[experiment]["interval_conditions"]
-    out = OUT_DIR / "thesis_figures" / experiment
+    out = OUT_DIR / "twiga_thesis.plotting" / experiment
     out.mkdir(parents=True, exist_ok=True)
     frames = {}
     for dataset in datasets:
@@ -567,7 +568,7 @@ def run_analysis(
         for dataset in datasets:
             analyse_experiment(full, dataset, experiment)
         if thesis:
-            thesis_figures(experiment, datasets, copy_to_images=copy_to_images)
+            render_single_figures(experiment, datasets, copy_to_images=copy_to_images)
 
         # Cross-dataset comparison figures, interval-producing conditions only.
         interval_conditions = EXPERIMENTS[experiment]["interval_conditions"]
@@ -617,7 +618,7 @@ def main() -> None:
         results_root=args.results_root,
         winsorize=args.winsorize_nrmse,
         latex=not args.no_latex,
-        thesis=args.thesis_figures,
+        thesis=args.twiga_thesis.plotting,
         copy_to_images=args.copy_to_images,
     )
 

@@ -46,10 +46,14 @@ import pandas as pd  # noqa: E402
 script_dir = Path(__file__).resolve().parent
 sys.path[:0] = [str(script_dir), str(script_dir.parents[1])]
 
-from fixed_benchmark_analysis import N_STRATA, _window_hits  # noqa: E402
-from thesis_figures import line_style as LS, style as S, tokens as T  # noqa: E402
 from twiga.core.metrics.interval import conditional_cwe  # noqa: E402
 from twiga.distributions.conformal.multitarget import MultiTargetConformal, Predictive  # noqa: E402
+
+from chapters.ch7_multitarget.experiment_1_benchmark.fixed_benchmark_analysis import (  # noqa: E402
+    N_STRATA,
+    _window_hits,
+)
+from twiga_thesis.plotting import line_style as LS, style as S, tokens as T  # noqa: E402
 
 ALPHA = 0.1
 TARGETS = ("P", "Q", "V")

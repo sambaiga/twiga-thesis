@@ -70,12 +70,13 @@ import torch
 script_dir = Path(__file__).resolve().parent
 sys.path[:0] = [str(script_dir), str(script_dir.parent / "experiment_1_benchmark")]
 
-import decision_scoring as ds  # noqa: E402
-import fixed_benchmark as fb  # noqa: E402
 from twiga.core.utils import configure, get_logger  # noqa: E402
 from twiga.distributions.ml.utils import get_sigma_from_quantile_levels  # noqa: E402
 from twiga.experiment import Condition, ExperimentEngine, ExperimentSpec  # noqa: E402
 from twiga.utils.data_loading import load_dataset  # noqa: E402
+
+import chapters.ch7_multitarget.experiment_1_benchmark.fixed_benchmark as fb  # noqa: E402
+import chapters.ch7_multitarget.experiment_3_decision.decision_scoring as ds  # noqa: E402
 
 log = get_logger(__name__)
 
@@ -451,7 +452,9 @@ def checkpoint_sources(sweep_root: Path, key: str) -> dict[str, Path]:
     Returns:
         ``{head: checkpoint directory}`` for every head whose checkpoints exist; empty if no run holds the scenario.
     """
-    from decision_forecast_type_report import scenario_key  # noqa: PLC0415  (report module, imported on demand)
+    from chapters.ch7_multitarget.experiment_3_decision.decision_forecast_type_report import (  # noqa: PLC0415
+        scenario_key,
+    )
 
     for run in sorted((sweep_root / "runs").glob("*"), reverse=True):
         if scenario_key(run) != key:

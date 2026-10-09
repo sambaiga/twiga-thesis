@@ -3,7 +3,7 @@ r"""CV split-scheme figure for Chapter 7, in the thesis's own production style.
 Renders the same information as `ExperimentEngine`'s lets-plot sanity plot
 (``twiga.experiment.engine._save_split_scheme_plot``) --- one Gantt row per
 fold, coloured by Train / Val / Calib / Test --- but through
-:mod:`thesis_figures.style`, so it sits in the document as a vector PDF with
+:mod:`twiga_thesis.plotting.style`, so it sits in the document as a vector PDF with
 the same serif type, palette and spine treatment as every other Chapter 7
 figure rather than the lets-plot PNG the engine emits for a quick sanity
 check during a run.
@@ -25,15 +25,16 @@ import sys
 import matplotlib.pyplot as plt
 import pandas as pd
 
-sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # experiment/ (thesis_figures, common)
+sys.path.insert(0, str(Path(__file__).resolve().parents[2]))  # experiment/ (twiga_thesis.plotting, common)
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # chapter directory (shared.*)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from conditions import ABLATION_SPEC
-from shared.protocol import DATASETS  # noqa: E402
-from thesis_figures import style as S, tokens as T  # noqa: E402
 from twiga.core.backtester import TimeBasedCV  # noqa: E402
 from twiga.utils.run_forecast import PipelineConfig, load_and_preprocess  # noqa: E402
+
+from chapters.ch6_conformal.design_ablation.conditions import ABLATION_SPEC
+from chapters.ch6_conformal.shared.protocol import DATASETS  # noqa: E402
+from twiga_thesis.plotting import style as S, tokens as T  # noqa: E402
 
 SEGMENT_COLORS = {
     "Train": T.PRIMARY,  # teal

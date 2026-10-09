@@ -19,7 +19,7 @@ own Experiment 1 tables:
 Significance markers (benchmark table):
   bold          the head is in the 95% Model Confidence Set for that metric and
                 target (NRMSE, CRPS, WS; fold-level losses, as Chapters 5 and 7
-                test them, via experiment.common.result_analysis); for stratified CWE,
+                test them, via twiga_thesis.analysis); for stratified CWE,
                 which is a diagnostic rather than a proper score, bold marks the
                 highest value and carries no test
   up/down arrow the head is significantly better / worse than anchored FPQR
@@ -47,8 +47,11 @@ import pandas as pd
 script_dir = Path(__file__).resolve().parent
 sys.path.insert(0, str(script_dir))
 sys.path.insert(0, str(script_dir.parents[2]))
-from experiment.common.result_analysis import dm_and_mcs  # noqa: E402
-from fixed_benchmark_analysis import load_condition, two_sided_cwe  # noqa: E402
+from chapters.ch7_multitarget.experiment_1_benchmark.fixed_benchmark_analysis import (  # noqa: E402
+    load_condition,
+    two_sided_cwe,
+)
+from twiga_thesis.analysis import dm_and_mcs  # noqa: E402
 
 REFERENCE = "fpqr_anchor"
 # Row order and labels: the proposed configuration first, the baselines, then
@@ -132,7 +135,7 @@ def significance(
 ) -> tuple[dict, dict, dict, dict]:
     """Fold-level DM and MCS per (metric, target), as Chapters 5 and 7 test them.
 
-    One loss per head and fold, through ``experiment.common.result_analysis.dm_and_mcs``
+    One loss per head and fold, through ``twiga_thesis.analysis.dm_and_mcs``
     (DM with Benjamini-Hochberg adjustment, MCS at alpha=0.05). The compared heads form
     one test family, the same one the report's significance figures use; the adjustment
     depends on the family, so adding the reference rows to it would make the compared

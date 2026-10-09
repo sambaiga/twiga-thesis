@@ -26,12 +26,13 @@ import pandas as pd
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "shared"))
-from copula_variants import run_fold, variant_registry  # noqa: E402
-from forecast_examples import backbone_settings, build_backtest_folds  # noqa: E402
-from tune_backbone import tune as tune_backbone  # noqa: E402
 from twiga.core.utils import get_logger
 from twiga.core.utils.paths import slugify
 from twiga.experiment import start_run
+
+from chapters.ch7_multitarget.copula.copula_variants import run_fold, variant_registry  # noqa: E402
+from chapters.ch7_multitarget.shared.forecast_examples import backbone_settings, build_backtest_folds  # noqa: E402
+from chapters.ch7_multitarget.shared.tune_backbone import tune as tune_backbone  # noqa: E402
 
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent

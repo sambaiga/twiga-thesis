@@ -34,14 +34,24 @@ import numpy as np  # noqa: E402
 import pandas as pd  # noqa: E402
 
 script_dir = Path(__file__).resolve().parent
-sys.path.insert(0, str(script_dir.parents[1]))  # experiment/ (thesis_figures, common)
+sys.path.insert(0, str(script_dir.parents[1]))  # experiment/ (twiga_thesis.plotting, common)
 sys.path.insert(0, str(script_dir.parent))  # chapter directory (shared.*)
 sys.path.insert(0, str(script_dir.parents[1] / "common"))
 
-from shared.forecast_examples import best_interval_day, condition_dir, daily_error, day_frame  # noqa: E402
-from shared.protocol import ALPHA, CHAPTER_DATASETS, DEFAULT_OUTPUT_ROOT, experiment_output_dir  # noqa: E402
-from thesis_figures import line_style as LS  # noqa: E402
-from thesis_figures.style import tex_safe  # noqa: E402
+from chapters.ch6_conformal.shared.forecast_examples import (  # noqa: E402
+    best_interval_day,
+    condition_dir,
+    daily_error,
+    day_frame,
+)
+from chapters.ch6_conformal.shared.protocol import (  # noqa: E402
+    ALPHA,
+    CHAPTER_DATASETS,
+    DEFAULT_OUTPUT_ROOT,
+    experiment_output_dir,
+)
+from twiga_thesis.plotting import line_style as LS  # noqa: E402
+from twiga_thesis.plotting.style import tex_safe  # noqa: E402
 
 IMAGES_DIR = script_dir.parents[2] / "Papers" / "PhD thesis -Final-Revision" / "Images" / "Chapter-7"
 CONDITIONS = {"conf_scp_pooled": "fixed", "conf_scp": "adaptive", "conf_crc": "crc"}

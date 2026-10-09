@@ -1,7 +1,7 @@
 r"""Chapter 6, Experiment 1 figures for every dataset, in the thesis line-plot style.
 
 One panel per dataset (or per dataset and target), authored at its final size
-with :mod:`thesis_figures.line_style` (10 pt labels, 8 pt legends below the
+with :mod:`twiga_thesis.plotting.line_style` (10 pt labels, 8 pt legends below the
 axes, outward ticks, no minor ticks, the thesis palette), so the chapter can
 place them as subfigures and refer to each one:
 
@@ -45,12 +45,13 @@ import pandas as pd  # noqa: E402
 script_dir = Path(__file__).resolve().parent
 sys.path[:0] = [str(script_dir), str(script_dir.parent / "shared"), str(script_dir.parents[1])]
 
-import benchmark_dependence_check as bdc  # noqa: E402
-from experiment.common.comparison_plots import plot_dm_significance_matrix  # noqa: E402
-from experiment.common.result_analysis import dm_and_mcs  # noqa: E402
-import fixed_benchmark_tables as fbt  # noqa: E402
-from thesis_figures import line_style as LS, style as S, tokens as T  # noqa: E402
 from twiga.core.stats.association import distance_correlation  # noqa: E402
+
+import chapters.ch7_multitarget.experiment_1_benchmark.fixed_benchmark_tables as fbt  # noqa: E402
+import chapters.ch7_multitarget.shared.benchmark_dependence_check as bdc  # noqa: E402
+from twiga_thesis.analysis import dm_and_mcs  # noqa: E402
+from twiga_thesis.plotting import line_style as LS, style as S, tokens as T  # noqa: E402
+from twiga_thesis.plotting.comparison_plots import plot_dm_significance_matrix  # noqa: E402
 
 MAIN = fbt.MAIN
 LABEL = {"fpqr_anchor": "FPQR", "qr": "QR", "bnn": "BNN", "laplace": "Laplace"}

@@ -26,7 +26,22 @@ import json
 from pathlib import Path
 import sys
 
-from experiment.common.comparison_plots import (
+from matplotlib import pyplot as plt
+import numpy as np
+import pandas as pd
+from twiga.experiment.run_catalog import (
+    discover_runs as _discover_experiment_runs,
+    latest_run_for_group as _latest_experiment_run,
+    load_group_csv,
+)
+
+from twiga_thesis.analysis import (
+    dm_and_mcs as shared_dm_and_mcs,
+    fold_level as aggregate_fold_level,
+    kupiec_table as shared_kupiec_table,
+    metric_table as build_metric_table,
+)
+from twiga_thesis.plotting.comparison_plots import (
     bootstrap_ci as shared_bootstrap_ci,
     display_metric as shared_display_metric,
     display_name,
@@ -40,20 +55,6 @@ from experiment.common.comparison_plots import (
     plot_primary_metric_comparison as shared_plot_primary_metric_comparison,
     save_metric_figures,
 )
-from experiment.common.result_analysis import (
-    dm_and_mcs as shared_dm_and_mcs,
-    fold_level as aggregate_fold_level,
-    kupiec_table as shared_kupiec_table,
-    metric_table as build_metric_table,
-)
-from matplotlib import pyplot as plt
-import numpy as np
-import pandas as pd
-from twiga.experiment.run_catalog import (
-    discover_runs as _discover_experiment_runs,
-    latest_run_for_group as _latest_experiment_run,
-    load_group_csv,
-)
 
 script_dir = Path(__file__).resolve().parent
 RUNS_DIR = script_dir / "results" / "chapter_5_fpqr" / "runs"
@@ -61,10 +62,10 @@ OUT_DIR = script_dir / "results" / "analysis"
 FIG_DIR = OUT_DIR / "figures"
 
 sys.path.insert(0, str(script_dir))
-from fpqr_experiment import SPEC  # noqa: E402
+from chapters.ch5_fpqr.fpqr_experiment import SPEC  # noqa: E402
 
 sys.path.insert(0, str(script_dir.parent))
-from thesis_figures import (
+from twiga_thesis.plotting import (
     style as S,  # noqa: E402
     tokens as T,  # noqa: E402
 )

@@ -85,8 +85,9 @@ from twiga.experiment import start_run
 log = get_logger(__name__)
 
 sys.path.insert(0, str(Path(__file__).resolve().parent.parent / "shared"))
-from experiment.common.significance import pairwise_dm_table  # noqa: E402
-from forecast_examples import (  # noqa: E402
+from twiga.core.metrics import pairwise_dm_table  # noqa: E402
+
+from chapters.ch7_multitarget.shared.forecast_examples import (  # noqa: E402
     _cfg,
     backbone_settings,
     build_backtest_folds,
@@ -95,7 +96,7 @@ from forecast_examples import (  # noqa: E402
     metrics_table,
     pointwise_losses,
 )
-from tune_backbone import tune as tune_backbone  # noqa: E402
+from chapters.ch7_multitarget.shared.tune_backbone import tune as tune_backbone  # noqa: E402
 
 script_dir = Path(__file__).resolve().parent
 # Outside the repo, matching multitarget_experiment.py/fpqr_gating_ablation.py's
@@ -321,7 +322,7 @@ def family_significance(table: pd.DataFrame, metric: str = "Winkler") -> pd.Data
 
     Complements :func:`significance`'s single pre-registered pair (which tests
     one contrast against a strict null) with the full M(M-1)/2 picture across
-    the FPQR family, using ``experiment.common.significance``'s
+    the FPQR family, using ``twiga.core.metrics``'s
     ``pairwise_dm_table`` rather than a separate reimplementation -- that
     module is documented as chapter-agnostic given per-fold loss arrays of
     equal length per condition, which is exactly what this table provides

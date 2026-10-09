@@ -23,7 +23,7 @@ prose, because the reported percentages in an earlier chapter draft would
 otherwise read as directionally confirmed when they are two-sided noise.
 
 Run:  uv run python -c "import sys; sys.path.insert(0,'experiment');
-      from thesis_figures import ch7_backbone_fix_reversal as F; F.render_all()"
+      from twiga_thesis.plotting import ch7_backbone_fix_reversal as F; F.render_all()"
 """
 
 from __future__ import annotations

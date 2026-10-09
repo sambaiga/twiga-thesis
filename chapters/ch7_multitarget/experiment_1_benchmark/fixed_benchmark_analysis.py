@@ -40,15 +40,20 @@ sys.path.insert(0, str(script_dir.parents[2]))
 import matplotlib  # noqa: E402
 
 matplotlib.use("Agg")
-from experiment.common.forecast_panels import draw  # noqa: E402
-from experiment.common.significance import mcs_ranking, pairwise_dm_table  # noqa: E402
 import matplotlib.pyplot as plt  # noqa: E402
+from twiga.core.metrics import mcs_ranking, pairwise_dm_table  # noqa: E402
+
+from twiga_thesis.plotting.forecast_panels import draw  # noqa: E402
 
 sys.path.insert(0, str(script_dir.parent.parent))
-from thesis_figures.style import configure, pad_limits  # noqa: E402
+from twiga_thesis.plotting.style import configure, pad_limits  # noqa: E402
 
 sys.path.insert(0, str(script_dir))
-from fixed_benchmark import ALPHA, DEFAULT_OUTPUT_ROOT, FAN_LEVELS  # noqa: E402
+from chapters.ch7_multitarget.experiment_1_benchmark.fixed_benchmark import (  # noqa: E402
+    ALPHA,
+    DEFAULT_OUTPUT_ROOT,
+    FAN_LEVELS,
+)
 
 N_STRATA = 10
 
@@ -249,7 +254,7 @@ def plot_day(
 
     ``names`` maps a condition to its column title; rows are labelled by target role (P, Q, V).
     """
-    from fixed_benchmark_tables import ROLE  # noqa: PLC0415
+    from chapters.ch7_multitarget.experiment_1_benchmark.fixed_benchmark_tables import ROLE  # noqa: PLC0415
 
     heads = list(fans)
     targets = sorted(next(iter(fans.values()))["target"].unique())

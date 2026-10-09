@@ -26,7 +26,7 @@ import pandas as pd
 import torch
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from learned_tau import SPLITS, build, capture, find_head  # noqa: E402
+from chapters.ch5_fpqr.learned_tau import SPLITS, build, capture, find_head  # noqa: E402
 
 script_dir = Path(__file__).resolve().parent
 OUT = script_dir / "s564_tau_matrix.csv"

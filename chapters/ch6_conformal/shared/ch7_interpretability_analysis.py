@@ -41,9 +41,13 @@ script_dir = Path(__file__).resolve().parent
 sys.path.insert(0, str(script_dir.parent))
 sys.path.insert(0, str(script_dir.parents[1]))
 
-from shared.forecast_examples import condition_dir, daily_error  # noqa: E402
-from shared.protocol import CHAPTER_DATASETS, DEFAULT_OUTPUT_ROOT, experiment_output_dir  # noqa: E402
-from thesis_figures import line_style as LS, style as S, tokens as T  # noqa: E402
+from chapters.ch6_conformal.shared.forecast_examples import condition_dir, daily_error  # noqa: E402
+from chapters.ch6_conformal.shared.protocol import (  # noqa: E402
+    CHAPTER_DATASETS,
+    DEFAULT_OUTPUT_ROOT,
+    experiment_output_dir,
+)
+from twiga_thesis.plotting import line_style as LS, style as S, tokens as T  # noqa: E402
 
 IMAGES_DIR = script_dir.parents[2] / "Papers" / "PhD thesis -Final-Revision" / "Images" / "Chapter-7"
 SLUG = {"MLVS-PT": "pt", "MLVS-UK": "uk"}

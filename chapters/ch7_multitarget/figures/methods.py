@@ -19,7 +19,7 @@ equations state precisely but do not make visible:
     differ only in whether the copula is applied.
 
 Run:  uv run python -c "import sys; sys.path.insert(0,'experiment');
-      from thesis_figures import ch6_methods as M; M.render_all()"
+      from twiga_thesis.plotting import ch6_methods as M; M.render_all()"
 """
 
 from __future__ import annotations

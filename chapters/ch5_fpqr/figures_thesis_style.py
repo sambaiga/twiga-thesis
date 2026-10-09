@@ -8,7 +8,7 @@ reader should notice, dotted grey references, sentence-case labels, legends belo
 Usage::
 
     MPLBACKEND=Agg uv run python -c "import sys; sys.path.insert(0, 'experiment'); \
-        from thesis_figures import ch5_figures as F; F.render()"
+        from twiga_thesis.plotting import ch5_figures as F; F.render()"
 """
 
 from __future__ import annotations

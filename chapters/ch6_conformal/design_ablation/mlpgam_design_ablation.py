@@ -53,18 +53,19 @@ import pandas as pd
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))  # chapter directory (shared.*)
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
-from conditions import (  # noqa: E402
-    ABLATION_CONDITIONS,
-    ABLATION_SPEC,
-    make_conformal_config,
-)
-from experiment.common.significance import mcs_ranking, pairwise_dm_table  # noqa: E402
-from shared.metrics import INTERVAL_METRICS, POINT_METRICS, cwe_comparison  # noqa: E402
-from shared.protocol import DATASETS, experiment_output_dir  # noqa: E402
+from twiga.core.metrics import mcs_ranking, pairwise_dm_table  # noqa: E402
 from twiga.core.utils import configure, get_logger  # noqa: E402
 from twiga.experiment import Condition, ExperimentEngine  # noqa: E402
 from twiga.models.nn import MLPGAMConfig  # noqa: E402
 from twiga.utils.run_forecast import PipelineConfig, setup_environment  # noqa: E402
+
+from chapters.ch6_conformal.design_ablation.conditions import (  # noqa: E402
+    ABLATION_CONDITIONS,
+    ABLATION_SPEC,
+    make_conformal_config,
+)
+from chapters.ch6_conformal.shared.metrics import INTERVAL_METRICS, POINT_METRICS, cwe_comparison  # noqa: E402
+from chapters.ch6_conformal.shared.protocol import DATASETS, experiment_output_dir  # noqa: E402
 
 log = get_logger(__name__)
 

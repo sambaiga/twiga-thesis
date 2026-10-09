@@ -9,7 +9,7 @@ Chapter 3 image folder.
 Usage::
 
     MPLBACKEND=Agg uv run python -c "import sys; sys.path.insert(0, 'experiment'); \
-        from thesis_figures import ch3_figures as F; F.render(['dss_eu_disagreement'])"
+        from twiga_thesis.plotting import ch3_figures as F; F.render(['dss_eu_disagreement'])"
 """
 
 from __future__ import annotations

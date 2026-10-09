@@ -5,7 +5,7 @@ significance) and follows the practices of ``ch6_analyse_results.py`` and
 ``ch7_analyse_results.py``:
 
 * fold-then-mean aggregation; DM and MCS on fold-level losses through
-  ``experiment.common.result_analysis.dm_and_mcs``, after dropping heads that
+  ``twiga_thesis.analysis.dm_and_mcs``, after dropping heads that
   are degenerate on the tested metric;
 * ``metric_table`` per target (mean, sample std, per-fold ranks, arithmetic,
   Borda and diversity-weighted Borda ranks), PICP ranked by its distance from
@@ -51,17 +51,18 @@ sys.path.insert(0, str(script_dir))
 sys.path.insert(0, str(script_dir.parents[2]))
 sys.path.insert(0, str(script_dir.parent / "shared"))
 sys.path.insert(0, str(script_dir.parents[1]))
-import benchmark_dependence_check as bdc  # noqa: E402
-from experiment.common.comparison_plots import (  # noqa: E402
+from twiga.core.metrics.calibration import kupiec_pof_test  # noqa: E402
+
+import chapters.ch7_multitarget.experiment_1_benchmark.fixed_benchmark_analysis as fba  # noqa: E402
+import chapters.ch7_multitarget.experiment_1_benchmark.fixed_benchmark_tables as fbt  # noqa: E402
+import chapters.ch7_multitarget.shared.benchmark_dependence_check as bdc  # noqa: E402
+from twiga_thesis.analysis import dm_and_mcs, metric_table  # noqa: E402
+from twiga_thesis.plotting import style as S, tokens as T  # noqa: E402
+from twiga_thesis.plotting.comparison_plots import (  # noqa: E402
     plot_dm_significance_matrix,
     plot_forest_grid,
     plot_metric_bar_grid,
 )
-from experiment.common.result_analysis import dm_and_mcs, metric_table  # noqa: E402
-import fixed_benchmark_analysis as fba  # noqa: E402
-import fixed_benchmark_tables as fbt  # noqa: E402
-from thesis_figures import style as S, tokens as T  # noqa: E402
-from twiga.core.metrics.calibration import kupiec_pof_test  # noqa: E402
 
 NOMINAL = 0.90
 REFERENCE = fbt.REFERENCE
