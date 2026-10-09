@@ -54,6 +54,6 @@ jobs:
           uv run ruff check . --no-fix
           uv run ruff format --check .
       - name: Run ty type checking
-        run: uv run ty check twiga_thesis  # chapters/ not yet clean, see README Known limitations
+        run: uv run ty check twiga_thesis chapters
       - name: Run tests
         run: uv run pytest

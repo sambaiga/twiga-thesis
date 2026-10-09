@@ -18,7 +18,7 @@ repos:
         stages: [commit-msg]
       - id: ty
         name: ty type check
-        entry: uvx ty check twiga_thesis
+        entry: uvx ty check twiga_thesis chapters
         language: system
         types: [python]
         pass_filenames: false
