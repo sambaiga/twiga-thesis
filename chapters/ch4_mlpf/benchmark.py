@@ -2,9 +2,17 @@
 
 Models compared
 ---------------
-Neural networks : N-HiTS, MLPF, MLPGAM, MLPGAF
-Tree-based ML   : LightGBM, XGBoost, CatBoost
-Linear baseline : LinearRegression
+Neural networks     : N-HiTS, MLPF, MLPGAM, MLPGAF
+Tree-based ML       : LightGBM, XGBoost, CatBoost
+Linear baseline     : LinearRegression
+Statistical baseline: SeasonalNaive, Naive
+
+RQ4's benchmark also compares against MSTL in the legacy notebooks this script
+descends from; MSTL has no twiga-native equivalent (it is a
+statsforecast/darts-specific seasonal-trend decomposition), so it is dropped
+here rather than reimplemented, and SeasonalNaive/Naive stand in as the
+statistical floor RQ4's own "least training time"/"inference time comparable
+to S-Naive" findings are checked against.
 
 CV strategy
 -----------
@@ -42,6 +50,7 @@ from twiga.core.config import DataPipelineConfig, ExperimentConfig
 from twiga.core.plot.matplot_theme import configure_matlib_style
 from twiga.core.utils.logger import configure, get_logger, log_section
 from twiga.forecaster.core import TwigaForecaster
+from twiga.models.baseline import NAIVEConfig, SEASONALNAIVEConfig
 from twiga.models.ml import CATBOOSTConfig, LIGHTGBMConfig, LINEAREGConfig, XGBOOSTConfig
 from twiga.models.nn.mlpf_model import MLPFConfig
 from twiga.models.nn.mlpgaf_model import MLPGAFConfig
@@ -172,7 +181,7 @@ def build_data_config(
 
 
 def build_model_configs(cal: list, exog: list, lags: list) -> list:
-    """8 models: 4 neural-network + 3 tree-based + 1 linear."""
+    """10 models: 4 neural-network + 3 tree-based + 1 linear + 2 statistical baselines."""
     nn_kwargs = {
         "max_epochs": MAX_EPOCHS,
         "rich_progress_bar": False,
@@ -196,6 +205,10 @@ def build_model_configs(cal: list, exog: list, lags: list) -> list:
         CATBOOSTConfig(verbose=False),
         # ── Linear baseline ─────────────────────────────────────────────
         LINEAREGConfig(),
+        # ── Statistical baselines ────────────────────────────────────────
+        # Daily seasonality at 30-min resolution: one day = 48 samples.
+        SEASONALNAIVEConfig(period="1D", freq=PERIOD),
+        NAIVEConfig(strategy="window_last"),
     ]
 
 
@@ -219,7 +232,7 @@ def build_forecaster_config() -> ExperimentConfig:
 def tune_on_first_fold(
     forecaster: TwigaForecaster,
     data: pd.DataFrame,
-) -> None:
+) -> pd.DataFrame:
     """Tune all models on fold-0 data, freeze best params into forecaster.models.
 
     Steps
@@ -234,13 +247,24 @@ def tune_on_first_fold(
     Because ``_split_scheme`` is already set, the subsequent
     ``forecaster.backtesting(data)`` call reuses the exact same folds
     without re-computing them, and uses the tuned model configs for every fold.
+
+    Returns:
+        Fold-0's full training slice (before the 80/20 tune split), so callers
+        (e.g. ``measure_train_times``) can reuse the same window without
+        re-deriving the split scheme.
     """
     log.info("Initialising split scheme and extracting fold-0 train data …")
 
     # Advancing the generator once initialises _split_scheme for ALL folds
     # (set_split_scheme runs before the first yield) and gives us fold 0.
+    # forecaster.split() yields twiga.core.backtester.SplitBundle, a 6-field
+    # namedtuple (fit_df, val_df, calib_df, test_df, scheme, split_key) — this
+    # unpack previously read `fold0_train, _, scheme0, _ = next(split_gen)` (4
+    # names against a 6-tuple), which raises "too many values to unpack" the
+    # instant this function is called. Found during the re-audit this
+    # script's own README names as an open gap; fixed here.
     split_gen = forecaster.split(data)
-    fold0_train, _, scheme0, _ = next(split_gen)
+    fold0_train, _val_df, _calib_df, _fold0_test, scheme0, _split_key = next(split_gen)
 
     log.info(
         "Fold 0 train window: %s → %s  (%d rows)",
@@ -276,6 +300,8 @@ def tune_on_first_fold(
         }
         log.info("  %-18s  %s", name, params)
 
+    return fold0_train
+
 
 # ---------------------------------------------------------------------------
 # Backtesting
@@ -295,6 +321,46 @@ def run_backtesting(
         TEST_SIZE_MONTHS,
     )
     return forecaster.backtesting(data=data, verbose=True)
+
+
+def measure_train_times(
+    data_config: DataPipelineConfig,
+    model_configs: list,
+    fold0_train: pd.DataFrame,
+) -> pd.DataFrame:
+    """Time one fit of each model, on the same fold-0 training window, for the cost comparison.
+
+    ``TwigaForecaster``'s multi-model ``backtesting()``/``evaluate_point_forecast()`` path only
+    persists *inference* wall-time into its metrics frame (the ``inference-time`` column set in
+    ``BaseForecaster._evaluate_core``). The training wall-time
+    ``BaseForecaster._fit`` records (``self.train_walltime``) is set on the shared
+    ``TwigaForecaster`` instance itself — overwritten on every model/fold iteration of its own
+    internal loop — not on the individual items in ``forecaster.models``, so it cannot be read
+    back per model after the fact (confirmed by reading ``TwigaForecaster.fit``/``_fit`` directly;
+    an earlier version of this function assumed the opposite and always returned ``NaN``). This
+    times one standalone fit per model directly instead, each on the same fold-0 train window
+    `tune_on_first_fold` already extracted, so every model's figure is comparable.
+
+    Args:
+        data_config: The shared `DataPipelineConfig` (`build_data_config()`'s output).
+        model_configs: The model configs under comparison (`build_model_configs()`'s output).
+        fold0_train: Fold-0's training slice (same window `tune_on_first_fold` uses).
+
+    Returns:
+        One row per model: `Model` (matching the metrics frame's own `Model` column) and
+        `train_time_s` (seconds, a single representative fit, not averaged across folds).
+    """
+    import time
+
+    forecaster_config = build_forecaster_config()
+    rows = []
+    for model_config in model_configs:
+        solo = TwigaForecaster(data_params=data_config, model_params=[model_config], train_params=forecaster_config)
+        start = time.perf_counter()
+        solo.fit(train_df=fold0_train)
+        elapsed = time.perf_counter() - start
+        rows.append({"Model": str(model_config.name).upper(), "train_time_s": elapsed})
+    return pd.DataFrame(rows)
 
 
 # ---------------------------------------------------------------------------
@@ -364,17 +430,24 @@ def report(metrics: pd.DataFrame) -> pd.DataFrame:
 # ---------------------------------------------------------------------------
 
 
-def save_results(predictions: pd.DataFrame, metrics: pd.DataFrame) -> None:
-    """Save predictions and metrics to CSV.
+def save_results(predictions: pd.DataFrame, metrics: pd.DataFrame, train_times: pd.DataFrame | None = None) -> None:
+    """Save predictions, metrics, and (if given) per-model train times to CSV.
 
     Args:
         predictions: DataFrame with model predictions.
         metrics: DataFrame with evaluation metrics.
+        train_times: Optional per-model training wall-time, from
+            :func:`capture_train_times`; read by ``analysis.py`` for the
+            accuracy-vs-cost trade-off.
     """
     metrics.to_csv(OUTPUT_DIR / "results" / "metrics" / "backtest_metrics.csv", index=False)
     predictions.to_csv(OUTPUT_DIR / "results" / "predictions" / "backtest_predictions.csv", index=False)
     log.info("Saved metrics     → %s", OUTPUT_DIR / "results" / "metrics" / "backtest_metrics.csv")
     log.info("Saved predictions → %s", OUTPUT_DIR / "results" / "predictions" / "backtest_predictions.csv")
+    if train_times is not None:
+        path = OUTPUT_DIR / "results" / "metrics" / "backtest_train_times.csv"
+        train_times.to_csv(path, index=False)
+        log.info("Saved train times → %s", path)
 
 
 def plot_results(predictions: pd.DataFrame, overall: pd.DataFrame) -> None:
@@ -493,7 +566,7 @@ if __name__ == "__main__":
     )
 
     log_section(log, "Fold-0 Hyperparameter Tuning")
-    tune_on_first_fold(forecaster, data)
+    fold0_train = tune_on_first_fold(forecaster, data)
 
     log_section(log, "Expanding-Window Backtesting")
     predictions, metrics = run_backtesting(forecaster, data)
@@ -501,8 +574,11 @@ if __name__ == "__main__":
     log_section(log, "Results")
     overall = report(metrics)
 
+    log_section(log, "Training-Time Measurement")
+    train_times = measure_train_times(data_config, model_configs, fold0_train)
+
     log_section(log, "Saving")
-    save_results(predictions, metrics)
+    save_results(predictions, metrics, train_times)
     plot_results(predictions, overall)
 
     log.info("Done. All results in %s", OUTPUT_DIR)
