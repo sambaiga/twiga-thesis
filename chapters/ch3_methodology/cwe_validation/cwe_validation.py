@@ -124,12 +124,18 @@ def stratified_cwe(
     comparable across strata; recomputing it per stratum rescales NMPI differently
     in each bin and makes them incommensurable.
 
-    Deliberately not ``twiga.core.metrics.interval.conditional_cwe``: that function
-    references the per-stratum width to the raw target ``y``, while this one
-    references it to the residual ``y - mu``. Residual-referencing is exactly the
-    design choice this experiment is validating (see this chapter's "Validation
-    Using Net-Load Data" subsection), so calling the shipped, raw-target-referenced
-    function here would validate a different hypothesis than the one claimed.
+    Still deliberately not ``twiga.core.metrics.interval.conditional_cwe`` or
+    ``reduced_cwe``, even though both gained a ``point_forecast`` argument in
+    twiga 1.1.1 that residual-references the per-stratum width exactly as this
+    function does (the gap this comment used to describe is closed). The
+    remaining, still-real difference is the scoring formula itself:
+    ``conditional_cwe`` scores each stratum with the original seven-parameter
+    ``cwe_score``, and ``reduced_cwe`` gates on a pass/fail calibration test
+    before applying a single sharpness kernel; this function instead takes the
+    harmonic mean of two continuous kernels (coverage and width), which is the
+    design this chapter's "Validation Using Net-Load Data" subsection actually
+    validates. Calling either shipped function here would validate a different
+    metric's soundness than the one this module claims to validate.
     """
     scale = float(y.max() - y.min())
     out = []
