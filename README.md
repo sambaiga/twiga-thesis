@@ -21,10 +21,10 @@ Per-chapter reproducibility code for the thesis. Depends on
 
 | # | Chapter | RQ | |
 |---|---|---|---|
-| 1 | [Introduction](chapters/ch1_introduction/) | Setting the stage | <img src="assets/roadmap.png" height="150"> |
+| 1 | [Introduction](chapters/ch1_introduction/) | Setting the stage | <img src="assets/ch1.png" height="150"> |
 | 2 | [Background](chapters/ch2_background/) | Setting the stage | <img src="assets/ch2.png" height="150"> |
 | 3 | [Methodology](chapters/ch3_methodology/) | RQ1 | <img src="assets/ch3.png" height="150"> |
-| 4 | [MLPF](chapters/ch4_mlpf/) | RQ2 | MLPF vs. ML/DNN baselines |
+| 4 | [MLPF](chapters/ch4_mlpf/) | RQ2 | <img src="assets/ch4.png" height="150"> |
 | 5 | [FPQR](chapters/ch5_fpqr/) | RQ3 | <img src="assets/ch5.png" height="150"> |
 | 6 | [Conformal Prediction](chapters/ch6_conformal/) | RQ3 | <img src="assets/ch6.png" height="150"> |
 | 7 | [Multi-Target Forecasting](chapters/ch7_multitarget/) | RQ4 | <img src="assets/ch7.png" height="150"> |
@@ -32,8 +32,10 @@ Per-chapter reproducibility code for the thesis. Depends on
 
 Each chapter folder has its own `README.md` with the exact reproduction command and the thesis
 table/figure each output maps to. RQ3 covers both Chapter 5 (FPQR) and Chapter 6 (MLPGAM +
-conformal calibration), per the thesis's own framing. Images are each chapter's own generated
-output, not stock illustrations.
+conformal calibration), per the thesis's own framing. Chapters 2, 3, 6 and 7 show that chapter's
+own generated figure; Chapters 1, 4 and 5 show a small schematic illustrating the chapter's own
+idea rather than a result figure (`scripts/generate_readme_thumbnails.py`). Every thumbnail shares
+one canvas size so the table reads evenly.
 
 ## Quickstart
 
