@@ -6,6 +6,7 @@ import numpy as np
 import pandas as pd
 from twiga.core.metrics import mcs_ranking, pairwise_dm_table
 from twiga.core.metrics.calibration import kupiec_pof_test
+from twiga.core.metrics.stats import benjamini_hochberg, giacomini_white_from_losses
 from twiga.experiment.analysis import aggregate_fold_metrics, rank_models
 
 
@@ -110,6 +111,97 @@ def dm_and_mcs(
         p_matrix.loc[row.condition_a, row.condition_b] = row.p_adjusted
         p_matrix.loc[row.condition_b, row.condition_a] = row.p_adjusted
     return dm_table, p_matrix, model_set
+
+
+def gw_test(
+    fold_frame: pd.DataFrame,
+    alpha: float = 0.05,
+    metric: str = "winkler_score",
+    fold_column: str = "Folds",
+    condition_column: str = "condition",
+) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """Compute the all-pairs Giacomini-White conditional-accuracy table and a symmetric adjusted-p matrix.
+
+    Same input contract as :func:`dm_and_mcs` (one loss value per condition and fold; rows missing the selected
+    loss are excluded together so every compared condition uses the same folds), but tests *conditional*
+    predictive accuracy rather than DM's unconditional one: :func:`twiga.core.metrics.stats.giacomini_white_from_losses`
+    conditions on the lagged loss differential, so a model that is only occasionally much better is not washed
+    out by DM-style averaging the way an unconditionally-equal-on-average model would be. ``twiga.core.metrics``
+    has no ready-made pairwise GW table (only ``pairwise_dm_table``'s DM-specific one), so this function builds
+    one directly from the per-pair primitive, mirroring ``pairwise_dm_table``'s own all-pairs/BH-correction
+    structure rather than introducing a different convention.
+
+    ``giacomini_white_from_losses`` is already a one-sided test (H1: the second series is conditionally more
+    accurate); the raw one-sided p-value for each ordered pair is folded into a two-sided equivalent via
+    ``2 * min(p, 1 - p)``, the same transform ``pairwise_dm_table`` applies to DM's own one-sided primitive,
+    before Benjamini-Hochberg correction across all pairs.
+
+    Args:
+        fold_frame: One row per condition and fold, as returned by :func:`fold_level`.
+        alpha: Target false-discovery rate for the Benjamini-Hochberg correction.
+        metric: The loss column to compare; lower must be better.
+        fold_column: Column identifying the fold.
+        condition_column: Column identifying the condition.
+
+    Returns:
+        A tuple ``(gw_table, p_matrix)``: ``gw_table`` has one row per unordered pair with
+        ``condition_a``, ``condition_b``, ``p_value``, ``p_adjusted``, ``significant``, and ``winner``
+        (the condition with the lower mean loss), sorted by adjusted p-value; ``p_matrix`` is the
+        symmetric adjusted-p-value matrix indexed and columned by condition name, matching
+        :func:`dm_and_mcs`'s own ``p_matrix`` shape.
+
+    Raises:
+        ValueError: If required columns are missing or fewer than two conditions have complete losses.
+    """
+    required_columns = {fold_column, condition_column, metric}
+    missing_columns = required_columns.difference(fold_frame.columns)
+    if missing_columns:
+        raise ValueError(f"Fold frame is missing comparison columns: {sorted(missing_columns)}")
+
+    complete = fold_frame.dropna(subset=[metric])
+    loss_frame = complete.pivot(index=fold_column, columns=condition_column, values=metric).dropna()
+    if loss_frame.shape[1] < 2:
+        raise ValueError(f"At least two conditions with complete {metric} losses are required")
+
+    conditions = list(loss_frame.columns)
+    pairs = [(conditions[i], conditions[j]) for i in range(len(conditions)) for j in range(i + 1, len(conditions))]
+    raw_p_values = np.array(
+        [
+            float(
+                giacomini_white_from_losses(
+                    loss_frame[condition_a].to_numpy().reshape(-1, 1),
+                    loss_frame[condition_b].to_numpy().reshape(-1, 1),
+                    version="multivariate",
+                )
+            )
+            for condition_a, condition_b in pairs
+        ]
+    )
+    two_sided_p_values = np.clip(2 * np.minimum(raw_p_values, 1 - raw_p_values), 0.0, 1.0)
+    _, adjusted_p_values = benjamini_hochberg(two_sided_p_values, alpha=alpha)
+
+    rows = []
+    pairwise = zip(pairs, two_sided_p_values, adjusted_p_values, strict=True)
+    for (condition_a, condition_b), p_value, p_adjusted in pairwise:
+        mean_a = float(loss_frame[condition_a].mean())
+        mean_b = float(loss_frame[condition_b].mean())
+        rows.append(
+            {
+                "condition_a": condition_a,
+                "condition_b": condition_b,
+                "p_value": float(p_value),
+                "p_adjusted": float(p_adjusted),
+                "significant": bool(p_adjusted < alpha),
+                "winner": condition_b if mean_b < mean_a else condition_a,
+            }
+        )
+    gw_table = pd.DataFrame(rows).sort_values("p_adjusted", ignore_index=True)
+
+    p_matrix = pd.DataFrame(np.nan, index=conditions, columns=conditions)
+    for row in gw_table.itertuples(index=False):
+        p_matrix.loc[row.condition_a, row.condition_b] = row.p_adjusted
+        p_matrix.loc[row.condition_b, row.condition_a] = row.p_adjusted
+    return gw_table, p_matrix
 
 
 def kupiec_table(

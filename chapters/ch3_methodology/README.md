@@ -6,6 +6,8 @@ evaluated, considering the influence of meteorological variables on accuracy.
 | Directory/script | Produces |
 |---|---|
 | `cwe_validation/` | The CWE metric's definition, design-choice ablations, and soundness validation (own [README](cwe_validation/README.md)). |
+| `best_practices/` | Protocol comparison: single train/test split vs expanding-window backtesting, across five simple baselines (own [README](best_practices/README.md)). |
+| `covariate_influence/` | RQ2: meteorological covariate ablation -- GHI/temperature/both/neither, one MLPF backbone (own [README](covariate_influence/README.md)). |
 | `figures/feature_evidence.py` | Rank-fusion consensus evidence: ACF-derived lookback/lag split, per-metric ranker disagreement on the reactive-power target. |
 | `figures/figures.py` | General Chapter 3 line-style figures. |
 
@@ -13,5 +15,7 @@ Datasets: MLVS-PT, SPS-UK (see `data/README.md`).
 
 ```bash
 uv run python chapters/ch3_methodology/cwe_validation/run_all.py
+uv run python chapters/ch3_methodology/best_practices/experiment.py --protocol all
+uv run python chapters/ch3_methodology/covariate_influence/experiment.py
 uv run python -c "from chapters.ch3_methodology.figures.feature_evidence import render_all; render_all()"
 ```
