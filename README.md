@@ -8,8 +8,8 @@
 [![Python 3.12+](https://img.shields.io/badge/python-3.12%2B-blue.svg)](pyproject.toml)
 [![twiga](https://img.shields.io/pypi/v/twiga?label=twiga)](https://pypi.org/project/twiga/)
 
-This repository contains reproducibility code for each thesis chapter and requires the following dependencies:
-[`twiga`](https://github.com/sambaiga/twiga-forecast), an open-source forecasting framework available on PyPI. Twiga was developed as a by-product of this PhD thesis.
+This repository includes the code needed to reproduce the results from each chapter of the thesis. To run the code, you will need [`twiga`](https://github.com/sambaiga/twiga-forecast), an open-source forecasting framework available on PyPI. Twiga was created as part of this PhD thesis.
+
 
 
 </div>
