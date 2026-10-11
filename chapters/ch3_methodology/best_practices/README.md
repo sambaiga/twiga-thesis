@@ -18,5 +18,4 @@ uv run python chapters/ch3_methodology/best_practices/analysis.py
 uv run python -c "from chapters.ch3_methodology.best_practices.figures import render_all; render_all()"
 ```
 
-Note: MSTL (used by the legacy single-dataset notebook this experiment generalises) has no twiga equivalent and is
-dropped rather than substituted.
+MSTL has no twiga equivalent and is therefore not included among the baselines.

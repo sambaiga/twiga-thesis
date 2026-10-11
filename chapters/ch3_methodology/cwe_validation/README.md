@@ -38,11 +38,10 @@ the nine defaults cannot form the 90 % interval this section reports.
 
 ## Figures
 
-Figures are not produced here. `experiment/thesis_figures/` reads these CSVs and
-renders to `Papers/PhD thesis -Final-Revision/Images/Chapter-3/`.
+Figures are not produced here. `chapters/ch3_methodology/figures/figures.py` reads these CSVs and
+renders them to `chapters/ch3_methodology/figures/output/`.
 
 ```bash
 uv run python chapters/ch3_methodology/cwe_validation/run_all.py
-uv run python -c "import sys; sys.path.insert(0,'experiment'); \
-  from thesis_figures import illustrations as I, data_figures as D; I.render_all(); D.render_all()"
+uv run python -c "from chapters.ch3_methodology.figures.figures import render; render()"
 ```
