@@ -45,7 +45,6 @@ import pandas as pd
 from rich.console import Console
 from rich.table import Table
 import scipy.signal as signal
-from sklearn.preprocessing import MinMaxScaler, StandardScaler
 from twiga.core.config import DataPipelineConfig, ExperimentConfig
 from twiga.core.plot.matplot_theme import configure_matlib_style
 from twiga.core.utils.logger import configure, get_logger, log_section
@@ -74,7 +73,7 @@ PROJECT_NAME = "benchmark-backtesting"
 # 30-min resolution
 PERIOD = "30min"
 FORECAST_HORIZON = 48  # 1 day ahead  (48 × 30 min)
-LOOKBACK = 336  # 1-week lookback (7 × 48)
+LOOKBACK = 336  # fallback (1 week, 7 × 48) when load_dataset() suggests no ACF lookback
 
 # Expanding CV: ≥ 12 months training, 3-month test folds
 TRAIN_SIZE_MONTHS = 12
@@ -169,31 +168,35 @@ def build_data_config(
     """
     return DataPipelineConfig(
         target_feature=target,
-        historical_features=lags,
+        past_features=lags,
         period=PERIOD,
         latitude=lat,
         longitude=lon,
         calendar_features=cal,
-        exogenous_features=exog,
+        known_future_features=exog,
         forecast_horizon=FORECAST_HORIZON,
         lookback_window_size=lookback_window_size if lookback_window_size is not None else LOOKBACK,
-        input_scaler=StandardScaler(),
-        target_scaler=MinMaxScaler(feature_range=(-1, 1)),
+        input_scaler="standard",
+        target_scaler="minmax",
     )
 
 
-def build_model_configs(cal: list, exog: list, lags: list) -> list:
-    """10 models: 4 neural-network + 3 tree-based + 1 linear + 2 statistical baselines."""
+def build_model_configs(cal: list, exog: list, lags: list, lookback_window_size: int | None = None) -> list:
+    """10 models: 4 neural-network + 3 tree-based + 1 linear + 2 statistical baselines.
+
+    `lookback_window_size` must match the data config's own value (see `build_data_config`);
+    `None` falls back to `LOOKBACK`.
+    """
     nn_kwargs = {
         "max_epochs": MAX_EPOCHS,
         "rich_progress_bar": False,
         "num_target_feature": 1,
         "forecast_horizon": FORECAST_HORIZON,
-        "lookback_window_size": LOOKBACK,
+        "lookback_window_size": lookback_window_size if lookback_window_size is not None else LOOKBACK,
         "num_calendar_features": len(cal),
-        "num_exogenous_features": len(exog),
-        "num_historical_features": len(lags),
-        "num_future_covariates": 0,
+        "num_known_future_features": len(exog),
+        "num_past_features": len(lags),
+        "num_forecast_period_features": 0,
     }
     return [
         # ── Neural networks ──────────────────────────────────────────────
@@ -357,7 +360,7 @@ def measure_train_times(
     forecaster_config = build_forecaster_config()
     rows = []
     for model_config in model_configs:
-        solo = TwigaForecaster(data_params=data_config, model_params=[model_config], train_params=forecaster_config)
+        solo = TwigaForecaster(data_params=data_config, model_params=[model_config], cv_params=forecaster_config)
         start = time.perf_counter()
         solo.fit(train_df=fold0_train)
         elapsed = time.perf_counter() - start
@@ -547,7 +550,7 @@ if __name__ == "__main__":
 
     log_section(log, "Configuration")
     data_config = build_data_config(target, lags, cal, exog, lat, lon, lookback_window_size=lookback)
-    model_configs = build_model_configs(cal, exog, lags)
+    model_configs = build_model_configs(cal, exog, lags, lookback_window_size=lookback)
     forecaster_config = build_forecaster_config()
 
     log.info(
@@ -564,7 +567,7 @@ if __name__ == "__main__":
     forecaster = TwigaForecaster(
         data_params=data_config,
         model_params=model_configs,
-        train_params=forecaster_config,
+        cv_params=forecaster_config,
     )
 
     log_section(log, "Fold-0 Hyperparameter Tuning")

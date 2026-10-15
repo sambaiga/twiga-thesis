@@ -69,7 +69,7 @@ HIGHER_BETTER = {"corr"}
 
 # ── Reference architecture values (MLPFConfig's own field defaults) ──────────
 REFERENCE_HORIZON = FORECAST_HORIZON  # 48 samples = 1 day (benchmark.py's own value)
-REFERENCE_LOOKBACK = LOOKBACK  # 336 samples = 7 days (benchmark.py's own value)
+REFERENCE_LOOKBACK = LOOKBACK  # 336 samples = 7 days (benchmark.py's fallback; the sweep varies it)
 REFERENCE_EMBEDDING = None
 REFERENCE_COMBINATION = "addition-comb"
 

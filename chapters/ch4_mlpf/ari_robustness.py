@@ -65,19 +65,22 @@ K_DAYS = range(2, 8)  # k = 2..7 day-ahead, per RQ3
 MAX_EPOCHS = 30
 
 
-def build_mlpf_config(cal: list, exog: list, lags: list) -> MLPFConfig:
-    """MLPF's own default architecture (benchmark.py's reference config), point forecast only."""
+def build_mlpf_config(cal: list, exog: list, lags: list, lookback_window_size: int | None = None) -> MLPFConfig:
+    """MLPF's own default architecture (benchmark.py's reference config), point forecast only.
+
+    `lookback_window_size` must match the data config's own value; `None` falls back to `LOOKBACK`.
+    """
     return MLPFConfig(
         out_activation_function="Identity",
         max_epochs=MAX_EPOCHS,
         rich_progress_bar=False,
         num_target_feature=1,
         forecast_horizon=FORECAST_HORIZON,
-        lookback_window_size=LOOKBACK,
+        lookback_window_size=lookback_window_size if lookback_window_size is not None else LOOKBACK,
         num_calendar_features=len(cal),
-        num_exogenous_features=len(exog),
-        num_historical_features=len(lags),
-        num_future_covariates=0,
+        num_known_future_features=len(exog),
+        num_past_features=len(lags),
+        num_forecast_period_features=0,
     )
 
 
@@ -105,7 +108,7 @@ def fit_backbone(
         metrics=["rmse", "mae", "corr", "wmape", "smape"],
         project_name="ari-robustness",
     )
-    forecaster = TwigaForecaster(data_params=data_config, model_params=[model_config], train_params=forecaster_config)
+    forecaster = TwigaForecaster(data_params=data_config, model_params=[model_config], cv_params=forecaster_config)
 
     # forecaster.split() yields twiga.core.backtester.SplitBundle, a 6-field namedtuple
     # (fit_df, val_df, calib_df, test_df, scheme, split_key) -- see benchmark.py's
@@ -206,7 +209,7 @@ def main() -> None:
     setup()
     data, target, cal, exog, lags, lat, lon, lookback = load_data()
     data_config = build_data_config(target, lags, cal, exog, lat, lon, lookback_window_size=lookback)
-    model_config = build_mlpf_config(cal, exog, lags)
+    model_config = build_mlpf_config(cal, exog, lags, lookback_window_size=lookback)
 
     forecaster, fold0_train, fold0_test = fit_backbone(data, data_config, model_config)
     table = ari_nrmse_vs_k(forecaster, fold0_train, fold0_test, target)
