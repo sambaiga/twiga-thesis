@@ -2636,7 +2636,7 @@ name = "pexpect"
 version = "4.9.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
-    { name = "ptyprocess" },
+    { name = "ptyprocess", marker = "sys_platform != 'emscripten' and sys_platform != 'win32'" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/42/92/cc564bf6381ff43ce1f4d06852fc19a2f11d180f23dc32d9588bee2f149d/pexpect-4.9.0.tar.gz", hash = "sha256:ee7d41123f3c9911050ea2c2dac107568dc43b2d3b0c7557a33212c398ead30f", size = 166450, upload-time = "2023-11-25T09:07:26.339Z" }
 wheels = [
@@ -4069,7 +4069,7 @@ wheels = [
 
 [[package]]
 name = "twiga"
-version = "1.1.0"
+version = "1.1.1"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "antropy" },
@@ -4094,9 +4094,9 @@ dependencies = [
     { name = "tqdm" },
     { name = "xgboost" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/46/f9/b20fa2ef45ebc7bb5e404eb6c4a2358b205b3fe9200f7ae9297307f28fc4/twiga-1.1.0.tar.gz", hash = "sha256:02c7cb1bd21138a77e5852507d7094b7a0ee58dab34b9776eb8c5f70a1e775e7", size = 1501269, upload-time = "2026-10-09T17:50:39.646Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/de/2b/92581446639afbf0643b67227cdc19cec9dd19235ec8f93bf6e6151f8f0b/twiga-1.1.1.tar.gz", hash = "sha256:e738d855f9e5f2b283878d7e7e9cadf3039f661e00499e37608374eaa692f665", size = 1504583, upload-time = "2026-10-10T00:14:34.051Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/69/75/8a97a235e55b7b1fdddb753b3757995683a76aba81f0517416035a8462c4/twiga-1.1.0-py3-none-any.whl", hash = "sha256:eb8622818a31773349ca1ea64b28ee2e4ceb84b69f4d7d9107c14072f346a6ce", size = 976105, upload-time = "2026-10-09T17:50:37.816Z" },
+    { url = "https://files.pythonhosted.org/packages/d6/71/27aa52b7731935c43ad12817f2738334b2de79bef0132439931817ca5185/twiga-1.1.1-py3-none-any.whl", hash = "sha256:0c572322d9ff770c0b311add18411825237fa394269ec526ba2db802b118555c", size = 977670, upload-time = "2026-10-10T00:14:32.011Z" },
 ]
 
 [package.optional-dependencies]
@@ -4146,7 +4146,7 @@ requires-dist = [
     { name = "scienceplots", specifier = ">=2.1.1" },
     { name = "scipy", specifier = ">=1.14.0" },
     { name = "seaborn", specifier = ">=0.13.0" },
-    { name = "twiga", specifier = ">=1.1.0" },
+    { name = "twiga", specifier = ">=1.1.1" },
     { name = "twiga", extras = ["nn"], marker = "extra == 'nn'" },
 ]
 provides-extras = ["nn"]
