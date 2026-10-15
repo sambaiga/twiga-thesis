@@ -38,11 +38,76 @@ own generated figure; Chapters 1, 4 and 5 show a small schematic illustrating th
 idea rather than a result figure (`scripts/generate_readme_thumbnails.py`). Every thumbnail shares
 one canvas size so the table reads evenly.
 
-## Quickstart
+## Installation
+
+**Prerequisites:** Python 3.12+ and [`uv`](https://docs.astral.sh/uv/). Install `uv` with:
 
 ```bash
-uv sync --extra nn --dev   # --extra nn installs torch/lightning, needed by every chapter's neural experiments (Chapters 3-7)
+# macOS / Linux
+curl -LsSf https://astral.sh/uv/install.sh | sh
 ```
+
+```powershell
+# Windows (PowerShell)
+powershell -ExecutionPolicy ByPass -c "irm https://astral.sh/uv/install.ps1 | iex"
+```
+
+Then clone the repository and install its dependencies:
+
+```bash
+git clone https://github.com/sambaiga/twiga-thesis.git
+cd twiga-thesis
+uv sync --extra nn --dev
+```
+
+`--extra nn` installs `torch` and `lightning`, which every chapter's neural experiments
+(Chapters 3-7) need. Without it, scripts fail with `ModuleNotFoundError: No module named
+'lightning'`. `uv sync` removes packages that are not requested, so always pass `--extra nn` when
+re-syncing. Check the install with:
+
+```bash
+uv run python -c "import lightning, twiga; from twiga_thesis import thesis_data_dir; print(thesis_data_dir())"
+```
+
+This should print the path to the repository's `data/` folder.
+
+## Setup: data
+
+All scripts read datasets from the repository's `data/` folder, whatever directory you run them
+from. Datasets are not committed, so put them there before running anything:
+
+1. **SPS-UK** (public, Chapters 3-7): download it from Zenodo and build `data/MLVS-UK.parquet`:
+
+   ```bash
+   uv run python -c "from twiga_thesis.datasets import fetch_sps_uk_raw, build_sps_uk_parquet; build_sps_uk_parquet(fetch_sps_uk_raw())"
+   ```
+
+2. **MLVS-PT** (unpublished, Chapters 3-7): available from the author on request. Save it as
+   `data/MLVS-PT.parquet`.
+
+3. **Chapter 7 power-flow records only** (`DSS-EU`, `DSS-UK`, `DSS-US`): set `EXTERNAL_DATA_DIR`
+   to the root of a local `ml-energy-disaggregation` checkout:
+
+   ```bash
+   export EXTERNAL_DATA_DIR=/path/to/ml-energy-disaggregation      # macOS / Linux
+   ```
+
+   ```powershell
+   $env:EXTERNAL_DATA_DIR = "C:\path\to\ml-energy-disaggregation"  # Windows (PowerShell)
+   ```
+
+[`data/README.md`](data/README.md) explains where each dataset comes from and how it is built.
+
+## Running a chapter
+
+Run each script with `uv run` so it uses the project environment:
+
+```bash
+uv run python chapters/ch4_mlpf/benchmark.py
+```
+
+Each chapter's own `README.md` lists its scripts, their order, and the thesis table or figure each
+one produces.
 
 <details>
 <summary>Developing against an unreleased <code>twiga</code> change</summary>
@@ -52,12 +117,6 @@ uv add --editable ../twiga-forecast
 ```
 
 </details>
-
-## Data
-
-See [`data/README.md`](data/README.md): MLVS-PT is unpublished (available from the author on
-request); SPS-UK is public with a working fetch + assembly pipeline; Chapter 7's power-flow
-records resolve via `EXTERNAL_DATA_DIR`.
 
 ## Tooling
 
