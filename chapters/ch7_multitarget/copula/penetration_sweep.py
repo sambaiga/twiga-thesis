@@ -59,7 +59,7 @@ def coupling_strength(windows) -> float:
 # other Chapter 6 records -- MLVS-PT, MLVS-PT-3PHASE, MLVS-UK -- are real,
 # fixed-penetration measurements with no sweep to run). Each is close to
 # exactly one calendar year long (DSS-EU ~11 months, DSS-UK/DSS-US 12 months
-# -- verified directly against examples/data/*.parquet), which is why the
+# -- verified directly against data/*.parquet), which is why the
 # default train/test/step window below is 17/4/4 *weeks*, not the chapter's
 # literal 12/4 *months*: at 12/4 months an ~11-12 month record yields only 2
 # rolling folds per penetration level, too few for the >=3-point trend

@@ -89,6 +89,8 @@ from twiga.models.nn.nhitslaplace_model import NHITSLaplaceConfig
 from twiga.models.nn.nhitsqr_model import NHITSFPQRConfig, NHITSQRConfig
 from twiga.utils.run_forecast import PipelineConfig
 
+from twiga_thesis.paths import thesis_data_dir
+
 ALPHA = 0.10
 N_DEFAULT = 9
 # The `grid`/`n_quantiles`/... ablation groups sweep/reference N=9, matching
@@ -113,7 +115,7 @@ FIXED_GRID = [round((i + 0.5) / N_DEFAULT, 4) for i in range(N_DEFAULT)]
 DATASETS: dict[str, dict] = {
     "MLVS-PT": {
         "dataset_name": "MLVS-PT",
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2019-03",
         "train_end": "2021-12",
         "test_start": "2021-07",
@@ -125,7 +127,7 @@ DATASETS: dict[str, dict] = {
     },
     "MLVS-UK": {
         "dataset_name": "MLVS-UK",
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2018-01",
         "train_end": "2020-07",
         "test_start": "2019-12",
@@ -620,7 +622,7 @@ ENGINE = ExperimentEngine(SPEC)
 
 BASE_CFG = PipelineConfig(
     dataset_name="MLVS-PT",
-    data_path="examples/data",
+    data_path=str(thesis_data_dir()),
     output_dir="../experiments/chapter-5-fpqr/",
     input_window_size=96,
     forecast_horizon=48,

@@ -46,6 +46,8 @@ from twiga.experiment import Condition, ExperimentEngine, ExperimentSpec
 from twiga.models.nn import MLPGAMConfig, MLPGAMFPQRConfig
 from twiga.utils.run_forecast import PipelineConfig
 
+from twiga_thesis.paths import thesis_data_dir
+
 # ---------------------------------------------------------------------------
 # Datasets
 # ---------------------------------------------------------------------------
@@ -53,7 +55,7 @@ from twiga.utils.run_forecast import PipelineConfig
 DATASETS: dict[str, dict] = {
     "MLVS-PT": {
         "dataset_name": "MLVS-PT",
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2019-03",
         "train_end": "2022-01",
         "input_window_size": 96,
@@ -63,7 +65,7 @@ DATASETS: dict[str, dict] = {
     },
     "MLVS-UK": {
         "dataset_name": "MLVS-UK",
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2018-01",
         "train_end": "2020-07",
         "test_start": "2019-12",
@@ -76,7 +78,7 @@ DATASETS: dict[str, dict] = {
     # Synthetic heavy-tailed datasets — generate with experiment/common/synthetic_netload.py
     "SYN-HT3": {
         "dataset_name": "SYN-HT3",
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2020-01",
         "train_end": "2022-07",
         "input_window_size": 96,
@@ -86,7 +88,7 @@ DATASETS: dict[str, dict] = {
     },
     "SYN-HT10": {
         "dataset_name": "SYN-HT10",
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2020-01",
         "train_end": "2022-07",
         "input_window_size": 96,

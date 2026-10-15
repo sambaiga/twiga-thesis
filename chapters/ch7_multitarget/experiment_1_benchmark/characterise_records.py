@@ -22,6 +22,8 @@ from twiga.core.data.characterisation import CharacterisationConfig, SignalChara
 from twiga.core.utils import get_logger
 from twiga.utils.data_loading import load_dataset
 
+from twiga_thesis.paths import thesis_data_dir
+
 sys.path.insert(0, str(Path(__file__).resolve().parent))
 
 log = get_logger(__name__)
@@ -46,7 +48,7 @@ def main() -> None:
     report: dict = {}
 
     for scenario in args.scenarios:
-        data, targets, *_ = load_dataset(scenario, data_path="examples/data")
+        data, targets, *_ = load_dataset(scenario, data_path=str(thesis_data_dir()))
         report[scenario] = {}
         print(f"\n=== {scenario} ===")
         for target in targets:

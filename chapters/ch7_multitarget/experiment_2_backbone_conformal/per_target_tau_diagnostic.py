@@ -68,6 +68,8 @@ from twiga.core.utils import get_logger, release_torch_memory
 from twiga.models.nn.mlpffpqr_model import MLPFFPQRConfig, MLPFFPQRModel
 from twiga.utils.data_loading import load_dataset
 
+from twiga_thesis.paths import thesis_data_dir
+
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent
 TAU_CLAMP = (0.01, 0.99)  # matches the proposal's clamp
@@ -76,7 +78,7 @@ CLAMP_TOL = 1e-4
 
 def build_windows(scenario: str, lookback: int, horizon: int):
     """Supervised windows plus the standardised targets used for the theory grid."""
-    data, targets, _cal, exog, _lags, _lat, _lon, _lookback = load_dataset(scenario, data_path="examples/data")
+    data, targets, _cal, exog, _lags, _lat, _lon, _lookback = load_dataset(scenario, data_path=str(thesis_data_dir()))
     y = data[targets].to_numpy(dtype=np.float64)
     x_exog = data[exog].to_numpy(dtype=np.float64)
 

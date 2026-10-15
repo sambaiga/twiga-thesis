@@ -39,6 +39,8 @@ from twiga.utils.run_forecast import (
     visualize_results,
 )
 
+from twiga_thesis.paths import thesis_data_dir
+
 log = get_logger(__name__)
 
 try:
@@ -534,7 +536,7 @@ def run_ablation(cfg: PipelineConfig | None = None) -> pd.DataFrame:
 if __name__ == "__main__":
     ablation_cfg = PipelineConfig(
         dataset_name="MLVS-PT",
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         output_dir="../experiments/embedding_ablation/",
         train_start="2019-03",
         train_end="2020-02",

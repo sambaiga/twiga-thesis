@@ -57,6 +57,7 @@ from twiga.utils.run_forecast import (  # noqa: E402
 )
 
 from chapters.ch5_fpqr.exploratory.learned_tau import SPLITS, find_head  # noqa: E402
+from twiga_thesis.paths import thesis_data_dir
 
 script_dir = Path(__file__).resolve().parent
 OUT = script_dir / "qvn_pit"
@@ -95,7 +96,7 @@ def build(dataset: str, condition: str, train_start: str, train_end: str, test_s
     """Build a forecaster for one qvn_type condition, mirroring fpqr_experiment.py's own overrides."""
     cfg = PipelineConfig(
         dataset_name=dataset,
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         output_dir=str(script_dir / "_run"),
         train_start=train_start,
         train_end=train_end,
@@ -252,7 +253,7 @@ def main() -> None:
         # worked_example.py's own alignment (not test_df's own scaled
         # target column, avoiding any scaling/column-name ambiguity):
         # first test window starts input_window_size rows into test_df.
-        raw = pd.read_parquet(Path("examples/data") / f"{args.dataset}.parquet")
+        raw = pd.read_parquet(thesis_data_dir() / f"{args.dataset}.parquet")
         net = raw["NetLoad(kW)"].to_numpy()
         stamps_all = pd.to_datetime(raw["timestamp"]).to_numpy()
         first = int(test_df.index[0]) + 96  # input_window_size, matching build()'s own value

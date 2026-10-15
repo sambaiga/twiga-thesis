@@ -1,4 +1,4 @@
-"""Build examples/data/DSS-EU.parquet from the PT_DSS_EV_*_PV_*.parquet scenarios.
+"""Build data/DSS-EU.parquet from the PT_DSS_EV_*_PV_*.parquet scenarios.
 
 The nine scenario files are the OpenDSS time-series power-flow output for the
 four-feeder Hybrid European MV-LV network model, the non-synthetic test

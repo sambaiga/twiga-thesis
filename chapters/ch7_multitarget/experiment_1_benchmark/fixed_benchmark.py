@@ -103,6 +103,8 @@ from twiga.models.nn.mlpfqr_model import MLPFQRConfig
 from twiga.utils.data_loading import load_dataset
 from twiga.utils.run_forecast import PipelineConfig
 
+from twiga_thesis.paths import thesis_data_dir
+
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent
 DEFAULT_OUTPUT_ROOT = (
@@ -810,7 +812,7 @@ CV_PROTOCOLS: dict[str, dict] = {
 }
 PROTOCOL: dict[str, str] = {DSS_EU: "short", DSS_UK: "short", DSS_US: "short", MLVS_PT_3PHASE: "long"}
 
-_DATASET_COMMON = {"data_path": "examples/data", "forecast_horizon": 48, "window_stride": 48, "period": "30min"}
+_DATASET_COMMON = {"data_path": str(thesis_data_dir()), "forecast_horizon": 48, "window_stride": 48, "period": "30min"}
 # The 2019 records mirror DSS-EU's 2021 calendar: September to December as the test period.
 _DSS_2019 = {"train_start": "2019-01", "train_end": "2019-12", "test_start": "2019-09", "test_end": "2019-12"}
 DATASETS: dict[str, dict] = {
@@ -890,7 +892,7 @@ def base_config(
     """PipelineConfig shared by every dataset; dataset fields are applied per spec."""
     return PipelineConfig(
         dataset_name=DSS_EU,
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         output_dir=str(output_root / "fixed_benchmark"),
         epochs=epochs,
         num_trials=hpo_trials,

@@ -107,6 +107,7 @@ from chapters.ch7_multitarget.experiment_3_decision.operational_decision import 
 )
 from chapters.ch7_multitarget.shared.forecast_examples import hosting_capacity_rows  # noqa: E402
 from chapters.ch7_multitarget.shared.tune_backbone import tune as tune_backbone  # noqa: E402
+from twiga_thesis.paths import thesis_data_dir
 
 # Same nominal level throughout the project (Chapter 5/7's own convention,
 # and TwigaForecaster's own `interval_alpha` default): a 90% central
@@ -136,7 +137,7 @@ def decision_rating(scenario: str, quantile: float) -> float:
     decision would then compare exceedance probabilities defined against
     different levels, which is not a comparison at all.
     """
-    data, targets, *_ = load_dataset(scenario, data_path="examples/data")
+    data, targets, *_ = load_dataset(scenario, data_path=str(thesis_data_dir()))
     p, q = data[targets[0]].to_numpy(), data[targets[1]].to_numpy()
     return float(np.quantile(np.hypot(p, q), quantile))
 
@@ -574,7 +575,7 @@ def run_decision(key: str, args, out_dir: Path, output_root: Path) -> pd.DataFra
     engine = ExperimentEngine(spec)
     cfg = PipelineConfig(
         dataset_name=SCENARIOS[key],
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         output_dir=str(output_root / "backbone_conformal_decision" / key.lower()),
         epochs=5 if args.quick else args.epochs,
         num_trials=args.hpo_trials,

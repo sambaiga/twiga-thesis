@@ -84,6 +84,7 @@ from chapters.ch7_multitarget.experiment_3_decision.multitarget_decision import 
     build_condition_scorer,
     decision_rating,
 )
+from twiga_thesis.paths import thesis_data_dir
 
 log = get_logger(__name__)
 
@@ -243,7 +244,7 @@ def run_decision(key: str, args, out_dir: Path, output_root: Path) -> pd.DataFra
     engine = ExperimentEngine(spec)
     cfg = PipelineConfig(
         dataset_name=SCENARIOS[key],
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         output_dir=str(output_root / "multitarget_decision_single_split" / key.lower()),
         epochs=5 if args.quick else args.epochs,
         num_trials=args.hpo_trials,

@@ -77,6 +77,7 @@ from twiga.utils.data_loading import load_dataset  # noqa: E402
 
 import chapters.ch7_multitarget.experiment_1_benchmark.fixed_benchmark as fb  # noqa: E402
 import chapters.ch7_multitarget.experiment_3_decision.decision_scoring as ds  # noqa: E402
+from twiga_thesis.paths import thesis_data_dir
 
 log = get_logger(__name__)
 
@@ -169,7 +170,7 @@ def check_penetration_response(record: str, levels: tuple[float, ...] = LEVELS) 
 
 def decision_limits(record: str) -> ds.DecisionLimits:
     """Fixed thermal limit for a network: the 98th percentile of its no-DER apparent power (pre-DER headroom)."""
-    data, *_ = load_dataset(f"{record}:0:0", data_path="examples/data")
+    data, *_ = load_dataset(f"{record}:0:0", data_path=str(thesis_data_dir()))
     rating = float(np.quantile(np.hypot(data["p_kw"], data["q_kvar"]), LIMIT_PERCENTILE))
     log.info("limits for %s: thermal %.3f (no-DER 98th percentile)", record, rating)
     return ds.DecisionLimits(rating=rating, target_index=(0, 1, 2), severities=SEVERITIES, voltage_band=STATUTORY_BAND)
@@ -182,7 +183,7 @@ def scenario_record(key: str) -> pd.DataFrame:
     never a model input, so it is read from the record directly.
     """
     record, feeder, ev, pv = key.split(":")
-    raw = pd.read_parquet(Path("examples/data") / f"{record}.parquet")
+    raw = pd.read_parquet(thesis_data_dir() / f"{record}.parquet")
     if record == "DSS-US":
         trafo = raw.groupby("trafo")["utilisation"].max().sort_values(ascending=False).index[int(feeder)]
         raw = raw[raw["trafo"] == trafo]

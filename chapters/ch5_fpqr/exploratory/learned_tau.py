@@ -26,6 +26,8 @@ from twiga.utils.run_forecast import (
     split_data,
 )
 
+from twiga_thesis.paths import thesis_data_dir
+
 script_dir = Path(__file__).resolve().parent
 EPOCHS = 60
 
@@ -48,7 +50,7 @@ def build(
 ):
     cfg = PipelineConfig(
         dataset_name=dataset,
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         output_dir=str(script_dir / "_run"),
         train_start=train_start,
         train_end=train_end,

@@ -54,6 +54,7 @@ from twiga.utils.run_forecast import PipelineConfig, setup_environment
 from chapters.ch4_mlpf.benchmark import FORECAST_HORIZON, LOOKBACK
 from chapters.ch6_conformal.shared.protocol import DATASETS
 from twiga_thesis.analysis import dm_and_mcs, fold_level, metric_table
+from twiga_thesis.paths import thesis_data_dir
 from twiga_thesis.plotting import comparison_plots, line_style, tokens
 
 OUTPUT_DIR = Path("../experiments/ch4_mlpf/design_choices")
@@ -237,7 +238,7 @@ def main() -> None:
     output_dir = Path(args.output_dir)
     base_cfg = PipelineConfig(
         output_dir=f"{output_dir}/",
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         out_activation="Identity",
         split_freq="months",
         metrics=POINT_METRICS,

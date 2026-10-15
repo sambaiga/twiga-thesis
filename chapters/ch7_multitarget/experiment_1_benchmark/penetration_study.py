@@ -31,12 +31,12 @@ never mistaken for the chapter's own single-dataset claim.
 Why DSS-UK/DSS-US carry the PV-only axis, not DSS-EU
 ------------------------------------------------------
 ``DSS-EU``'s own OpenDSS scenario files
-(``examples/data/PT_DSS_EV_*_PV_*.parquet``, merged by ``build_dss_eu.py``)
+(``data/PT_DSS_EV_*_PV_*.parquet``, merged by ``build_dss_eu.py``)
 cover a full EV-only sweep (EV in {0, .2, .4, .6, .8} at PV=0) but only two
 points on the PV-only axis (PV in {0, .8} at EV=0) -- the PV=.2/.4/.6-at-
 EV=0 scenario files were simply never simulated, confirmed directly against
 the file listing, not assumed. Two points cannot support a trend claim.
-``DSS-UK``/``DSS-US`` (``examples/data/DSS-UK.parquet``/``DSS-US.parquet``)
+``DSS-UK``/``DSS-US`` (``data/DSS-UK.parquet``/``DSS-US.parquet``)
 each carry a full, already-simulated 4x4 (EV, PV) grid at
 {0, .2, .4, .6} on both axes (confirmed directly against the files' own
 ``ev_pen``/``pv_pen`` columns), including a genuine 4-point PV-only sweep at
@@ -103,6 +103,7 @@ from chapters.ch7_multitarget.experiment_2_backbone_conformal.backbone_conformal
     DSS_UK,
     DSS_US,
 )
+from twiga_thesis.paths import thesis_data_dir
 
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent
@@ -214,7 +215,7 @@ def base_config(epochs: int, hpo_trials: int = 50, hpo_epochs: int = 100) -> Pip
     output_dir = script_dir.parent.parent.parent.parent / "experiments" / "ch7_multitarget" / "penetration_study"
     return PipelineConfig(
         dataset_name=next(iter(DSS_EU_DATASETS)),
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         output_dir=str(output_dir),
         epochs=epochs,
         num_trials=hpo_trials,

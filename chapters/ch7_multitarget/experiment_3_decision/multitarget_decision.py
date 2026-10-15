@@ -80,6 +80,7 @@ from chapters.ch7_multitarget.experiment_3_decision.operational_decision import 
     VOLTAGE_BANDS,
 )
 from chapters.ch7_multitarget.shared.forecast_examples import hosting_capacity_rows  # noqa: E402
+from twiga_thesis.paths import thesis_data_dir
 
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent
@@ -187,7 +188,7 @@ def decision_rating(scenario: str, quantile: float) -> float:
 
     See backbone_conformal_decision.py's own docstring.
     """
-    data, targets, *_ = load_dataset(scenario, data_path="examples/data")
+    data, targets, *_ = load_dataset(scenario, data_path=str(thesis_data_dir()))
     p, q = data[targets[0]].to_numpy(), data[targets[1]].to_numpy()
     return float(np.quantile(np.hypot(p, q), quantile))
 
@@ -411,7 +412,7 @@ def run_decision(key: str, args, out_dir: Path, output_root: Path) -> pd.DataFra
     engine = ExperimentEngine(spec)
     cfg = PipelineConfig(
         dataset_name=SCENARIOS[key],
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         output_dir=str(output_root / "multitarget_decision" / key.lower()),
         epochs=5 if args.quick else args.epochs,
         num_trials=args.hpo_trials,

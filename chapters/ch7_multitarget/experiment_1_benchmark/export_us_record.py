@@ -3,7 +3,7 @@
 The power-flow record is produced in the ``ml-energy-disaggregation`` repository
 and carries a step index rather than a timestamp, and no weather column. Both
 are needed before ``load_dataset`` can treat it like any other dataset, so this
-script attaches them once and writes a parquet into ``examples/data``.
+script attaches them once and writes a parquet into ``data/``.
 
 The irradiance column is the same plane-of-array profile that drove the
 simulation, so it is the physical driver of the photovoltaic generation in the

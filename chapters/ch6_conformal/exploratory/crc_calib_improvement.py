@@ -60,6 +60,8 @@ from twiga.utils.run_forecast import (
     setup_environment,
 )
 
+from twiga_thesis.paths import thesis_data_dir
+
 log = get_logger(__name__)
 
 _EXPERIMENT_PREFIX = "calib"
@@ -630,7 +632,7 @@ def run_for_dataset(args: argparse.Namespace, dataset_name: str) -> None:
 
     cfg = PipelineConfig(
         dataset_name=ds.name,
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         train_start=ds.train_start,
         train_end=ds.train_end,
         period=ds.period,

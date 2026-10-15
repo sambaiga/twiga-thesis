@@ -117,6 +117,8 @@ from twiga.models.nn.mlpflaplace_model import MLPFLaplaceConfig
 from twiga.models.nn.mlpfqr_model import MLPFQRConfig
 from twiga.utils.run_forecast import PipelineConfig
 
+from twiga_thesis.paths import thesis_data_dir
+
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent
 # parents[3]: experiment_1_benchmark -> ch7_multitarget -> experiment ->
@@ -328,7 +330,7 @@ MLVS_PT_3PHASE = "MLVS-PT-3PHASE"
 DATASETS: dict[str, dict] = {
     DSS_EU: {
         "dataset_name": DSS_EU,
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2021-01",
         "train_end": "2021-12",
         "test_start": "2021-09",
@@ -340,7 +342,7 @@ DATASETS: dict[str, dict] = {
     },
     MLVS_PT_3PHASE: {
         "dataset_name": MLVS_PT_3PHASE,
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2019-03",
         "train_end": "2022-01",
         "test_start": "2021-07",
@@ -933,7 +935,7 @@ def base_config(
     """Shared PipelineConfig defaults for this script's ENGINES; dataset/output_dir overridden per run."""
     return PipelineConfig(
         dataset_name=DSS_EU,
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         output_dir=str(output_root / "multitarget_experiment"),
         epochs=epochs,
         # Reachable now via --run-hpo (2026-09-18, see main()'s own args --

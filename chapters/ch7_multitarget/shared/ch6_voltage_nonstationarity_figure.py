@@ -31,6 +31,7 @@ sys.path.insert(0, str(script_dir.parent.parent))  # repo "experiment" package r
 
 from twiga.utils.data_loading import load_dataset  # noqa: E402
 
+from twiga_thesis.paths import thesis_data_dir
 from twiga_thesis.plotting import style as S  # noqa: E402
 from twiga_thesis.plotting.tokens import HIGHLIGHT, PRIMARY, TEXT_MUTED  # noqa: E402
 
@@ -41,7 +42,7 @@ def main() -> None:
     S.configure()
 
     data, target, _cal, _exog, _hist, _lat, _lon, _lookback = load_dataset(
-        dataset="MLVS-PT-3PHASE", data_path="examples/data", top_k=2, weather_top_k=1, n_samples=48
+        dataset="MLVS-PT-3PHASE", data_path=str(thesis_data_dir()), top_k=2, weather_top_k=1, n_samples=48
     )
     if target != ["LP", "LQ", "LV"]:
         raise ValueError(f"expected load_dataset('MLVS-PT-3PHASE') target_series=['LP','LQ','LV'], got {target}")

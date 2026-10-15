@@ -56,7 +56,7 @@ into LP/LQ/LV. What's still missing is the *file*: the loader reads raw
 per-year substation CSVs available only on the project server, and
 ``MLVS-PT-3PHASE.parquet`` has not yet been produced from them (via
 ``PhD-Thesis-Anthony/notebook/Prepare-data.ipynb``) or copied into
-``examples/data/``. Until it is, ``--dataset MLVS-PT-3PHASE`` fails with a
+``data/``. Until it is, ``--dataset MLVS-PT-3PHASE`` fails with a
 plain ``FileNotFoundError`` (confirmed) rather than silently running on the
 wrong target — this script's own default still runs DSS-EU only, so a
 plain invocation is unaffected. DSS-UK/DSS-US are reserved for Chapter 6's
@@ -87,6 +87,8 @@ from twiga.models.nn.mlpgamfpqr_model import MLPGAMFPQRConfig
 from twiga.models.nn.mlpgammvnormal_model import MLPGAMMVNormalConfig
 from twiga.utils.run_forecast import PipelineConfig
 
+from twiga_thesis.paths import thesis_data_dir
+
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent
 DEFAULT_OUTPUT_ROOT = (
@@ -110,7 +112,7 @@ MLVS_PT_3PHASE = "MLVS-PT-3PHASE"
 DATASETS: dict[str, dict] = {
     DSS_EU_REFERENCE: {
         "dataset_name": DSS_EU_REFERENCE,
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2021-01",
         "train_end": "2021-12",
         "test_start": "2021-09",
@@ -122,7 +124,7 @@ DATASETS: dict[str, dict] = {
     },
     MLVS_PT_3PHASE: {
         "dataset_name": MLVS_PT_3PHASE,
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2019-03",
         "train_end": "2022-01",
         "test_start": "2021-07",
@@ -599,7 +601,7 @@ def base_config(
     """Shared PipelineConfig defaults for this script's engines."""
     return PipelineConfig(
         dataset_name=DSS_EU_REFERENCE,
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         output_dir=str(output_root / "fpqr_gating_ablation"),
         epochs=epochs,
         num_trials=hpo_trials,

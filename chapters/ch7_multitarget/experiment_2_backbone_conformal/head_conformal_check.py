@@ -98,6 +98,7 @@ from twiga.models.nn.nhitslaplace_model import NHITSLaplaceConfig
 from twiga.models.nn.nhitsqr_model import NHITSQRConfig
 from twiga.utils.run_forecast import PipelineConfig
 
+from twiga_thesis.paths import thesis_data_dir
 from twiga_thesis.plotting.forecast_panels import draw, place_legend_below  # noqa: E402
 
 log = get_logger(__name__)
@@ -218,7 +219,7 @@ def build_spec(dataset_key: str, conditions: list[Condition]) -> ExperimentSpec:
 def base_config(epochs: int) -> PipelineConfig:
     return PipelineConfig(
         dataset_name=DSS_EU,
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         output_dir=str(EXPLORATORY_OUT),
         epochs=epochs,
         num_trials=1,

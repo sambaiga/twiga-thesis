@@ -78,6 +78,7 @@ from twiga.utils.data_loading import load_dataset  # noqa: E402
 sys.path.insert(0, str(Path(__file__).resolve().parents[2]))
 from twiga.core.metrics import mcs_ranking, pairwise_dm_table
 
+from twiga_thesis.paths import thesis_data_dir
 from twiga_thesis.plotting.forecast_panels import draw, place_legend_below
 from twiga_thesis.plotting.style import configure, pad_limits, panel  # noqa: E402
 from twiga_thesis.plotting.tokens import (  # noqa: E402
@@ -221,7 +222,9 @@ def _calendar_matrix(data, ts, calendar):
 
 def build_windows(scenario: str, lookback: int, horizon: int):
     """Supervised windows in physical units, with the scaler fitted on train rows."""
-    data, targets, calendar, exog, _lags, _lat, _lon, _lookback = load_dataset(scenario, data_path="examples/data")
+    data, targets, calendar, exog, _lags, _lat, _lon, _lookback = load_dataset(
+        scenario, data_path=str(thesis_data_dir())
+    )
     y = data[targets].to_numpy(dtype=np.float64)
     x_exog = data[exog].to_numpy(dtype=np.float64)
     ts = pd.to_datetime(data["timestamp"])
@@ -425,7 +428,9 @@ def build_backtest_folds(
         List of dicts in the same shape :func:`build_windows` returns, each with
         an added ``fold`` label naming the held-out period.
     """
-    data, targets, calendar, exog, _lags, _lat, _lon, _lookback = load_dataset(scenario, data_path="examples/data")
+    data, targets, calendar, exog, _lags, _lat, _lon, _lookback = load_dataset(
+        scenario, data_path=str(thesis_data_dir())
+    )
     y = data[targets].to_numpy(dtype=np.float64)
     x_exog = data[exog].to_numpy(dtype=np.float64)
     ts = pd.to_datetime(data["timestamp"])

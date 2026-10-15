@@ -116,6 +116,8 @@ from twiga.models.nn.mlpgamfpqr_model import MLPGAMFPQRConfig
 from twiga.models.nn.nhitsfpqr_model import NHITSFPQRConfig
 from twiga.utils.run_forecast import PipelineConfig
 
+from twiga_thesis.paths import thesis_data_dir
+
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent
 
@@ -141,7 +143,7 @@ DSS_US = "DSS-US:0:0.4:0.4"
 DATASETS: dict[str, dict] = {
     DSS_EU: {
         "dataset_name": DSS_EU,
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2021-01",
         "train_end": "2021-12",
         "test_start": "2021-09",
@@ -153,7 +155,7 @@ DATASETS: dict[str, dict] = {
     },
     MLVS_PT_3PHASE: {
         "dataset_name": MLVS_PT_3PHASE,
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2019-03",
         "train_end": "2022-01",
         "test_start": "2021-07",
@@ -168,7 +170,7 @@ DATASETS: dict[str, dict] = {
     # DSS-EU's own entry above (test window the last quarter of the year).
     DSS_UK: {
         "dataset_name": DSS_UK,
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2019-01",
         "train_end": "2019-12",
         "test_start": "2019-09",
@@ -180,7 +182,7 @@ DATASETS: dict[str, dict] = {
     },
     DSS_US: {
         "dataset_name": DSS_US,
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2019-01",
         "train_end": "2019-12",
         "test_start": "2019-09",
@@ -624,7 +626,7 @@ def base_config(
     """
     return PipelineConfig(
         dataset_name=DSS_EU,
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         output_dir=str(output_root / "backbone_conformal_study"),
         epochs=epochs,
         num_trials=hpo_trials,

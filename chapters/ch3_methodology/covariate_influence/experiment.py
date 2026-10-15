@@ -33,6 +33,7 @@ from chapters.ch3_methodology.best_practices.protocol import (
     MIN_TRAIN_MONTHS,
 )
 from chapters.ch3_methodology.covariate_influence.conditions import CONDITIONS
+from twiga_thesis.paths import thesis_data_dir
 
 log = get_logger(__name__)
 script_dir = Path(__file__).resolve().parent
@@ -44,7 +45,7 @@ DEFAULT_OUTPUT_ROOT = BEST_PRACTICES_OUTPUT_ROOT.parent / "ch3_methodology" / "c
 DATASETS: dict[str, dict] = {
     "MLVS-PT": {
         "dataset_name": "MLVS-PT",
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2019-03",
         "train_end": "2022-01",
         "test_start": "2021-07",
@@ -56,7 +57,7 @@ DATASETS: dict[str, dict] = {
     },
     "MLVS-UK": {
         "dataset_name": "MLVS-UK",
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2018-01",
         "train_end": "2020-07",
         "test_start": "2019-12",
@@ -102,7 +103,7 @@ def base_config(output_dir: Path, epochs: int) -> PipelineConfig:
     """Shared :class:`~twiga.utils.run_forecast.PipelineConfig`."""
     return PipelineConfig(
         output_dir=f"{output_dir}/",
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         out_activation="Identity",
         epochs=epochs,
         num_trials=50,

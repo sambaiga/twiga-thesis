@@ -33,6 +33,8 @@ from pathlib import Path
 from twiga.experiment import ExperimentSpec
 from twiga.utils.run_forecast import PipelineConfig
 
+from twiga_thesis.paths import thesis_data_dir
+
 script_dir = Path(__file__).resolve().parent
 CHAPTER_DIR = script_dir.parent
 
@@ -57,7 +59,7 @@ EXPANDING_WINDOW = "expanding"
 DATASETS: dict[str, dict] = {
     "MLVS-PT": {
         "dataset_name": "MLVS-PT",
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2019-03",
         "train_end": "2022-01",
         "test_start": "2021-07",
@@ -136,7 +138,7 @@ def base_config(output_dir: Path, metrics: list[str]) -> PipelineConfig:
     """Shared :class:`PipelineConfig`; the dataset fields come from each spec's dataset entry."""
     return PipelineConfig(
         output_dir=f"{output_dir}/",
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         out_activation="Identity",
         epochs=1,  # every condition here is a non-neural baseline; epochs is inert for them.
         num_trials=1,

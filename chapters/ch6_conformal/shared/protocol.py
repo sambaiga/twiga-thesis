@@ -29,6 +29,8 @@ from pathlib import Path
 from twiga.experiment import ExperimentSpec
 from twiga.utils.run_forecast import PipelineConfig
 
+from twiga_thesis.paths import thesis_data_dir
+
 script_dir = Path(__file__).resolve().parent
 CHAPTER_DIR = script_dir.parent
 
@@ -76,7 +78,7 @@ NON_TRANSFERABLE: frozenset[str] = frozenset({"opt_lr", "opt_weight_decay", "sch
 DATASETS: dict[str, dict] = {
     "MLVS-PT": {
         "dataset_name": "MLVS-PT",
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2019-03",
         "train_end": "2022-01",
         "test_start": "2021-07",
@@ -88,7 +90,7 @@ DATASETS: dict[str, dict] = {
     },
     "MLVS-UK": {
         "dataset_name": "MLVS-UK",
-        "data_path": "examples/data",
+        "data_path": str(thesis_data_dir()),
         "train_start": "2018-01",
         "train_end": "2020-07",
         "test_start": "2019-12",
@@ -183,7 +185,7 @@ def base_config(
 
     return PipelineConfig(
         output_dir=f"{output_dir}/",
-        data_path="examples/data",
+        data_path=str(thesis_data_dir()),
         out_activation="Identity",
         epochs=epochs,
         num_trials=hpo_trials,

@@ -58,6 +58,8 @@ from twiga.models.nn.mlpgam_model import MLPGAMConfig
 from twiga.models.nn.nhits_model import NHITSConfig
 from twiga.utils.data_loading import load_dataset
 
+from twiga_thesis.paths import thesis_data_dir
+
 log = get_logger(__name__)
 
 # ---------------------------------------------------------------------------
@@ -65,7 +67,7 @@ log = get_logger(__name__)
 # ---------------------------------------------------------------------------
 
 DATASET = "MLVS-PT"
-DATA_PATH = Path("examples/data")
+DATA_PATH = thesis_data_dir()
 OUTPUT_DIR = Path("../experiments/benchmark_backtesting")
 PROJECT_NAME = "benchmark-backtesting"
 
