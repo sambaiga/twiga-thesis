@@ -41,7 +41,7 @@ one canvas size so the table reads evenly.
 ## Quickstart
 
 ```bash
-uv sync --extra nn --dev   # omit --extra nn for Chapters 3-4 only (no torch needed)
+uv sync --extra nn --dev   # --extra nn installs torch/lightning, needed by every chapter's neural experiments (Chapters 3-7)
 ```
 
 <details>
